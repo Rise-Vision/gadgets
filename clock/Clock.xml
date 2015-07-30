@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-    <ModulePrefs title="Simple Clock Gadget" height="400" title_url="http://www.risevision.com/help/users/what-are-gadgets/free-gadgets/rise-vision-clock/">
+    <ModulePrefs title="Simple Clock Gadget" height="400">
 	<Require feature="rpc" />
 	<Optional feature="rise-api">
 	    <Param name="reports_ready" />
@@ -31,91 +31,91 @@
 	    body, div {
 	    background: transparent;
 	    text-align: center;
-	    
+
 	    /* user can't select text on a touchscreen */
 	    user-select: none;
 	    -moz-user-select: none;
 	    -webkit-user-select: none;
-	    -khtml-user-select: none; 
+	    -khtml-user-select: none;
 	    }
 
 	   __UP_text_font-style__
 	 </style>
-	 
-	<script type="text/javascript">	 
+
+	<script type="text/javascript">
 	    var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-	    
+
 	    var prefs = new gadgets.Prefs();
-	    
+
 	    //Issue 1041 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
 	    };
-	    
+
 	    //Add Analytics code.
 	    var _gaq = _gaq || [];
-	    
+
 	    _gaq.push(['_setAccount', 'UA-41395348-14']);
 	    _gaq.push(['_trackPageview']);
-	  
+
 	    (function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    })();
-	    
+
 	    function play() {
-	    
+
 	    }
-	    
+
 	    function pause() {
-	    
+
 	    }
-	    
+
 	    function stop() {
-	    
+
 	    }
-	    
+
 	    function readyEvent() {
 		gadgets.rpc.call('', 'rsevent_ready', null, prefs.getString("id"), true, true, true, true, true);
 	    }
-	    
+
 	    function doneEvent() {
 		gadgets.rpc.call('', 'rsevent_done', null, prefs.getString("id"));
 	    }
-	    
+
 	    function initClock() {
 		var id = prefs.getString("id");
 		var backgroundColor = prefs.getString("backgroundColor");
-	 
-		// register your RPC calls (communicate with the viewer application) 
+
+		// register your RPC calls (communicate with the viewer application)
 		// each one of these is a command. the Viewer will send this command, and the function
 		// in the command will be called. For example the first one, once rscmd_play_ + id is called, the play();
-		// function is called 
+		// function is called
 		if (id !== null && id != "") {
 			gadgets.rpc.register("rscmd_play_" + id, play);
 			gadgets.rpc.register("rscmd_pause_" + id, pause);
 			gadgets.rpc.register("rscmd_stop_" + id, stop);
-		} 
-	 
+		}
+
 		if (backgroundColor !== null && backgroundColor != "") {
 			document.body.style.background = backgroundColor;
-		} 
-	 
+		}
+
 		clock();
 		readyEvent();
 	    }
-	    
+
 	    function clock() {
 		var backgroundColor = prefs.getString("backgroundColor");
 		var dispTime = "";
 		var currentTime = new Date();
-		
+
 		if (prefs.getString("showTime") !== "false") {
 		    var hours = currentTime.getHours();
 		    var minutes = currentTime.getMinutes();
 		    if (minutes <= 9) minutes = "0" + minutes;
-		    
+
 		    if (prefs.getString("timeFormat") == null || prefs.getString("timeFormat") == "12hTime") {
 			    var amOrPm = "AM";
 			    if (hours > 11) amOrPm = "PM";
@@ -127,7 +127,7 @@
 			    dispTime = hours + ":" + minutes;
 		    }
 		}
-	 
+
 		if (prefs.getString("showDate") !== "false") {
 		    var month = currentTime.getMonth();
 		    var day = currentTime.getDate();
@@ -145,20 +145,20 @@
 			    dispTime += "<br>" + day+ "/" + (month + 1) + "/" + year;
 		    }
 		}
-		
+
 		//Issue 367
 		if (!prefs.getBool("showTime") && prefs.getBool("showDate"))
 		{
 		    dispTime = dispTime.replace("<br>", "");
 		}
-		
+
 		document.getElementById("clock").innerHTML = dispTime;
 		setTimeout("clock()", 10000);
 	    }
-	    
-	    gadgets.util.registerOnLoadHandler(initClock); 
+
+	    gadgets.util.registerOnLoadHandler(initClock);
 	</script>
-	 
+
 	<div id="clock" class="text_font-style" style="height:100%;width:100%;">
 	</div>
     ]]>
