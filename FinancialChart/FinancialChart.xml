@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-    <ModulePrefs title="Rise Financial Chart Gadget" title_url="http://www.risevision.com/help/users/what-are-gadgets/premium-gadgets/rise-vision-financial-chart/">
+    <ModulePrefs title="Rise Financial Chart Gadget">
 	<Require feature="rpc" />
 	<Optional feature="rise-api">
 	    <Param name="reports_ready" />
@@ -315,13 +315,13 @@
 		</form>
 	    </div>
 	    
-	    <link rel="stylesheet" href="https://s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
+	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 	    
-	    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
-	    <script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	    <script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
+	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	    <script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
     
             <script type="text/javascript">
 		var prefs = new gadgets.Prefs(),
@@ -488,20 +488,20 @@
 	    <div id="error" class="error"></div>
 	</div>	
 	
-	<link rel="stylesheet" href="https://s3.amazonaws.com/Common-Production/envision/css/envision.css" />
+	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/envision/css/envision.css" />
 	
-	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+	<script type="text/javascript" src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Chart/RiseVision.Templates.Finance.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/RiseVision.Templates.Finance.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
 
 	<!-- Load after envision.js. -->
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/envision/grid.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/grid.min.js"></script>
     
 	<script>
 	    var prefs = new gadgets.Prefs(),

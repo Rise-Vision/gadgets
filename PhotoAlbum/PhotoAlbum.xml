@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-    <ModulePrefs title="Rise Vision Photo Album Gadget" height="400" title_url="http://www.risevision.com/help/users/what-are-gadgets/free-gadgets/rise-vision-photo-album/">
+    <ModulePrefs title="Rise Vision Photo Album Gadget" height="400">
 	<Require feature="rpc" />
 	<Optional feature="rise-api">
 	    <Param name="reports_ready" />
@@ -104,16 +104,16 @@
 	<div id="container">
 	</div>
 	
-	<link rel="stylesheet" href="https://s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/css/ContentFlow.css" />
+	<link rel="stylesheet" href="//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/css/ContentFlow.css" />
 	
-	<script src="http://www.google.com/jsapi"></script>
+	<script src="//www.google.com/jsapi"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     
-	<script src="https://s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/js/CoverFlow.min.js"></script>
-	<script src="https://s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/js/ContentFlow.js"></script>
-	<script src="https://s3.amazonaws.com/Common-Production/touchSwipe/jquery.touchSwipe-1.2.2.min.js"></script>
-	<script src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script src="https://s3.amazonaws.com/Gadget-Photo-Album/PhotoAlbum.min.js"></script>
+	<script src="//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/js/CoverFlow.min.js"></script>
+	<script src="//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/js/ContentFlow.js"></script>
+	<script src="//s3.amazonaws.com/Common-Production/touchSwipe/jquery.touchSwipe-1.2.2.min.js"></script>
+	<script src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script src="//s3.amazonaws.com/Gadget-Photo-Album/PhotoAlbum.min.js"></script>
     
 	<script type="text/javascript">
 	    var prefs = new gadgets.Prefs();

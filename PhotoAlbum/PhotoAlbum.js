@@ -29,10 +29,10 @@ PhotoAlbum.prototype.initialize = function() {
 	$("<link/>", {
 	    rel: "stylesheet",
 	    type: "text/css",
-	    href: "https://s3.amazonaws.com/Gadget-Photo-Album/SlideShow/css/SlideShow.css"
+	    href: "//s3.amazonaws.com/Gadget-Photo-Album/SlideShow/css/SlideShow.css"
 	 }).appendTo("head");
 	
-	$.getScript("https://s3.amazonaws.com/Gadget-Photo-Album/SlideShow/js/SlideShow.min.js", function() {
+	$.getScript("//s3.amazonaws.com/Gadget-Photo-Album/SlideShow/js/SlideShow.min.js", function() {
 	    self.loadFeed();		
 	});  
     }    
@@ -40,10 +40,10 @@ PhotoAlbum.prototype.initialize = function() {
 	$("<link/>", {
 	    rel: "stylesheet",
 	    type: "text/css",
-	    href: "https://s3.amazonaws.com/Gadget-Photo-Album/Collage/css/Collage.css"
+	    href: "//s3.amazonaws.com/Gadget-Photo-Album/Collage/css/Collage.css"
 	}).appendTo("head");
 	
-	$.getScript("https://s3.amazonaws.com/Gadget-Photo-Album/Collage/js/Collage.min.js", function() {
+	$.getScript("//s3.amazonaws.com/Gadget-Photo-Album/Collage/js/Collage.min.js", function() {
 	    self.loadFeed();		
 	});
     }
@@ -177,7 +177,7 @@ PhotoAlbum.prototype.loadPhotos = function() {
 }
 PhotoAlbum.prototype.addCaption = function(title, description, url, isFirst) {
     var field,
-	isPicasa = this.url.indexOf("https://picasaweb.google.com", 0) != -1 ? true : false;
+	isPicasa = this.url.indexOf("//picasaweb.google.com", 0) != -1 ? true : false;
 
     if (isPicasa) {
 	if (description == null || description == "") {

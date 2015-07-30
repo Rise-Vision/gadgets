@@ -558,7 +558,7 @@ Venue.prototype.loadSpecials = function() {
             }
         }
 
-        $(this).attr("src", "http://foursquare.com/img/specials/" + self.specials[self.specialsIndex].icon + ".png");
+        $(this).attr("src", "//foursquare.com/img/specials/" + self.specials[self.specialsIndex].icon + ".png");
         $(".specialTitle").eq(index).text(self.specials[self.specialsIndex].title);
         $(".special").eq(index).text(self.specials[self.specialsIndex].text);
         self.specialsIndex++;

@@ -89,7 +89,7 @@
 	<![CDATA[
 	<div id="content">
 	    <div id="upper">
-		<img id="crown" src="https://s3.amazonaws.com/Gadget-Foursquare/images/crown.png" />
+		<img id="crown" src="//s3.amazonaws.com/Gadget-Foursquare/images/crown.png" />
 		<div id="mayor"> 
 		    <img class="photo" />
 		</div>

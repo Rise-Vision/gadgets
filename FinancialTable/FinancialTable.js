@@ -9,20 +9,20 @@ RiseVision.FinancialSettings = function() {
 //Populate settings from saved values.
 RiseVision.FinancialSettings.prototype.initSettings = function() {
     var self = this;
-        
+
     //Add event handlers.
     $("#selector").on("click", function(event) {
 	financial.showStockSelector();
     });
-    
+
     $(".colorPicker").on("click", function(event) {
 	financial.showColorPicker($(this).data("for"));
     });
-    
+
     $(".fontSelector").on("click", function(event) {
 	financial.showFontSelector($(this).data("for"));
     });
-    
+
     $("#scrollDirection").on("change", function(event) {
 	if ($(this).val() == "none") {
 	    $("li.scroll").hide();
@@ -31,7 +31,7 @@ RiseVision.FinancialSettings.prototype.initSettings = function() {
 	    $("li.scroll").show();
 	}
     });
-    
+
     $("#scrollBy").on("change", function(event) {
 	if ($(this).val() == "continuous") {
 	    $("li.scrollHold").hide();
@@ -40,11 +40,11 @@ RiseVision.FinancialSettings.prototype.initSettings = function() {
 	    $("li.scrollHold").show();
 	}
     });
-    
+
     $("#colCount").on("change", function(event) {
 	financial.buildFieldsUI();
     });
-    
+
     $("#useDefault").on("click", function(event) {
 	if ($(this).is(":checked")) {
 	    $("li.layoutURL").hide();
@@ -53,12 +53,12 @@ RiseVision.FinancialSettings.prototype.initSettings = function() {
 	    $("li.layoutURL").show();
 	}
     });
-    
+
     //Request additional parameters from the Viewer.
     gadgets.rpc.call("", "rscmd_getAdditionalParams", function(result) {
 	if (result) {
-	    result = JSON.parse(result);	    
-	    
+	    result = JSON.parse(result);
+
 	    //Populate fields saved as UserPrefs.
 	    $("#disclaimerFont").val(prefs.getString("disclaimerFont"));
 	    $("#disclaimerLoc").val(prefs.getString("disclaimerLoc"));
@@ -71,52 +71,52 @@ RiseVision.FinancialSettings.prototype.initSettings = function() {
 	    $("#rowPadding").val(prefs.getInt("rowPadding"));
 	    $("#colPadding").val(prefs.getInt("colPadding"));
 	    $("#colCount").val(prefs.getInt("colCount"));
-	    $("#bgColor").val(prefs.getString("bgColor"));	
+	    $("#bgColor").val(prefs.getString("bgColor"));
 	    $("#rowColor").val(prefs.getString("rowColor"));
 	    $("#altRowColor").val(prefs.getString("altRowColor"));
 	    $("#selRowColor").val(prefs.getString("selRowColor"));
 	    $("#useDefault").attr("checked", prefs.getBool("useDefault"));
 	    $("#layoutURL").val(prefs.getString("layoutURL"));
-	    
+
 	    //Populate colors and show color as background of text box.
 	    self.populateColor($("#rowColor"), prefs.getString("rowColor"));
 	    self.populateColor($("#altRowColor"), prefs.getString("altRowColor"));
 	    self.populateColor($("#selRowColor"), prefs.getString("selRowColor"));
 	    self.populateColor($("#bgColor"), prefs.getString("bgColor"));
-	    
+
 	    //Populate fields saved as additionalParams.
 	    $("#instruments").val(result["instruments"]);
 	    $("#heading_font-style").text(result["heading_font"]);
 	    $("#heading_font-style").data("css", result["heading_font-style"]);
 	    $("#data_font-style").text(result["data_font"]);
 	    $("#data_font-style").data("css", result["data_font-style"]);
-	    
+
 	    //Build UI for fields before populating.
 	    $("#colCount").trigger("change");
-	
+
 	    for (var i = 0; i < parseInt($("#colCount").val()); i++) {
 		self.initFields(i + 1, result.fields[i]);
 	    }
-	    
+
 	    $(".field").trigger("change");
 	}
 	else {
 	    $("#colCount").trigger("change");
 	    $(".field").trigger("change");
 	}
-	
+
 	$("form ol li ol.drillDown li:visible:last").css({
 	    "clear": "left",
 	    "float": "left",
 	    "margin-bottom": "10px"
 	});
-	
+
 	//Manually trigger event handlers so that the visibility of fields can be set.
 	$("#scrollDirection").trigger("change");
 	$("#scrollBy").trigger("change");
 	$("#useDefault").triggerHandler("click");
 	$("#settings").show();
-    });    
+    });
 }
 RiseVision.FinancialSettings.prototype.populateColor = function($element, color) {
     $element.val(color);
@@ -135,7 +135,7 @@ RiseVision.FinancialSettings.prototype.initFields = function(index, field) {
 RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
     var colCount = parseInt($("#colCount").val()),
 	conditionalCount = $(".field").length;
-	
+
     //Hide all fields related to field formatting.
     if (isNaN(colCount) || colCount == 0) {
 	$(".formatting").hide();
@@ -154,13 +154,13 @@ RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
 	else {
 	    //Show all existing settings.
 	    $(".formatting").show();
-	    
+
 	    for (var i = conditionalCount + 1; i <= colCount; i++) {
 		var li = document.createElement("li"),
 		    ol = document.createElement("ol");
-		    
+
 		    ol.setAttribute("class", "formatting drillDown");
-		    
+
 		    $(ol)
 			.append($("<li></li>")
 			    .append("<label for='field" + i + "'>Field*:</label>")
@@ -171,7 +171,7 @@ RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
 				"<option value='lastPrice'>Last Price</option>" +
 				"<option value='historicClose'>Previous Close</option>" +
 				"<option value='netChange'>Change</option>" +
-				"<option value='percentChange'>% Change</option>" +				
+				"<option value='percentChange'>% Change</option>" +
 				"<option value='accumulatedVolume'>Accumulated Volume</option>" +
 				"<option value='dayHigh'>Day High</option>" +
 				"<option value='dayLow'>Day Low</option>" +
@@ -200,7 +200,7 @@ RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
 			    .append("<input id='headerText" + i + "' name='headerText" + i + "' type='text' class='headerText short' />"))
 			.append($("<li class='numeric drilldown'></li>")
 			    .append($("<ol></ol>")
-				.append($("<li></li>")			
+				.append($("<li></li>")
 				    .append("<label for='decimals" + i + "'>Decimals:</label>")
 				    .append("<select id='decimals" + i + "' name='decimals" + i + "' class='decimals short'>" +
 					"<option value='0'>0</option>" +
@@ -231,12 +231,12 @@ RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
 					"<option value='valuePositive'>Value Positive Green Negative Red</option>" +
 					"<option value='valueNegative'>Value Negative Green Positive Red</option>" +
 					"</select>"))));
-						
-		$(li).append(ol);		
-		
+
+		$(li).append(ol);
+
 		//Insert before Background Color.
-		$("#bgColor").parent().before(li);		
-		
+		$("#bgColor").parent().before(li);
+
 		//Add event handler for the Field settings.
 		$(".field").on("change", function(event) {
 		    if ((this.value != "instrument") && (this.value != "logo") && (this.value != "name") && (this.value != "tradeTime")) {
@@ -247,7 +247,7 @@ RiseVision.FinancialSettings.prototype.buildFieldsUI = function() {
 		    }
 		});
 	    }
-	    
+
 	    //Set default value for newly added fields.
 	    for (var i = conditionalCount + 1; i <= colCount; i++) {
 		$(".field").eq(i - 1)[0].selectedIndex = i - 1;
@@ -259,7 +259,7 @@ RiseVision.FinancialSettings.prototype.showStockSelector = function() {
     gadgets.rpc.call("", "rscmd_openFinancialSelector", null, "instruments", $("#instruments").val());
 }
 RiseVision.FinancialSettings.prototype.showColorPicker = function(id) {
-    gadgets.rpc.call("", "rscmd_openColorPicker", null, id, $("#" + id).val()); 
+    gadgets.rpc.call("", "rscmd_openColorPicker", null, id, $("#" + id).val());
 }
 RiseVision.FinancialSettings.prototype.showFontSelector = function(id) {
     gadgets.rpc.call("", "rscmd_openFontSelector", null, id, $("#" + id).data("css"));
@@ -280,37 +280,37 @@ RiseVision.FinancialSettings.prototype.getSettings = function() {
 	errors = document.getElementsByClassName("errors")[0],
 	params = "",
 	settings = null;
-    
+
     $(".errors").empty();
-    
+
     //Perform validation.
     errorFound = (financial.settings.validateRequired($("#instruments"), errors, "Instruments")) ? true : errorFound;
     errorFound = (financial.settings.validateNumeric($("#scrollHold"), errors, "Scroll Hold")) ? true : errorFound;
-    errorFound = (financial.settings.validateNumeric($("#scrollResumes"), errors, "Scroll Resumes")) ? true : errorFound;    
+    errorFound = (financial.settings.validateNumeric($("#scrollResumes"), errors, "Scroll Resumes")) ? true : errorFound;
     errorFound = (financial.settings.validateNumeric($("#rowPadding"), errors, "Row Padding")) ? true : errorFound;
     errorFound = (financial.settings.validateNumeric($("#colPadding"), errors, "Column Padding")) ? true : errorFound;
-    
+
     if (parseInt($("#colCount").val()) > 0) {
 	$(".field").each(function(i) {
 	    errorFound = (financial.settings.validateRequired($(this), errors, "Field")) ? true : errorFound;
 	});
-	
+
 	$(".width").each(function(i) {
 	    errorFound = (financial.settings.validateNumeric($(this), errors, "Width")) ? true : errorFound;
 	});
     }
-    
+
     errorFound = (financial.settings.validateRequired($("#layoutURL"), errors, "Layout URL")) ? true : errorFound;
-    
+
     if (errorFound) {
 	$(".errors").fadeIn(200).css("display", "inline-block");
 	$("#wrapper").scrollTop(0);
-	
+
 	return null;
     }
     else {
 	//Construct parameters string to pass to RVA.
-	params = 
+	params =
 	    "up_disclaimerFont=" + $("#disclaimerFont").val() +
 	    "&up_disclaimerLoc=" + $("#disclaimerLoc").val() +
 	    "&up_scrollDirection=" + $("#scrollDirection").val() +
@@ -326,47 +326,47 @@ RiseVision.FinancialSettings.prototype.getSettings = function() {
 	    "&up_altRowColor=" + $("#altRowColor").val() +
 	    "&up_selRowColor=" + $("#selRowColor").val() +
 	    "&up_layoutURL=" + escape($("#layoutURL").val());
-	
+
 	if ($("#acceptance").is(":checked")) {
 	    params += "&up_acceptance=true";
 	}
 	else {
 	    params += "&up_acceptance=false";
 	}
-	
+
 	if ($("#useDefault").is(":checked")) {
 	    params += "&up_useDefault=true";
 	}
 	else {
 	    params += "&up_useDefault=false";
 	}
-	
+
 	settings = {
 	    "params": params,
 	    "additionalParams": JSON.stringify(financial.saveAdditionalParams())
 	};
-    
+
 	$(".errors").css({ display: "none" });
-	
+
 	return settings;
-    }  
+    }
 }
 RiseVision.FinancialSettings.prototype.saveAdditionalParams = function() {
     var additionalParams = {},
-	fields = [];    
-    
+	fields = [];
+
     additionalParams["instruments"] = $("#instruments").val();
     additionalParams["heading_font"] = $("#heading_font-style").text();
     additionalParams["heading_font-style"] = $("#heading_font-style").data("css");
     additionalParams["data_font"] = $("#data_font-style").text();
     additionalParams["data_font-style"] = $("#data_font-style").data("css");
-    
+
     for (var i = 0; i < parseInt($("#colCount").val()); i++) {
 	fields.push(financial.saveFormatSettings(i + 1, fields));
     }
-    
+
     additionalParams["fields"] = fields;
-    
+
    return additionalParams;
 }
 RiseVision.FinancialSettings.prototype.saveFormatSettings = function(i) {
@@ -376,13 +376,13 @@ RiseVision.FinancialSettings.prototype.saveFormatSettings = function(i) {
 	"width": $("#width" + i).val(),
 	"header": $("#headerText" + i).val()
     };
-    
+
     if ($("#decimals" + i + ":visible").length > 0) {
 	formatSettings["decimals"] = $("#decimals" + i).val();
 	formatSettings["sign"] = $("#sign" + i).val();
 	formatSettings["condition"] = $("#condition" + i + "Action").val();
     }
-	
+
     return formatSettings;
 }
 /* Settings End */
@@ -392,32 +392,32 @@ RiseVision.Financial = {};
 
 RiseVision.Financial = function(displayID) {
     this.displayID = displayID;
-    
+
     //Gadget settings
     this.scrollDirection = prefs.getString("scrollDirection");
     this.scrollBy = prefs.getString("scrollBy");
     this.scrollHold = prefs.getInt("scrollHold") * 1000;
     this.scrollSpeed = prefs.getString("scrollSpeed");
-    this.scrollResumes = prefs.getInt("scrollResumes") * 1000;    
+    this.scrollResumes = prefs.getInt("scrollResumes") * 1000;
     this.rowPadding = prefs.getInt("rowPadding") / 2 + "px";
     this.colPadding = prefs.getInt("colPadding") / 2 + "px";
     this.disclaimerFont = prefs.getString("disclaimerFont");
-    this.disclaimerLoc = prefs.getString("disclaimerLoc"); 
+    this.disclaimerLoc = prefs.getString("disclaimerLoc");
     this.useDefault = prefs.getBool("useDefault");
-    
+
     if (this.useDefault) {
 	this.layoutURL = "";
     }
-    else {	
+    else {
 	this.layoutURL = prefs.getString("layoutURL");
     }
-    
-    this.logosURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
+
+    this.logosURL = "//s3.amazonaws.com/risecontentlogos/financial/";
     this.hasLogos = false;
     this.hasLastItemScrolled = false;
     this.updateInterval = 60000;
     this.selectedIndex = -1;
-    
+
     this.isLoading = true;
     this.sortConfig = {
 	"bAutoWidth": false,
@@ -428,12 +428,12 @@ RiseVision.Financial = function(displayID) {
 	"bPaginate": false,
 	"bSort": false,
 	"sScrollY": "500px"	//Needed just to force table structure conducive to sorting.
-    };   
+    };
 }
 RiseVision.Financial.prototype.getInstrument = function(index) {
-    $("tr").removeClass("selected");		
+    $("tr").removeClass("selected");
     $(".item").eq(index).addClass("selected");
-    
+
     return $(".item").eq(index).attr("data-code");
 }
 /*
@@ -445,7 +445,7 @@ RiseVision.Financial.prototype.checkInstruments = function(includeAll) {
 	instruments = [],
 	unrequested = [],
 	numRows = this.data.getNumberOfRows();
-	
+
     if (includeAll) {
 	this.requested = [];
     }
@@ -453,20 +453,20 @@ RiseVision.Financial.prototype.checkInstruments = function(includeAll) {
     for (var row = 0; row < numRows; row++) {
 	instruments.push(this.data.getFormattedValue(row, this.financial.dataFields["code"]));
     }
-    
+
     //Find all symbols in 'instruments' that are not already in 'this.requested'.
     unrequested = $.grep(instruments, function(el) {
 	return $.inArray(el, self.requested) == -1
     });
-    
+
     for (var i = 0; i < unrequested.length; i++) {
     	this.requested.push(unrequested[i]);
     }
-    
+
     if (unrequested.length > 0) {
 	gadgets.rpc.call("", "instrumentsChanged", null, this.displayID, unrequested);
     }
-    
+
     if (includeAll) {
 	//Every 24 hours, pass a list of all instruments to any listeners.
 	setTimeout(function() {
@@ -479,72 +479,72 @@ RiseVision.Financial.prototype.getAdditionalParams = function(name, value) {
 	if (value) {
 	    var styleNode = document.createElement("style"),
 		currentIndex = 0;
-	    
+
 	    value = JSON.parse(value);
-	    
+
 	    //Inject CSS font styles into the DOM.
 	    styleNode.appendChild(document.createTextNode(value["heading_font-style"]));
-	    styleNode.appendChild(document.createTextNode(value["data_font-style"]));        
+	    styleNode.appendChild(document.createTextNode(value["data_font-style"]));
 	    document.getElementsByTagName("head")[0].appendChild(styleNode);
-	    
+
 	    financial.instruments = value.instruments;
-	    
+
 	    //Determine what fields will need to be requested from the data source.
 	    //Instrument is always returned.
 	    financial.requestedFields = [];
-	    
+
 	    $.each(value.fields, function(index, value) {
 		if ((value.field == "name" ) || (value.field == "logo") || (value.field == "instrument") || (value.field == "arrow")) {}	//Issue 853
 		else {
 		    financial.requestedFields.push(value.field);
 		}
 	    });
-	    
+
 	    financial.requestedFields.push("code");
 	    financial.requestedFields.push("name");	//Issue 853
-	    financial.fields = value.fields;	    
-	    
-	    $.each(value.fields, function(index, value) {				
+	    financial.fields = value.fields;
+
+	    $.each(value.fields, function(index, value) {
 		if (value.field == "logo") {
-		    financial.hasLogos = true;		    
+		    financial.hasLogos = true;
 		    return false;
-		}	    
+		}
 	    });
 	}
     }
-    
+
     financial.init();
 }
 RiseVision.Financial.prototype.init = function() {
     var self = this,
 	params = {};
-	
+
     this.financial = new RiseVision.Common.Financial.RealTime(this.displayID, this.instruments);
-    
+
     if (this.useDefault) {
 	this.getData();
     }
     else {
 	//Load custom layout.
 	if (this.layoutURL) {
-	    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;	
+	    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;
 	    gadgets.io.makeRequest(this.layoutURL, function(obj) {
 		var data = obj.data;
-		
+
 		if (data.getElementsByTagName("Style").length > 0) {
 		    var head = document.getElementsByTagName("head")[0],
 			style = document.createElement("style");
-			
+
 		    style.type = "text/css";
 		    style.innerHTML = data.getElementsByTagName("Style")[0].childNodes[1].nodeValue;
 		    head.appendChild(style);
 		}
-		
+
 		if (data.getElementsByTagName("Layout").length == 0) {
 		    console.log("No Layout tag specified in custom layout file.");
 		    return;
 		}
-		
+
 		self.layout = data.getElementsByTagName("Layout")[0].childNodes[1].nodeValue;
 		self.getData();
 	    }, params);
@@ -553,17 +553,17 @@ RiseVision.Financial.prototype.init = function() {
 }
 RiseVision.Financial.prototype.getData = function() {
     var self = this;
-    
+
     this.financial.getData(this.requestedFields, this.hasLogos, this.isChain(), function(data, urls) {
 	if (data) {
 	    self.data = data;
 	    self.urls = urls;
 	    self.arrowCount = 0;
-	    
+
 	    //Temporarily size the Gadget using the UserPrefs. Workaround for multi-page Presentation issue.
 	    $("#container").width(prefs.getString("rsW"));
 	    $("#container").height(prefs.getString("rsH"));
-	    
+
 	    if (self.isLoading) {
 		self.loadArrow(self.logosURL + "animated-green-arrow.gif");
 		self.loadArrow(self.logosURL + "animated-red-arrow.gif");
@@ -573,7 +573,7 @@ RiseVision.Financial.prototype.getData = function() {
 		if (self.isChain()) {
 		    self.checkInstruments(false);
 		}
-		
+
 		if (self.layoutURL) {
 		    self.showCustomLayout();
 		}
@@ -590,20 +590,20 @@ RiseVision.Financial.prototype.getData = function() {
 RiseVision.Financial.prototype.loadArrow = function(url) {
     var self = this,
 	img = new Image();
-	
+
     img.onload = function() {
 	self.onArrowLoaded();
     }
-    
+
     img.onerror = function() {
 	self.onArrowLoaded();
     }
-	
+
     img.src = url;
 }
 RiseVision.Financial.prototype.onArrowLoaded = function() {
     this.arrowCount++;
-    
+
     if (this.arrowCount == 2) {
 	if (this.layoutURL) {
 	    this.showCustomLayout();
@@ -616,53 +616,53 @@ RiseVision.Financial.prototype.onArrowLoaded = function() {
 RiseVision.Financial.prototype.showDefaultLayout = function() {
     var disclaimer = null,
 	table = null;
-	
+
     if (this.isLoading || this.isChain()) {
 	this.selectedIndex = $(".selected").index();
-	
+
 	$("#container").empty();
-	
+
 	//Configure disclaimer.
 	disclaimer = document.createElement("div");
 	disclaimer.setAttribute("id", "disclaimer");
 	disclaimer.setAttribute("class", "default");
 	$("#container").append(disclaimer);
-	
+
 	//Configure table.
 	table = document.createElement("table");
 	table.setAttribute("id", "financial");
-	table.setAttribute("class", "default page");	
+	table.setAttribute("class", "default page");
 	$("#container").append(table);
     }
-    
+
     this.initTable();
 }
 /* Custom layout may or may not be a table. Need to account for both possibilities. */
 RiseVision.Financial.prototype.showCustomLayout = function() {
     var numRows = 0;
-    
+
     if (this.isLoading || this.isChain()) {
 	numRows = this.data.getNumberOfRows();
-	
+
 	$("#container").empty();
 	$("#container").append(this.layout);
-    
+
 	for (var row = 0; row < numRows; row++) {
 	    var parent = $(".repeat:first").parent();
-	    
+
 	    if (row > 0) {
 		$(parent).append($(".repeat:first").clone());
 	    }
 	}
     }
-    
+
     this.initTable();
 }
 RiseVision.Financial.prototype.initTable = function() {
     var self = this,
 	numRows = this.data.getNumberOfRows(),
 	numCols = this.data.getNumberOfColumns();
-    
+
     //The table data can be removed and re-added only for a chain.
     //Individual stocks have to have their rows updated since it is possible for only some stocks to be returned
     //by the Data Server depending on collection times (e.g. one stock within collection time, another not).
@@ -670,12 +670,12 @@ RiseVision.Financial.prototype.initTable = function() {
 	if (!this.isLoading) {
 	    $(".dataTables_scrollBody").infiniteScroll.stop();
 	}
-	
+
 	//Add table headings.
 	if (numCols > 0) {
 	    this.addHeadings();
 	}
-    
+
 	//Add table rows.
 	for (var row = 0; row < numRows; row++) {
 	    if ($(".repeat").eq(row).length > 0) {
@@ -685,7 +685,7 @@ RiseVision.Financial.prototype.initTable = function() {
 		this.addRow(row, null);
 	    }
 	}
-	
+
 	if (this.selectedIndex != -1) {
 	    $(".item").eq(this.selectedIndex).addClass("selected");
 	}
@@ -694,79 +694,79 @@ RiseVision.Financial.prototype.initTable = function() {
 	//Update rows.
 	this.updateRows();
     }
-    
-    this.formatFields();    
-    
+
+    this.formatFields();
+
     if (this.isLoading || this.isChain()) {
 	this.sortConfig.aoColumnDefs = [];
-	
+
 	//Use oSettings.aoColumns.sWidth for datatables to size columns.
 	$.each(this.fields, function(index, value) {
-	    if (value.width) {		
+	    if (value.width) {
 		self.sortConfig.aoColumnDefs.push({
 		    "sWidth": value.width,
 		    "aTargets": [index]
 		});
 	    }
 	});
-	
+
 	$("#financial").dataTable(this.sortConfig);
-	
+
 	//TODO: Try setting padding as part of this.sortConfig to see if it prevents column alignment issues.
 	//Row Padding
 	$(".dataTables_scrollHead table thead tr th, td").css({
 	    "padding-top": this.rowPadding,
 	    "padding-bottom": this.rowPadding
 	});
-	
+
 	//Column Padding
-	$("table thead tr th, td").css({ 
+	$("table thead tr th, td").css({
 	    "padding-left": this.colPadding,
 	    "padding-right": this.colPadding
 	});
-	
+
 	//First cell should have 10px of padding in front of it.
 	$("table tr th:first-child, td:first-child").css({
 	    "padding-left": "10px"
 	});
-	
+
 	//Last cell should have 10px of padding after it.
 	$("table tr th:last-child, td:last-child").css({
 	    "padding-right": "10px"
 	});
-	
+
 	//Configure disclaimer.
 	$("#disclaimer").text("Market Data by Thomson Reuters - Delayed 20 Minutes");
 	$("#disclaimer").css("font-family", this.disclaimerFont);
-	
-	if ((this.disclaimerLoc == "bottomRight") || (this.disclaimerLoc == "bottomLeft")) {	
+
+	if ((this.disclaimerLoc == "bottomRight") || (this.disclaimerLoc == "bottomLeft")) {
 	    $("#disclaimer").addClass("bottom");
-	    
+
 	    if (this.disclaimerLoc == "bottomRight") {
 		$("#disclaimer").addClass("right");
 	    }
 	}
 	else {
-	    $("#container").addClass("fullScreen");	
+	    $("#container").addClass("fullScreen");
 	    $("#disclaimer").addClass("top");
-	    
+
 	    if (this.disclaimerLoc == "topRight") {
 		$("#disclaimer").addClass("right");
 	    }
 	}
-	
-	//$(".dataTables_scrollBody").height(($("#container").outerHeight(true) - $("#disclaimer").height() - $(".dataTables_scrollHead").height()) / prefs.getInt("rsH") * 100 + "%");    
-	$(".dataTables_scrollBody").height($("#container").outerHeight() - $("#disclaimer").outerHeight() - $(".dataTables_scrollHead").outerHeight() + "px");    
+
+	//$(".dataTables_scrollBody").height(($("#container").outerHeight(true) - $("#disclaimer").height() - $(".dataTables_scrollHead").height()) / prefs.getInt("rsH") * 100 + "%");
+	$(".dataTables_scrollBody").height($("#container").outerHeight() - $("#disclaimer").outerHeight() - $(".dataTables_scrollHead").outerHeight() + "px");
     }
-    
+
     //Conditions
     $.each(this.fields, function(index, value) {
 	if (value.condition == "changeUp" || value.condition == "changeDown") {
 	    var results = self.financial.compare(value.field);
-	    
+
 	     $.each(results, function(i, result) {
 		var $cell = $("td." + value.field).eq(i);
-	    
+
 		if (value.condition == "changeUp") {
 		    if (result == 1) {
 			$cell.addClass("changeUpIncrease");
@@ -793,10 +793,10 @@ RiseVision.Financial.prototype.initTable = function() {
 	}
 	else if (value.condition == "valuePositive" || value.condition == "valueNegative") {
 	    var results = self.financial.checkSigns(value.field);
-	    
+
 	    $.each(results, function(i, result) {
 		var $cell = $("td." + value.field).eq(i);
-	
+
 		if (value.condition == "valuePositive") {
 		    //Positive or 0
 		    if (result == 1) {
@@ -820,7 +820,7 @@ RiseVision.Financial.prototype.initTable = function() {
 	    });
 	}
     });
-    
+
     //Initialize scrolling after conditions so that when scrolling by page, the cloned items will show the conditions as well.
     if (this.isLoading || this.isChain()) {
 	$(".dataTables_scrollBody").infiniteScroll({
@@ -835,31 +835,31 @@ RiseVision.Financial.prototype.initTable = function() {
 	    self.onLastItemScrolled.call(self, event);
 	});
     }
-    
+
     //Size container back to its original dimensions.
     $("#container").width("100%");
     $("#container").height("95%");
-    
+
     if (this.isLoading) {
 	this.isLoading = false;
 	readyEvent();
-	
+
 	this.checkInstruments(true);
     }
     else {
 	$(".dataTables_scrollBody").infiniteScroll.start();
     }
-    
+
     this.startTimer();
 }
 RiseVision.Financial.prototype.addHeadings = function() {
     var self = this,
 	tr = document.createElement("tr");
-    
+
     //Add headings for data.
     $.each(this.fields, function(index, value) {
 	var th = document.createElement("th");
-	
+
 	if (value.field == "logo") {
 	    th.setAttribute("class", "logo");
 	    $(th).html("Logo");
@@ -870,25 +870,25 @@ RiseVision.Financial.prototype.addHeadings = function() {
 	}
 	else {
 	    th.setAttribute("class", self.data.getColumnId(self.financial.dataFields[value.field]));
-	    $(th).html(self.data.getColumnLabel(self.financial.dataFields[value.field]));	    
+	    $(th).html(self.data.getColumnLabel(self.financial.dataFields[value.field]));
 	}
-	
-	$(th).addClass("heading_font-style");	
+
+	$(th).addClass("heading_font-style");
 	$(tr).append(th);
-    });    
-    
-    $("#financial").prepend($("<thead>").append(tr));   
+    });
+
+    $("#financial").prepend($("<thead>").append(tr));
 }
 RiseVision.Financial.prototype.addRow = function(row, tr) {
     var self = this,
 	logoIndex = -1,
 	instruments,
 	numCols = this.data.getNumberOfColumns();
-    
+
     if (this.data.getFormattedValue(row, 0) == "INCORRECT_TYPE") {
 	console.log("Chain could not be displayed. Please check that only one chain is being requested and that " +
 	    "chains are not being requested together with stocks.");
-    }    
+    }
     else {
 	if (tr == null) {
 	    tr = document.createElement("tr");
@@ -900,20 +900,20 @@ RiseVision.Financial.prototype.addRow = function(row, tr) {
 	    tr.attr("data-alias", this.data.getFormattedValue(row, 0));
 	    tr.attr("data-code", this.data.getFormattedValue(row, this.financial.dataFields["code"]));
 	}
-	
-	//Add an event handler for when a row is clicked.		
-	$(tr).on("click", function(event) {		
-	    $("tr").removeClass("selected");		
-	    $(this).addClass("selected");		
-	    gadgets.rpc.call("", "instrumentSelected", null, $(this).attr("data-code"));		
+
+	//Add an event handler for when a row is clicked.
+	$(tr).on("click", function(event) {
+	    $("tr").removeClass("selected");
+	    $(this).addClass("selected");
+	    gadgets.rpc.call("", "instrumentSelected", null, $(this).attr("data-code"));
 	});
-	
+
 	$.each(this.fields, function(index, value) {
 	    var td = document.createElement("td");
-	    
+
 	    //Remember the position of the logo column.
 	    if (value.field == "logo") {
-		logoIndex = index;		
+		logoIndex = index;
 	    }
 	    else if (value.field == "instrument") {
 		td.setAttribute("class", "data_font-style " + self.data.getColumnId((0)));
@@ -926,12 +926,12 @@ RiseVision.Financial.prototype.addRow = function(row, tr) {
 		$(td).attr("data-value", self.data.getFormattedValue(row, self.financial.dataFields[value.field]));		//Issue 978
 		$(tr).append(td);
 	    }
-	    
+
 	    //Add logo as background image last, so that we know what the height of the logo should be.
 	    if ((logoIndex != -1) && (index == self.fields.length - 1)) {
 		td = document.createElement("td");
 		td.setAttribute("class", "data_font-style logo");
-		
+
 		if (self.urls[row] != null) {
 		    $img = $("<img>");
 		    $img.attr("src", self.urls[row]);
@@ -941,17 +941,17 @@ RiseVision.Financial.prototype.addRow = function(row, tr) {
 		else {
 		    $(td).html(self.data.getFormattedValue(row, self.financial.dataFields["name"]));
 		}
-		
+
 		$(tr).find("td").eq(logoIndex).before(td);
 	    }
 	});
-	
+
 	if (this.useDefault) {
 	    $("#financial").append(tr);
 	}
-	
+
 	$(".logo img").height($(tr).height());
-	
+
 	//If this is a non-permissioned instrument, don't request it again.
 	if (this.data.getFormattedValue(row, self.financial.dataFields["name"]) == "N/P") {
 	    instruments = this.splitInstruments();
@@ -967,32 +967,32 @@ RiseVision.Financial.prototype.updateRows = function () {
 	newRows = [],
 	numRows = this.data.getNumberOfRows(),
 	numCols = this.data.getNumberOfColumns();
-    
+
     //Try to find a match for each instrument in the table.
     for (var row = 0; row < numRows; row++) {
 	$tr = $("tr[data-alias='" + this.data.getFormattedValue(row, 0) + "']:first");
-	
+
 	//Issue 736, 755 - Unable to locate row as data-alias is ... or N/A. Find first ... or N/A and update that row.
 	//Issue 978 - This could also occur if the request to the data server only returned a partial list of stocks because the
 	//others were outside of their collection times.
 	if ($tr.length == 0) {
-	    $tr = $("tr[data-alias='N/A']");	    
-	    
+	    $tr = $("tr[data-alias='N/A']");
+
 	    if ($tr.length == 0) {
 		$tr = $("tr[data-alias='...']");
 	    }
-	    
+
 	    if ($tr.length > 0) {	//Issue 978
 		$tr.attr("data-alias", this.data.getFormattedValue(row, 0));
 		$tr.attr("data-code", this.data.getFormattedValue(row, numCols - 1));
 	    }
 	}
-	
+
 	//Update row.
 	if ($tr.length > 0) {
 	    $.each(this.fields, function(index, value) {
 		var $td = $tr.find("." + value.field);
-		
+
 		//Update logo.
 		if (value.field == "logo") {
 		    if (self.urls[row] != null) {
@@ -1011,19 +1011,19 @@ RiseVision.Financial.prototype.updateRows = function () {
 		else {
 		    $td.html(self.data.getFormattedValue(row, self.financial.dataFields[value.field]));
 		    $td.attr("data-value", self.data.getFormattedValue(row, self.financial.dataFields[value.field]));	//Issue 978
-		}	
+		}
 	    });
 	}
     }
 }
 RiseVision.Financial.prototype.formatFields = function() {
     var self = this;
-    
+
     $.each(this.fields, function(index, value) {
 	if (value.field) {
 	    var $fields = $("td." + value.field),
 		width;
-	    
+
 	    if ($fields.length > 0) {
 		if (!$fields.hasClass("updated")) {
 		    if (self.isLoading || self.isChain()) {
@@ -1031,7 +1031,7 @@ RiseVision.Financial.prototype.formatFields = function() {
 			if (value.header) {
 			    $("th").eq(index).html(value.header);
 			}
-			
+
 			if (self.isLoading) {
 			    if (value.width) {
 				width = parseInt(value.width);
@@ -1039,28 +1039,28 @@ RiseVision.Financial.prototype.formatFields = function() {
 				value.width = width;
 			    }
 			}
-			
+
 			$("th").eq(index).css("text-align", value.alignment);
 		    }
-		    
+
 		    $fields.css("text-align", value.alignment);
-		    
+
 		    //Decimals and Sign
 		    $fields.each(function(i) {
 			var number, height;
-			
+
 			if ($(this).text() && !isNaN($(this).text())) {
 			    $(this).text(parseFloat($(this).text()).toFixed(value.decimals));
-			    
+
 			    //Issue 978 Start - The value in data-value is the true value together with its sign.
 			    number = $(this).attr("data-value");
-			    
+
 			    //If there is no old value, use the current value.
 			    if (!number) {
 				number = $(this).text();
 			    }
 			    //Issue 978 End
-			    
+
 			    if (value.sign == "none") {
 				$(this).html(self.addCommas(Math.abs(number).toFixed(value.decimals)));
 			    }
@@ -1080,31 +1080,31 @@ RiseVision.Financial.prototype.formatFields = function() {
 			    //Add img tags to show arrows.
 			    else if (value.sign == "arrow") {
 				var $img = $("<img class='arrow'>");
-				
+
 				$img.height($(this).height());
-				
+
 				//Issue 708 - Eliminate - sign for negative numbers, add commas.
 				$(this).html(self.addCommas(Math.abs(number).toFixed(value.decimals)));
-				
+
 				if (parseFloat(number) < 0) {
-				    $img.attr("src", self.logosURL + "animated-red-arrow.gif");				    				    			
+				    $img.attr("src", self.logosURL + "animated-red-arrow.gif");
 				}
 				else if (parseFloat(number) >= 0) {
 				    $img.attr("src", self.logosURL + "animated-green-arrow.gif");
 				}
-				
+
 				$(this).prepend($img);
 			    }
 			}
 		    });
-		    
-		    //Keep track of which cells have been updated, as it's possible that some cells may have been selected multiple times in the Gadget settings.			    
+
+		    //Keep track of which cells have been updated, as it's possible that some cells may have been selected multiple times in the Gadget settings.
 		    $fields.addClass("updated");
 		}
 	    }
 	}
     });
-    
+
     $("td").removeClass("updated");
 }
 RiseVision.Financial.prototype.addCommas = function(number)
@@ -1114,25 +1114,25 @@ RiseVision.Financial.prototype.addCommas = function(number)
     var x1 = x[0];
     var x2 = x.length > 1 ? '.' + x[1] : '';
     var regex = /(\d+)(\d{3})/;
-    
+
     while (regex.test(x1)) {
 	x1 = x1.replace(regex, '$1' + ',' + '$2');
     }
-    
+
     return x1 + x2;
 }
 RiseVision.Financial.prototype.onLastItemScrolled = function(e) {
     if (this.scrollBy != "page") {
 	doneEvent();
     }
-    
+
     if (this.checkForUpdates) {
 	if (this.scrollBy == "page") {
 	    //$(".dataTables_scrollBody").infiniteScroll.stop();
 	    this.checkForUpdates = false;
 	    this.getData();
 	}
-	else {	    
+	else {
 	    this.checkForUpdates = false;
 	    this.getData();
 	}
@@ -1140,7 +1140,7 @@ RiseVision.Financial.prototype.onLastItemScrolled = function(e) {
 }
 RiseVision.Financial.prototype.startTimer = function() {
     var self = this;
-    
+
     setTimeout(function() {
 	//If we're not scrolling, or there is not enough content to scroll, check for updates right away.
 	if ((self.scrollDirection == "none") || (!$(".dataTables_scrollBody").infiniteScroll.canScroll())) {
@@ -1153,16 +1153,16 @@ RiseVision.Financial.prototype.startTimer = function() {
 }
 RiseVision.Financial.prototype.splitInstruments = function() {
     var instruments = this.instruments.split(",");
-	
+
     $.each(instruments, function(index, value) {
 	instruments[index] = $.trim(instruments[index]);
     });
-    
+
     return instruments;
 }
 RiseVision.Financial.prototype.isChain = function() {
     var instruments = this.splitInstruments();
-    
+
     //This is a chain if there is only one instrument being requested, but multiple rows of data are returned.
     if (this.data != null) {
 	return instruments.length == 1 && this.data.getNumberOfRows() > 1;
@@ -1172,8 +1172,8 @@ RiseVision.Financial.prototype.isChain = function() {
     }
 }
 RiseVision.Financial.prototype.play = function() {
-    $(".dataTables_scrollBody").infiniteScroll.start();   
+    $(".dataTables_scrollBody").infiniteScroll.start();
 }
 RiseVision.Financial.prototype.pause = function() {
-    $(".dataTables_scrollBody").infiniteScroll.pause();	
+    $(".dataTables_scrollBody").infiniteScroll.pause();
 }

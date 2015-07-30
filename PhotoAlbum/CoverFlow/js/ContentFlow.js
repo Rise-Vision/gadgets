@@ -107,7 +107,7 @@ var ContentFlowGlobal = {
         if (!this.AddOnBaseDir) this.AddOnBaseDir = this.BaseDir;
         if (!this.CSSBaseDir) {
             //this.CSSBaseDir = this.BaseDir;
-            this.CSSBaseDir = "https://s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/css/"; //Donna
+            this.CSSBaseDir = "//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/css/"; //Donna
         }
     },
 
