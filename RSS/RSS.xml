@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-    <ModulePrefs title="Rise Vision RSS Gadget" title_url="http://www.risevision.com/help/users/what-are-gadgets/free-gadgets/rise-vision-rss/">
+    <ModulePrefs title="Rise Vision RSS Gadget">
 	<Require feature="rpc" />
     </ModulePrefs>
     <UserPref name="url" />
     <UserPref name="queue" />
-    <UserPref name="itemsCount" />    
+    <UserPref name="itemsCount" />
     <UserPref name="transition" />
     <UserPref name="scrollDirection" />
     <UserPref name="scrollSpeed" />
@@ -14,7 +14,7 @@
     <UserPref name="separatorSize" />
     <UserPref name="transitionHold" />
     <UserPref name="transitionResumes" />
-    <UserPref name="bgColor" />    
+    <UserPref name="bgColor" />
     <UserPref name="contentType" />
     <UserPref name="author" />
     <UserPref name="date" />
@@ -135,44 +135,44 @@
 				<label class="checkboxLabel"><input id="author" name="author" type="checkbox" value="author" />Author</label><br>
 				<label class="checkboxLabel"><input id="date" name="date" type="checkbox" value="date" />Date</label>
 			    </div>
-			</li>	
+			</li>
 			<li class="layout">
 			    <label>Layout:</label>
 			    <div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="4x1-headline.xml" checked="checked" style="height: 70px;">	
+				    <input type="radio" name="layout" value="4x1-headline.xml" checked="checked" style="height: 70px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/4x1-headline-thumb.png" />
-				</div>				
+				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="4x1-no-headline.xml" style="height: 70px;">	
+				    <input type="radio" name="layout" value="4x1-no-headline.xml" style="height: 70px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/4x1-no-headline-thumb.png" />
 				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="4x1-no-image.xml" style="height: 80px;">	
+				    <input type="radio" name="layout" value="4x1-no-image.xml" style="height: 80px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/4x1-no-image-thumb.png" />
 				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="4x1-no-image-no-headline.xml" style="height: 80px;">	
+				    <input type="radio" name="layout" value="4x1-no-image-no-headline.xml" style="height: 80px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/4x1-no-image-no-headline-thumb.png" />
-				</div>				
+				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="2x1-headline.xml" style="height: 140px;">	
+				    <input type="radio" name="layout" value="2x1-headline.xml" style="height: 140px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/2x1-headline-thumb.png" />
-				</div>				
+				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="2x1-no-headline.xml" style="height: 126px;">	
+				    <input type="radio" name="layout" value="2x1-no-headline.xml" style="height: 126px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/2x1-no-headline-thumb.png" />
-				</div>	
+				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="1x2-headline.xml" style="height: 150px;">				
+				    <input type="radio" name="layout" value="1x2-headline.xml" style="height: 150px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/1x2-headline-thumb.png" />
 				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="1x2-no-headline.xml" style="height: 150px;">	
+				    <input type="radio" name="layout" value="1x2-no-headline.xml" style="height: 150px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/1x2-no-headline-thumb.png" />
 				</div>
 				<div class="radio">
-				    <input type="radio" name="layout" value="background.xml" style="height: 126px;">	
+				    <input type="radio" name="layout" value="background.xml" style="height: 126px;">
 				    <img src="https://s3.amazonaws.com/Gadget-RSS/thumbs/background-thumb.png" />
 				</div>
 				<div class="radio">
@@ -291,35 +291,35 @@
 		    </ol>
 		</form>
 	    </div>
-	    
+
 	    <link rel="stylesheet" href="https://s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
-	    
+
 	    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	    
+
 	    <script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
 	    <script type="text/javascript" src="https://s3.amazonaws.com/Gadget-RSS/RSS.min.js"></script>
-    
+
             <script type="text/javascript">
                 var rssSettings = null;
-		
+
 		google.load("feeds", "1");
-                                
+
                 function init() {
 		    google.setOnLoadCallback(function() {
 			$(function() {
 			    rssSettings = new RiseVision.RSS.Settings();
-			    
+
 			    gadgets.rpc.register("rscmd_getSettings", rssSettings.getSettings);
 			    gadgets.rpc.register("rscmd_colorPickerCallback", rssSettings.setColor);
 			    gadgets.rpc.register("rscmd_fontSelectorCallback", rssSettings.setFont);
-			    
+
 			    rssSettings.initSettings();
 			});
 		    });
                 }
-		
-                gadgets.util.registerOnLoadHandler(init); 
+
+                gadgets.util.registerOnLoadHandler(init);
             </script>
 	]]>
     </Content>
@@ -329,7 +329,7 @@
 	    * {
 		box-sizing: border-box;
 	    }
-	    
+
 	    body {
 		background: transparent;
 		-webkit-user-select: none;
@@ -338,50 +338,50 @@
 		-o-user-select: none;
 		user-select: none;
 	    }
-	    
+
 	    #container,
 	    #hiddenContainer {
 		width: 100%;
 		height: 100%;
 	    }
-	    
+
 	    #hiddenContainer {
 		z-index: -9999;
 		position: absolute;
 	    }
-	    
+
 	    .page {
 		margin: 0;
 		padding: 0;
 	    }
-	    
+
 	    .item {
 		overflow: hidden;
 	    }
-	    
+
 	    .customFont {
 		visibility: hidden;
 		height: 0px;
 	    }
 	</style>
-    
+
 	<div class="customFont headline_font-style">headline</div>
 	<div class="customFont story_font-style">story</div>
 	<div class="customFont author_font-style">author</div>
 	<div class="customFont date_font-style">date</div>
-    
+
 	<div id="hiddenContainer">
 	</div>
 	<div id="container">
 	    <section class="page"></section>
 	</div>
-	
+
 	<script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	
+
 	<script type="text/javascript" src="http://9f8bd5014b970769c55f-6711414115c6e178c6b93552aded8da6.r34.cf2.rackcdn.com/common/JWPlayer/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="xBXyUtAJ+brFzwc2kNhDg/Sqk8W7rmktAYliYHzVgxo=";</script>
-    
+
 	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
 	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
 	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/dotdotdot/jquery.dotdotdot-1.5.6.min.js"></script>
@@ -390,61 +390,61 @@
 	<script type="text/javascript">
 	    var prefs = new gadgets.Prefs(),
 		controller = null;
-		
+
 	    //Issue 1055 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
 	    };
-	    
+
 	    //Add Analytics code.
 	    var _gaq = _gaq || [];
-	    
+
 	    _gaq.push(['_setAccount', 'UA-41395348-19']);
 	    _gaq.push(['_trackPageview']);
-	  
+
 	    (function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    })();
-	    
+
 	    $(document).ready(function() {
 		var id = prefs.getString("id"),
 		    bgColor = prefs.getString("bgColor");
-		
+
 		gadgets.rpc.register("rscmd_play_" + id, play);
 		gadgets.rpc.register("rscmd_pause_" + id, pause);
 		gadgets.rpc.register("rscmd_stop_" + id, stop);
-				
+
 		if (bgColor != null && bgColor != "") {
 		    document.body.style.background = bgColor;
 		}
-		
+
 		controller = new RiseVision.RSS.Controller();
-		
+
 		gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
-		gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");		
-	    });	
-	    
+		gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
+	    });
+
 	    function play() {
 		controller.play();
 	    }
-	    
+
 	    function pause() {
 		controller.pause();
 	    }
-	    
+
 	    function stop() {
 		controller.pause();
 	    }
-	    
+
 	    function readyEvent() {
 		gadgets.rpc.call('', 'rsevent_ready', null, prefs.getString("id"), true, true, true, true, true);
 	    }
-	
+
 	    function doneEvent() {
 		gadgets.rpc.call('', 'rsevent_done', null, prefs.getString("id"));
-	    }			
+	    }
 	</script>]]>
     </Content>
 </Module>
