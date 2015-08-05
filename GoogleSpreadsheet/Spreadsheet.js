@@ -6,7 +6,7 @@ RiseVision.Spreadsheet = function() {
 	var prefs = new gadgets.Prefs(),
 	defaultLayout = "https://s3.amazonaws.com/Gadget-Spreadsheet/layouts/Table/Table.xml",
 	layoutURL = unescape(prefs.getString("layoutURL"));
-	
+
 	//Gadget settings
 	this.prefs = prefs;
 	this.url = unescape(prefs.getString("url"));
@@ -31,7 +31,7 @@ RiseVision.Spreadsheet = function() {
 	this.condition3Action = prefs.getString("condition3Action");
 	this.rsW = prefs.getInt("rsW");
 	this.rsH = prefs.getInt("rsH");
-	
+
 	this.isLoading = true;
 	this.isPaused = true;
 	this.noDataFound = false;
@@ -45,7 +45,7 @@ RiseVision.Spreadsheet = function() {
 		"bSort": false,
 		"sScrollY": "500px"
 	};
-	
+
 	this.settings = new RiseVision.Common.Settings();
 	this.picker = new RiseVision.Common.Picker();
 	this.viz = new RiseVision.Common.Visualization();
@@ -57,7 +57,7 @@ RiseVision.Spreadsheet = function() {
 //Populate settings from saved values.
 RiseVision.Spreadsheet.prototype.initSettings = function() {
 	var self = this;
-	
+
 	//If the required field (URL) has been set, then we know the Gadget has already been saved.
 	if (this.url) {
 		$("#url").val(this.url);
@@ -76,7 +76,7 @@ RiseVision.Spreadsheet.prototype.initSettings = function() {
 				}
 			}
 		});
-		
+
 		$("input[type='radio'][name='cells']").each(function() {
 			if ($(this).val() == prefs.getString("cells")) {
 				$(this).attr("checked", "checked");
@@ -86,16 +86,16 @@ RiseVision.Spreadsheet.prototype.initSettings = function() {
 				}
 			}
 		});
-		
+
 		$("#range").val(prefs.getString("range"));
 		$("#headerRows").val(prefs.getString("headerRows"));
-		
+
 		//Issue 973 Start
 		this.range = prefs.getString("range");
 		this.headerRows = prefs.getString("headerRows");
 		//Issue 973 End
 	}
-	
+
 	$("#interval").val(this.interval);
 	$("#scrollBy").val(this.scrollBy);
 	$("#scrollDirection").val(this.scrollDirection);
@@ -139,7 +139,7 @@ $("#googleDrive").click(function() {
 
 $("input[name='cells']").change(function() {
 	var val = $(this).val();
-	
+
 	if (val == "range") {
 		self.range = $("#range").val();
 		$("#rangeContainer").show();
@@ -153,7 +153,7 @@ $("input[name='cells']").change(function() {
 });
 
 $("#range").blur(function() {
-	self.range = $(this).val();	
+	self.range = $(this).val();
 	self.showDataURLOptions();
 });
 
@@ -175,7 +175,7 @@ $("#sheet").change(function() {
 		self.populateColor($("#backgroundColor"), prefs.getString("backgroundColor"));
 		self.populateColor($("#rowColor"), prefs.getString("rowColor"));
 		self.populateColor($("#alternateRowColor"), prefs.getString("alternateRowColor"));
-		
+
 		$("#heading_font-style").text(result["heading_font"]);
 		$("#heading_font-style").data("css", result["heading_font-style"]);
 		$("#data_font-style").text(result["data_font"]);
@@ -185,7 +185,7 @@ $("#sheet").change(function() {
 			self.initFormatSettings(i + 1, result.columns[i]);
 		}
 	}
-	
+
 	$("#settings").show();
 });
 }
@@ -209,14 +209,14 @@ RiseVision.Spreadsheet.prototype.onScrollByChanged = function() {
 }
 RiseVision.Spreadsheet.prototype.onScrollDirectionChanged = function() {
 	var direction = $("#scrollDirection").val();
-	
+
 	if (direction == "none") {
 		$("li.scroll").hide();
 	}
 	else {
 		$("li.scroll").show();
 	}
-	
+
 	//Heading Font, Use Default Layout and Layout URL are not visible for horizontal scrolling.
 	if (direction == "rtl" || direction == "ltr") {
 		$("li.headingFont, li.useDefaultURL, li.layoutURL").hide();
@@ -242,7 +242,7 @@ RiseVision.Spreadsheet.prototype.onLayoutURLChanged = function() {
 RiseVision.Spreadsheet.prototype.buildColumnFormatUI = function() {
 	var colCount = parseInt($("#colCount").val()),
 	conditionalCount = $(".column").length;
-	
+
 	//Hide all fields related to column formatting.
 	if (isNaN(colCount) || colCount == 0) {
 		$(".formatting").hide();
@@ -261,11 +261,11 @@ RiseVision.Spreadsheet.prototype.buildColumnFormatUI = function() {
 	else {
 		//Show all existing settings.
 		$(".formatting").show();
-		
+
 		for (var i = conditionalCount + 1; i <= colCount; i++) {
 			var $li = $("<li></li>"),
 			$ol = $("<ol class='formatting drillDown'></ol>");
-			
+
 			$($ol)
 			.append($("<li></li>")
 				.append("<label for='column" + i + "'>" +
@@ -328,7 +328,7 @@ RiseVision.Spreadsheet.prototype.buildColumnFormatUI = function() {
 }
 }
 RiseVision.Spreadsheet.prototype.showColorPicker = function(id) {
-	gadgets.rpc.call("", "rscmd_openColorPicker", null, id, $("#" + id).val()); 
+	gadgets.rpc.call("", "rscmd_openColorPicker", null, id, $("#" + id).val());
 }
 RiseVision.Spreadsheet.prototype.showFontSelector = function(id) {
 	gadgets.rpc.call("", "rscmd_openFontSelector", null, id, $("#" + id).data("css"));
@@ -360,7 +360,7 @@ RiseVision.Spreadsheet.prototype.setURL = function(id, doc) {
 }
 RiseVision.Spreadsheet.prototype.onSheetsLoaded = function(sheets) {
 	$("#sheet").empty();
-	
+
 	for (var i = 0; i < sheets.length; i++) {
 		document.getElementById("sheet").add(sheets[i]);
 	}
@@ -371,7 +371,7 @@ RiseVision.Spreadsheet.prototype.showDataURLOptions = function() {
 		"headerRows": this.headerRows,
 		"range": this.range
 	});
-	
+
 	$(".errors").empty();
 	$(".errors").css({ display: "none" });
 	$("#url").val(url);
@@ -384,12 +384,12 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 	settings = null,
 	vizSettings = null,
 	selected;
-	
+
 	$(".errors").empty();
 	$(".errors").css({ display: "none" });
-	
+
 	//Validate the URL to ensure that it returns data.
-	if ($("#url").val() != "") {	
+	if ($("#url").val() != "") {
 		vizSettings = {
 		url: $("#url").val() + ($("#url").val().indexOf("?") == -1 ? "?" : "&") + "dummy=" + Math.ceil(Math.random() * 100),	//Issue 976
 		refreshInterval: 0,
@@ -402,7 +402,7 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 			errorFound = (spreadsheet.settings.validateNumeric($("#scrollResumes"), errors, "Scroll Resumes")) ? true : errorFound;
 			errorFound = (spreadsheet.settings.validateNumeric($("#rowPadding"), errors, "Row Padding")) ? true : errorFound;
 			errorFound = (spreadsheet.settings.validateNumeric($("#colPadding"), errors, "Column Padding")) ? true : errorFound;
-			
+
 			if (parseInt($("#colCount").val()) > 0) {
 				$(".column").each(function(i) {
 					errorFound = (spreadsheet.settings.validateRequired($(this), errors, "Column")) ? true : errorFound;
@@ -412,7 +412,7 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 					errorFound = (spreadsheet.settings.validateNumeric($(this), errors, "Column Width")) ? true : errorFound;
 				});
 			}
-			
+
 			if (errorFound) {
 				$(".errors").fadeIn(200).css("display", "inline-block");
 				$("#wrapper").scrollTop(0);
@@ -422,14 +422,14 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 			else {
 			//Construct parameters string to pass to RVA.
 			params = "up_url=" + escape($("#url").val());
-			
+
 			//Only save spreadsheet metadata settings if file has been selected using Google Picker(i.e. if docID has a value).
 			if (spreadsheet.docID != null) {
 				params += "&up_docID=" + spreadsheet.docID;
-				
+
 				//Entire Sheet or Range
 				selected = $("input[type='radio'][name='cells']:checked");
-				
+
 				if (selected.length > 0) {
 					params += "&up_cells=" + selected.val() +
 					"&up_range=" + $("#range").val();
@@ -438,7 +438,7 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 				params += "&up_sheet=" + escape($("#sheet").val()) +
 				"&up_headerRows=" + $("#headerRows").val();
 			}
-			
+
 			params += "&up_interval=" + $("#interval").val() +
 			"&up_scrollBy=" + $("#scrollBy").val() +
 			"&up_duration=" + $("#scrollHold").val() +
@@ -451,7 +451,7 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 			"&up_backgroundColor=" + $("#backgroundColor").val() +
 			"&up_rowColor=" + $("#rowColor").val() +
 			"&up_alternateRowColor=" + $("#alternateRowColor").val();
-			
+
 			//useLayoutURL now refers to whether or not to use the default URL, so it should be saved as the opposite value.
 			if ($("#useDefaultURL").is(":checked")) {
 				params += "&up_useLayoutURL=false";
@@ -459,18 +459,18 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 			else {
 				params += "&up_useLayoutURL=true";
 			}
-			
+
 			if ($("#layoutURL").is(":visible")) {
 				params += "&up_layoutURL=" + escape($("#layoutURL").val());
 			}
 
 			//Save fonts and column formatting as additional parameters.
 			var columns = [];
-			
+
 			for (var i = 0; i < parseInt($("#colCount").val()); i++) {
 				spreadsheet.saveFormatSettings(i + 1, columns);
 			}
-			
+
 			var additionalParams = {
 				"heading_font": $("#heading_font-style").text(),
 				"heading_font-style": $("#heading_font-style").data("css"),
@@ -478,12 +478,12 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 				"data_font-style": $("#data_font-style").data("css"),
 				"columns": columns
 			};
-			
+
 			var settings = {
 				params: params,
 				additionalParams: JSON.stringify(additionalParams)
 			};
-			
+
 			gadgets.rpc.call("", "rscmd_saveSettings", null, settings);
 		}
 	}
@@ -492,26 +492,26 @@ RiseVision.Spreadsheet.prototype.getSettings = function() {
 				"published to the web.");
 			$(".errors").fadeIn(200).css("display", "inline-block");
 			$("#wrapper").scrollTop(0);
-			
+
 			return null;
 		}
 	}
 }
 
-spreadsheet.viz.getData(vizSettings);  
+spreadsheet.viz.getData(vizSettings);
 }
 else {
 	errorFound = (spreadsheet.settings.validateRequired($("#url"), errors, "Data URL")) ? true : errorFound;
-	
+
 	if (errorFound) {
 		$(".errors").fadeIn(200).css("display", "inline-block");
 		$("#wrapper").scrollTop(0);
-		
+
 		return null;
 	}
 }
 }
-RiseVision.Spreadsheet.prototype.saveFormatSettings = function(i, columns) {    
+RiseVision.Spreadsheet.prototype.saveFormatSettings = function(i, columns) {
 	columns.push({
 		column: $("#column" + i).val(),
 		alignment: $("#alignment" + i).val(),
@@ -536,9 +536,9 @@ RiseVision.Spreadsheet.prototype.getAdditionalParams = function(name, value) {
 		styleNode.appendChild(document.createTextNode(value["heading_font-style"]));
 		styleNode.appendChild(document.createTextNode(value["data_font-style"]));
 		styleNode.appendChild(document.createTextNode("a:active" + value["data_font-style"]));
-		
-		document.getElementsByTagName("head")[0].appendChild(styleNode);	    	
-		
+
+		document.getElementsByTagName("head")[0].appendChild(styleNode);
+
 		spreadsheet.columns = value.columns;
 	}
 }
@@ -548,18 +548,18 @@ spreadsheet.initialize();
 RiseVision.Spreadsheet.prototype.initialize = function() {
 	var self = this,
 	params = {};
-	
+
 	//Same CSS file is used for default table layout and when a custom layout is not used.
 	if (!this.useLayoutURL && !this.isHorizontal()) {	//Issue 911
-		self.loadCSS("https://s3.amazonaws.com/Gadget-Spreadsheet/layouts/Table/Table.css");
+		self.loadCSS("//s3.amazonaws.com/Gadget-Spreadsheet/layouts/Table/Table.css");
 	}
-	
+
 	//Load XML layout.
 	if (this.useLayoutURL) {
 		params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;
 		gadgets.io.makeRequest(encodeURI(this.layoutURL), function(obj) {
 			var data = obj.data,
-			index = 0;	    
+			index = 0;
 
 			if (data.getElementsByTagName("Style").length > 0) {
 		//External CSS
@@ -567,15 +567,15 @@ RiseVision.Spreadsheet.prototype.initialize = function() {
 			self.loadCSS(data.getElementsByTagName("Style")[0].getAttribute("url"));
 		}
 		//Inline CSS
-		else {	
+		else {
 			var head = document.getElementsByTagName("head")[0],
 			style = document.createElement("style");
-			
+
 			style.innerHTML = data.getElementsByTagName("Style")[0].childNodes[1].nodeValue;
 			head.appendChild(style);
 		}
 	}
-	
+
 		//Save the layout.
 		self.layout = data.getElementsByTagName("Layout")[0].childNodes[1].nodeValue;
 		self.getData();
@@ -587,8 +587,8 @@ RiseVision.Spreadsheet.prototype.initialize = function() {
 }
 //Load CSS file.
 RiseVision.Spreadsheet.prototype.loadCSS = function(url) {
-	var link = $("<link>");	 
-	
+	var link = $("<link>");
+
 	link.attr({
 		type: "text/css",
 		rel: "stylesheet",
@@ -598,11 +598,11 @@ RiseVision.Spreadsheet.prototype.loadCSS = function(url) {
 }
 RiseVision.Spreadsheet.prototype.getData = function(url) {
 	var self = this;
-	
+
 	if (url) {
 		this.url = url;
 	}
-	
+
 	if (this.isHorizontal()) {
 		this.initHorizontalScroll();
 	}
@@ -639,9 +639,9 @@ RiseVision.Spreadsheet.prototype.onDataLoaded = function(data) {
 }
 /* Default layout is a table. */
 RiseVision.Spreadsheet.prototype.showDefaultLayout = function() {
-	if (!this.checkForNoData()) {		
+	if (!this.checkForNoData()) {
 		if (!this.isLoading && (this.dataTable != null)) {
-			this.dataTable.fnClearTable(false);	    	    
+			this.dataTable.fnClearTable(false);
 		}
 
 		this.cols = [];
@@ -675,23 +675,23 @@ RiseVision.Spreadsheet.prototype.showDefaultLayout = function() {
 		"padding-left": this.colPadding,
 		"padding-right": this.colPadding
 	});
-	
+
 	//First cell shouldn't have any padding in front of it.
 	$(".dataTables_scrollHead table tr th:first-child, td:first-child").css({
 		"padding-left": "10px"
 	});
-	
+
 	//Last cell shouldn't have any padding after it.
 	$(".dataTables_scrollHead table tr th:last-child, td:last-child").css({
 		"padding-right": "10px"
 	});
-	
+
 	//$(".dataTables_scrollBody").height(($("#container").outerHeight(true) - $(".dataTables_scrollHead").height()) / this.rsH * 100 + "%");
-	
+
 	this.setFontSizes();
 	this.configureScrolling();
 	this.handleConditions();
-	
+
 	if (this.isLoading) {
 		this.isLoading = false;
 		readyEvent();
@@ -705,26 +705,26 @@ RiseVision.Spreadsheet.prototype.showDefaultLayout = function() {
 RiseVision.Spreadsheet.prototype.createDataTable = function() {
 	var self = this,
 	colIndex;
-	
+
 	//Gadget Issue 804 - Size the Gadget using the UserPrefs.
 	$("#container").width(prefs.getString("rsW"));
 	$("#container").height(prefs.getString("rsH"));
-	
+
 	$(".page").empty();
-	
+
 	//Add column headings.
 	if (this.data.getNumberOfColumns() > 0) {
 		this.renderHeadings();
 	}
-	
+
 	//Add rows.
 	for (var row = 0, numRows = this.data.getNumberOfRows(); row < numRows; row++) {
 		this.renderRow(this.data.getNumberOfColumns(), row);
 	}
-	
+
 	this.formatColumns($(".page th"));
 	this.sortConfig.aoColumnDefs = [];
-	
+
 	//Use oSettings.aoColumns.sWidth for datatables to size columns.
 	$.each(this.columns, function(index, value) {
 		if (value.width) {
@@ -736,7 +736,7 @@ RiseVision.Spreadsheet.prototype.createDataTable = function() {
 			});
 		}
 	});
-	
+
 	this.dataTable = $(".page").dataTable(this.sortConfig);
 	$(".dataTables_scrollBody").height(($("#container").outerHeight(true) - $(".dataTables_scrollHead").height()) / this.rsH * 100 + "%");
 }
@@ -762,19 +762,19 @@ RiseVision.Spreadsheet.prototype.showCustomLayout = function() {
 
 	//Calculate number of images that need to be loaded.
 	this.imageTotal = ($(".image").length * this.data.getNumberOfRows()) + ($(".qrCode").length * this.data.getNumberOfRows());
-	
+
 	for (var row = 0, numRows = this.data.getNumberOfRows(); row < numRows; row++) {
 		if (row > 0) {
 			$repeat.parent().append($repeat.clone());
 		}
-		
+
 		for (var col = 0, numCols = this.cols.length; col < numCols; col++) {
-			var $cell = $("." + this.cols[col] + ":last");		
+			var $cell = $("." + this.cols[col] + ":last");
 
 			if ($cell) {
 			//Show an image.
 			if ($cell.hasClass("image")) {
-				this.loadImage(this.data.getValue(row, col), $cell);   			
+				this.loadImage(this.data.getValue(row, col), $cell);
 			}
 			//Generate QR code.
 			else if ($cell.hasClass("qrCode")) {
@@ -791,7 +791,7 @@ RiseVision.Spreadsheet.prototype.showCustomLayout = function() {
 				$cell.html(this.data.getFormattedValue(row, col));
 			}
 			//Text
-			else {	
+			else {
 				$cell.html(this.data.getFormattedValue(row, col));
 			}
 		}
@@ -806,7 +806,7 @@ RiseVision.Spreadsheet.prototype.showCustomLayout = function() {
 		$(".page").prepend($thead);
 		$("#header").remove();
 	}
-	
+
 	if (this.imageTotal == 0) {
 		this.finalizeCustomLayout();
 	}
@@ -825,17 +825,17 @@ RiseVision.Spreadsheet.prototype.finalizeCustomLayout = function() {
 		"padding-left": this.colPadding,
 		"padding-right": this.colPadding
 	});
-	
+
 	//First cell shouldn't have any padding in front of it.
 	$(".dataTables_scrollHead table tr th:first-child, td:first-child").css({
 		"padding-left": "10px"
 	});
-	
+
 	//Last cell shouldn't have any padding after it.
 	$(".dataTables_scrollHead table tr th:last-child, td:last-child").css({
 		"padding-right": "10px"
 	});
-	
+
 	$(".dataTables_scrollBody").height(($("#container").outerHeight(true) - $(".dataTables_scrollHead").height()) / this.rsH * 100 + "%");
 }
 
@@ -859,7 +859,7 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 	menuBtn = $("<a href='#' class='tableMenuButton data_font-style'>Display</a>"),
 	menuContainer = $("<div class='tableMenu tableMenuHidden data_font-style'><ul /></div>"),
 	$toggle = null;
-	
+
 	//Check to see if any of the th elements have been assigned any of the responsive class names (i.e. persist, essential or optional).
 	$(".dataTables_scrollHead th").each(function(i) {
 		if ($(this).is(".persist, .essential, .optional")) {
@@ -868,12 +868,12 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 			return false;
 		}
 	});
-	
+
 	//Not a responsive layout, so no need to build the menu.
 	if (!classFound) {
 		return;
 	}
-	
+
 	//Iterate over each table heading.
 	$(".dataTables_scrollHead th").each(function(i) {
 		var th = $(this),
@@ -882,25 +882,25 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 	//Loop through each row to assign any classes (essential, optional) to the matching cell.
 	$("tbody tr").each(function() {
 		var cell = $(this).find("th, td").eq(i);
-		
+
 		if (classes) {
 			cell.addClass(classes);
 		}
 	});
-	
+
 	//Create the menu checkboxes.
 	if (!th.is(".persist")) {
 		$toggle = $("<li><input type='checkbox' id='toggleCol" + i + "' value='" + i + "' /> <label for='toggleCol" + i + "'>" + th.html() + "</label></li>");
 
 		menuContainer.find("ul").append($toggle);
-		
+
 		//Assign event handlers to the checkbox.
 		$toggle.find("input")
 		.change(function() {
 			var colIndex = parseInt($(this).val()),
 			bVisible = self.dataTable.fnSettings().aoColumns[colIndex].bVisible,
 			cellIndex = colIndex + 1;
-			
+
 			//Show or hide the column and redraw the table. Note that the column is removed from the DOM if hidden.
 			self.dataTable.fnSetColumnVis(colIndex, bVisible ? false : true);
 			th.css("display", "table-cell");
@@ -910,7 +910,7 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 		//Called whenever the window is resized or re-oriented (mobile).
 		.bind("updateCheck", function() {
 			var colIndex = parseInt($(this).val());
-			
+
 			if (th.css("display") == "table-cell") {
 				$(this).attr("checked", true);
 				self.dataTable.fnSetColumnVis(colIndex, true);
@@ -919,40 +919,40 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 				$(this).attr("checked", false);
 				self.dataTable.fnSetColumnVis(colIndex, false);
 			}
-		}) 
+		})
 	}
 });
 
 	//Call the custom event on each of the checkboxes.
 	$(menuContainer.find("input")).each(function(i) {
-		$(this).trigger("updateCheck"); 
+		$(this).trigger("updateCheck");
 	});
-	
+
 	//Update the checkboxes checked status.
 	$(window).bind("orientationchange resize", function() {
 		menuContainer.find("input").trigger("updateCheck");
 	});
 
 	menuBtn.click(function() {
-		menuContainer.toggleClass("tableMenuHidden");            
+		menuContainer.toggleClass("tableMenuHidden");
 		return false;
 	});
 
 	menuWrapper.append(menuBtn).append(menuContainer);
 	$(".dataTables_scrollHead table").before(menuWrapper);
-	
+
 	//Close menu when user clicks off it.
-	$(document).click(function(e) {								
-		if (!$(e.target).is(menuContainer) && !$(e.target).is(menuContainer.find("*"))) {			
+	$(document).click(function(e) {
+		if (!$(e.target).is(menuContainer) && !$(e.target).is(menuContainer.find("*"))) {
 			menuContainer.addClass("tableMenuHidden");
-		}				
-	}); 
+		}
+	});
 }
 /* Format each column. */
 RiseVision.Spreadsheet.prototype.formatColumns = function($elem) {
 	var self = this,
-	logosURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
-	
+	logosURL = "//s3.amazonaws.com/risecontentlogos/financial/";
+
 	$.each(this.columns, function(index, value) {
 		if (value.column) {
 			var $columns = $("." + value.column),
@@ -964,16 +964,16 @@ RiseVision.Spreadsheet.prototype.formatColumns = function($elem) {
 		if (value.header) {
 			$elem.eq(colIndex).html(value.header);
 		}
-		
+
 		if (self.isLoading && value.width) {
 			width = parseInt(value.width);
 			width = width / self.rsW * 100 + "%";
 			value.width = width;
 		}
-		
+
 		$elem.eq(colIndex).css("text-align", value.alignment);
 		$columns.css("text-align", value.alignment);
-		
+
 		//Decimals and Sign
 		$columns.each(function(i) {
 			if ($(this).text() && !isNaN($(this).text())) {
@@ -1001,47 +1001,47 @@ RiseVision.Spreadsheet.prototype.formatColumns = function($elem) {
 			}
 			else if (value.sign == "arrow") {
 				var $img = $("<img class='arrow'>");
-				
+
 				$img.height($(this).height());
-				
+
 				$(this).html(Math.abs(number).toFixed(value.decimals));
-				
-				if (parseFloat(number) < 0) {				
-					$img.attr("src", logosURL + "animated-red-arrow.gif");				    				    			
+
+				if (parseFloat(number) < 0) {
+					$img.attr("src", logosURL + "animated-red-arrow.gif");
 				}
-				else if (parseFloat(number) >= 0) {				    
+				else if (parseFloat(number) >= 0) {
 					$img.attr("src", logosURL + "animated-green-arrow.gif");
 				}
-				
+
 				$(this).prepend($img);
 			}
 		}
 	});
 }
 }
-}); 
+});
 }
 /* Use ems for all font sizes.*/
 RiseVision.Spreadsheet.prototype.setFontSizes = function() {
 	var headingFontSize = parseInt($(".heading_font-style").css("font-size")),
 	dataFontSize = parseInt($(".data_font-style").css("font-size"));
-	
+
 	//The default font size of the body tag is 16px.
 	headingFontSize = headingFontSize / 16;
 	dataFontSize = dataFontSize / 16;
-	
+
 	$(".heading_font-style").css("font-size", headingFontSize + "em");
 	$(".data_font-style, .tableMenuButton").css("font-size", dataFontSize + "em");
 }
 RiseVision.Spreadsheet.prototype.loadImage = function(url, $cell) {
 	var self = this,
 	img = new Image();
-	
+
 	img.onload = function () {
 		$cell.append(this);
 		self.onImageLoaded();
 	}
-	
+
 	img.onerror = function() {
 		self.onImageLoaded();
 	}
@@ -1050,7 +1050,7 @@ RiseVision.Spreadsheet.prototype.loadImage = function(url, $cell) {
 }
 RiseVision.Spreadsheet.prototype.onImageLoaded = function() {
 	this.imagesLoaded++;
-	
+
 	//May have to resize headers after all images have loaded.
 	if (this.imagesLoaded == this.imageTotal) {
 		this.finalizeCustomLayout();
@@ -1058,7 +1058,7 @@ RiseVision.Spreadsheet.prototype.onImageLoaded = function() {
 }
 RiseVision.Spreadsheet.prototype.configureScrolling = function() {
 	var self = this;
-	
+
 	//Auto-scrolling.
 	if ($(".dataTables_scrollBody").length > 0) {
 		$(".dataTables_scrollBody").infiniteScroll({
@@ -1081,7 +1081,7 @@ RiseVision.Spreadsheet.prototype.configureScrolling = function() {
 }
 RiseVision.Spreadsheet.prototype.hasHeadings = function() {
 	var hasHeading = false;
-	
+
 	for (var col = 0; col < this.data.getNumberOfColumns(); col++) {
 		var label = this.data.getColumnLabel(col);
 
@@ -1090,7 +1090,7 @@ RiseVision.Spreadsheet.prototype.hasHeadings = function() {
 			break;
 		}
 	}
-	
+
 	return hasHeading;
 }
 /* Render column headings. */
@@ -1098,7 +1098,7 @@ RiseVision.Spreadsheet.prototype.renderHeadings = function() {
 	var $thead = $("<thead>"),
 	$tr = $("<tr>"),
 	hasHeadings = this.hasHeadings();
-	
+
 	for (var col = 0; col < this.data.getNumberOfColumns(); col++) {
 		var $th = $("<th class='heading_font-style'>");
 
@@ -1108,7 +1108,7 @@ RiseVision.Spreadsheet.prototype.renderHeadings = function() {
 
 		$tr.append($th);
 	}
-	
+
 	$thead.append($tr)
 	$(".page").append($thead);
 }
@@ -1116,7 +1116,7 @@ RiseVision.Spreadsheet.prototype.renderHeadings = function() {
 RiseVision.Spreadsheet.prototype.updateHeadings = function() {
 	var $th,
 	hasHeadings = this.hasHeadings();
-	
+
 	for (var col = 0; col < this.data.getNumberOfColumns(); col++) {
 		$th = $(".page thead th").eq(col);
 
@@ -1128,7 +1128,7 @@ RiseVision.Spreadsheet.prototype.updateHeadings = function() {
 /* Render rows of data. */
 RiseVision.Spreadsheet.prototype.renderRow = function(colsCount, row) {
 	var $tr = $("<tr class='item'>");
-	
+
 	for (var col = 0; col < colsCount; col++) {
 		var value = "", style = "";
 
@@ -1139,7 +1139,7 @@ RiseVision.Spreadsheet.prototype.renderRow = function(colsCount, row) {
 	if (style) {
 		style = style.substring(0, style.indexOf("font-family:"));
 	}
-	
+
 	this.addCell($tr, value, style, this.cols[col]);
 }
 
@@ -1147,13 +1147,13 @@ $(".page").append($tr);
 }
 RiseVision.Spreadsheet.prototype.addCell = function($tr, value, style, className) {
 	var $td = $("<td>");
-	
+
 	if (style != "") {
 		$td.attr("style", style);
 	}
-	
+
 	$td.addClass("data_font-style " + className);
-	$td.html(value); 
+	$td.html(value);
 	$tr.append($td);
 }
 //Issue 734
@@ -1163,7 +1163,7 @@ RiseVision.Spreadsheet.prototype.addRows = function() {
 	numRows = this.data.getNumberOfRows(),
 	numCols = this.data.getNumberOfColumns(),
 	newRow;
-	
+
 	for (; row < numRows; row++) {
 		newRow = [];
 
@@ -1172,16 +1172,16 @@ RiseVision.Spreadsheet.prototype.addRows = function() {
 		}
 
 		this.dataTable.fnAddData(newRow);
-	}    
-	
+	}
+
 	$(".dataTables_scrollBody table tbody tr").addClass("item");
 	$(".dataTables_scrollBody table tbody tr td").addClass("data_font-style");
-	
+
 	for (col = 0; col < numCols; col++) {
 		$(".dataTables_scrollBody table tbody tr td:nth-child(" + (col + 1) + ")").addClass(this.cols[col]);
 	}
-	
-	this.formatColumns($(".page th"));    
+
+	this.formatColumns($(".page th"));
 }
 RiseVision.Spreadsheet.prototype.checkForNoData = function() {
 	//NODATA is returned by a DDE data source when the DDE application (e.g. Excel) is not open.
@@ -1213,9 +1213,9 @@ RiseVision.Spreadsheet.prototype.checkForNoData = function() {
 RiseVision.Spreadsheet.prototype.handleConditions = function() {
 	var self = this,
 	colIndex = -1;
-	
+
 	//No need to save conditions if the data is not set to ever refresh.
-	if (this.interval > 0) {	
+	if (this.interval > 0) {
 		if (!this.conditions) {
 			this.conditions = {};
 		}
@@ -1231,7 +1231,7 @@ RiseVision.Spreadsheet.prototype.handleConditions = function() {
 					return false;
 				}
 			});
-			
+
 			self.checkConditions(self.conditions.columns[colIndex], value.condition);
 			//Issue 1009 End
 		}
@@ -1246,7 +1246,7 @@ RiseVision.Spreadsheet.prototype.handleConditions = function() {
 }
 RiseVision.Spreadsheet.prototype.checkSigns = function(column, condition) {
 	var colIndex = $("." + column + ":first").parent().children().index($("." + column + ":first"));
-	
+
 	for (var row = 0, numRows = this.data.getNumberOfRows(); row < numRows; row++) {
 		var current = this.data.getValue(row, colIndex);
 
@@ -1293,13 +1293,13 @@ RiseVision.Spreadsheet.prototype.checkConditions = function(column, condition) {
 		if (isNaN(previous)) {
 			previous = previous.replace(/[^0-9\.-]+/g,"");
 			previous = parseFloat(previous);
-		}	
+		}
 
 	//The data type of a column can still be a number even if there is string data in it.
 	//To be sure, let's check that the values we are comparing are numbers.
 	if (current != previous && !isNaN(current) && !isNaN(previous)) {
 		var $cell = $("." + column.column).eq(row);
-		
+
 		if (condition == "changeUp") {
 			if (current > previous) {
 				$cell.addClass("changeUpIncrease");
@@ -1322,9 +1322,9 @@ RiseVision.Spreadsheet.prototype.checkConditions = function(column, condition) {
 RiseVision.Spreadsheet.prototype.saveConditions = function() {
 	var self = this
 	i = 0;
-	
+
 	self.conditions.columns = [];
-	
+
 	$.each(this.columns, function(index, value) {
 		if (value.condition == "changeUp" || value.condition == "changeDown") {
 			self.conditions.columns.push({
@@ -1340,10 +1340,10 @@ RiseVision.Spreadsheet.prototype.saveConditions = function() {
 /* Store the current values so they can be compared to new values on a refresh. */
 RiseVision.Spreadsheet.prototype.saveCondition = function(values, column) {
 	var colIndex = $("." + column + ":first").parent().children().index($("." + column + ":first"));
-	
+
 	for (var row = 0, numRows = this.data.getNumberOfRows(); row < numRows; row++) {
 		values.push(this.data.getValue(row, colIndex));
-	}				
+	}
 }
 RiseVision.Spreadsheet.prototype.isHorizontal = function() {
 	return this.scrollDirection == "rtl" || this.scrollDirection == "ltr";
@@ -1366,9 +1366,9 @@ RiseVision.Spreadsheet.prototype.initHorizontalScroll = function() {
 				break;
 			}
 		}
-		
+
 		if (self.isLoading) {
-			$("#container").remove();			
+			$("#container").remove();
 			self.isLoading = false;
 		}
 
@@ -1423,9 +1423,9 @@ this.viz.getData(settings);
 }
 RiseVision.Spreadsheet.prototype.getHorizontalScrollData = function(row, result, fontRule) {
 	var numCols = result.getNumberOfColumns(),
-	rowData = "",	
-	item = [];    
-	
+	rowData = "",
+	item = [];
+
 	for (var col = 0; col < numCols; col++) {
 		if (rowData == "") {
 			rowData = result.getFormattedValue(row, col);
@@ -1433,14 +1433,14 @@ RiseVision.Spreadsheet.prototype.getHorizontalScrollData = function(row, result,
 		else {
 			rowData = rowData + " " + result.getFormattedValue(row, col);
 		}
-	}		    
-	
+	}
+
 	item.push({
 		type: "text",
 		value: rowData,
 		fontRule: fontRule
 	});
-	
+
 	return item;
 }
 RiseVision.Spreadsheet.prototype.play = function() {
@@ -1452,7 +1452,7 @@ RiseVision.Spreadsheet.prototype.play = function() {
 			$("#scrollContainer").infiniteScroll.start();
 		}
 	}
-	
+
 	if (this.isPaused) {
 		this.isPaused = false;
 
@@ -1463,7 +1463,7 @@ RiseVision.Spreadsheet.prototype.play = function() {
 }
 RiseVision.Spreadsheet.prototype.pause = function() {
 	this.isPaused = true;
-	
+
 	if (this.isHorizontal()) {
 		this.horizontalScroll.pause();
 	}

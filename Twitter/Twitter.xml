@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-  <ModulePrefs title="Rise Twitter Gadget" height="400" title_url="https://help.risevision.com/user/content/twitter-gadget">
+  <ModulePrefs title="Rise Twitter Gadget" height="400">
     <Require feature="rpc" />
     <Optional feature="rise-api">
       <Param name="reports_ready" />
@@ -46,14 +46,14 @@
     </div>
     <div class="error"></div>
 
-    <link type="text/css" rel="stylesheet" href="https://s3.amazonaws.com/Gadget-Twitter/css/Twitter.css"></link>
+    <link type="text/css" rel="stylesheet" href="//s3.amazonaws.com/Gadget-Twitter/css/Twitter.css"></link>
 
-    <script src="http://www.google.com/jsapi"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="http://datejs.googlecode.com/svn/trunk/build/date.js"></script>
+    <script src="//www.google.com/jsapi"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
 
-    <script src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-    <script src="https://s3.amazonaws.com/Gadget-Twitter/Twitter.min.js"></script>
+    <script src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
+    <script src="//s3.amazonaws.com/Gadget-Twitter/Twitter.min.js"></script>
 
     <script>
       var prefs = new gadgets.Prefs(),

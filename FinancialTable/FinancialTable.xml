@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module> 
-    <ModulePrefs title="Rise Vision Financial Gadget" height="400" title_url="http://www.risevision.com/help/users/what-are-gadgets/premium-gadgets/rise-vision-financial/">
-        <Require feature="rpc" /> 
-        <Optional feature="rise-api"> 
-            <Param name="reports_ready" /> 
-        </Optional> 
-    </ModulePrefs> 
+<Module>
+    <ModulePrefs title="Rise Vision Financial Gadget" height="400">
+        <Require feature="rpc" />
+        <Optional feature="rise-api">
+            <Param name="reports_ready" />
+        </Optional>
+    </ModulePrefs>
     <UserPref name="disclaimerFont" />
     <UserPref name="disclaimerLoc" />
     <UserPref name="acceptance" />
@@ -13,8 +13,8 @@
     <UserPref name="scrollBy" />
     <UserPref name="scrollHold" />
     <UserPref name="scrollSpeed" />
-    <UserPref name="scrollResumes" />    
-    <UserPref name="rowPadding" /> 
+    <UserPref name="scrollResumes" />
+    <UserPref name="rowPadding" />
     <UserPref name="colPadding" />
     <UserPref name="colCount" />
     <UserPref name="bgColor" />
@@ -43,7 +43,7 @@
 			    </label>
 			    <input id="instruments" name="instruments" type="text" class="medium" value="AA.N, AXP.N, BA.N, BAC.N, CAT.N, CSCO.O, CVX.N ,DD.N, DIS.N, GE.N, HD.N, HPQ.N, IBM.N, INTC.O, JNJ.N, JPM.N, KO.N, KRFT.O, MCD.N, MMM.N, MRK.N, MSFT.O, PFE.N, PG.N, T.N, TRV.N, UTX.N, VZ.N, WMT.N, XOM.N" required autofocus />
 			    <a id="selector" href="#">Stock Selector</a>
-			</li>			
+			</li>
 			<li>
 			    <label for="scrollDirection">
 				<a href="#" class="tooltip">Scroll Direction:<span>Direction in which the data should scroll</span></a>
@@ -170,7 +170,7 @@
 				<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
 				<option value="Times New Roman, Times, serif">Times New Roman</option>
 				<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
-				<option value="Verdana, Verdana, Geneva, sans-serif" selected="selected">Verdana</option>				
+				<option value="Verdana, Verdana, Geneva, sans-serif" selected="selected">Verdana</option>
 			    </select>
 			</li>
 			<li>
@@ -202,39 +202,39 @@
 		    </ol>
 		</form>
 	    </div>
-	    
-	    <link rel="stylesheet" href="https://s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
-	    
-	    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
-	    <script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	    <script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
-    
+
+	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
+
+	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	    <script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
+
             <script type="text/javascript">
 		var prefs = new gadgets.Prefs(),
 		    financial = null;
-                                
+
                 function init() {
 		    google.setOnLoadCallback(function() {
 			$(function() {
 			    financial = new RiseVision.FinancialSettings();
-			    
+
 			    gadgets.rpc.register("rscmd_getSettings", financial.getSettings);
 			    gadgets.rpc.register("rscmd_financialSelectorCallback", financial.setStocks);
 			    gadgets.rpc.register("rscmd_colorPickerCallback", financial.setColor);
 			    gadgets.rpc.register("rscmd_fontSelectorCallback", financial.setFont);
-			    
+
 			    financial.initSettings();
 			});
 		    });
                 }
-		
-                gadgets.util.registerOnLoadHandler(init); 
+
+                gadgets.util.registerOnLoadHandler(init);
             </script>
 	]]>
     </Content>
-    <Content type="html"> 
+    <Content type="html">
         <![CDATA[
         <style type="text/css">
 	    * {
@@ -248,7 +248,7 @@
 		user-select: none;
 		-moz-user-select: none;
 		-webkit-user-select: none;
-		-khtml-user-select: none; 
+		-khtml-user-select: none;
 	    }
 	    table {
 		border-collapse: collapse;
@@ -256,21 +256,21 @@
 	    tbody tr {
 		white-space: nowrap;
 	    }
-	    
-	    #container {				
+
+	    #container {
 		width: 100%;
 		height: 95%;
 	    }
 	    #container.fullScreen {
 		height: 100%;
 	    }
-	    
+
 	    .error {
 		padding: 1em;
 		font-size: 20px;
 		color: red;
-	    }	    	   
-	    
+	    }
+
 	    /* Row Colors */
 	    .even {
 		background-color: __UP_rowColor__;
@@ -295,12 +295,12 @@
 	    #financial.default .valueNegativePositive {
 		color: red !important;
 	    }
-	    
-	    /* Logos and arrows */	    
+
+	    /* Logos and arrows */
 	    #financial.default .logo img, .arrow {
 		vertical-align: top;
 	    }
-	    
+
 	    /* Disclaimer */
 	    #disclaimer.default {
 		padding: 0.5em;
@@ -308,10 +308,10 @@
 		font-size: 10px;
 	    }
 	    #disclaimer.default.top {
-		position: relative;	/* To have rows scroll underneath the disclaimer. */		
+		position: relative;	/* To have rows scroll underneath the disclaimer. */
 	    }
 	    #disclaimer.default.top.right {
-		text-align: right;	
+		text-align: right;
 	    }
 	    #disclaimer.default.bottom {
 		position: absolute;
@@ -320,49 +320,49 @@
 	    #disclaimer.default.bottom.right {
 		right: 0;
 	    }
-        </style> 
-    
+        </style>
+
 	<div id="container">
 	</div>
- 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date.js"></script>
-    
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
-	
-        <script type="text/javascript"> 
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+	<script type="text/javascript" src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
+
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
+
+        <script type="text/javascript">
             var prefs = new gadgets.Prefs(),
 		financial = null;
-		
+
 	    //Issue 1053 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
 	    };
-		
+
 	    //Add Analytics code.
 	    var _gaq = _gaq || [];
-	    
+
 	    _gaq.push(['_setAccount', 'UA-41395348-1']);
 	    _gaq.push(['_trackPageview']);
-	  
+
 	    (function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    })();
-	    
+
             function init() {
-                var id = prefs.getString("id"),				
+                var id = prefs.getString("id"),
 		    bgColor = prefs.getString("bgColor");
-		
+
                 if (bgColor && bgColor != "") {
                     document.body.style.background = bgColor;
                 }
-		
+
 		if (id && id != "") {
 		    gadgets.rpc.register("rscmd_play_" + id, play);
 		    gadgets.rpc.register("rscmd_pause_" + id, pause);
@@ -371,17 +371,17 @@
 		    gadgets.rpc.call("", "rsparam_get", null, id, "displayId");
 		}
             }
-	    
+
 	    function initFinancial(name, value) {
 		var id = prefs.getString("id");
-		
+
 		if (prefs.getBool("acceptance")) {
 		    financial = new RiseVision.Financial(value);
-		
+
 		    gadgets.rpc.register("rscmd_getInstrument", function(index) {
 			return financial.getInstrument.call(financial, index);
 		    });
-		
+
 		    gadgets.rpc.register("rsparam_set_" + id, financial.getAdditionalParams);
 		    gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
 		}
@@ -391,36 +391,36 @@
 		    readyEvent();
 		}
 	    }
-	    
+
 	    function play() {
 		if (financial != null) {
 		    financial.play();
 		}
 	    }
-	    
+
 	    function pause() {
 		if (financial != null) {
 		    financial.pause();
 		}
 	    }
-	    
+
 	    function stop() {
 		if (financial != null) {
 		    financial.pause();
 		}
 	    }
-	    
+
             // sends "READY" event to the Viewer
             function readyEvent() {
                 gadgets.rpc.call('', 'rsevent_ready', null, prefs.getString("id"), true, true, true, true, true);
             }
-            
+
             // sends "DONE" event to the Viewer
             function doneEvent() {
                 gadgets.rpc.call('', 'rsevent_done', null, prefs.getString("id"));
             }
-            
+
 	    gadgets.util.registerOnLoadHandler(init);
         </script>]]>
-    </Content> 
+    </Content>
 </Module>
