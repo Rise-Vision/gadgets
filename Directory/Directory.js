@@ -1542,7 +1542,7 @@ RiseVision.Directory.Controller.prototype.onBgImageLoaded = function(row, img) {
 
 	if ($image.length > 0) {
 		$img.attr("src", this.data.getFormattedValue(row, this.imageIndex));
-		$img.height(0);
+		// $img.height(0);
 		$img.css("max-width", img.width);
 		$img.css("max-height", img.height);
 		$image.append($img);
