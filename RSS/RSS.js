@@ -266,133 +266,121 @@ RiseVision.RSS.Settings.prototype.setFont = function(id, css, style) {
     $("#" + id).text(style);
 }
 RiseVision.RSS.Settings.prototype.getSettings = function() {
-    var errorFound = false,
-  errors = document.getElementsByClassName("errors")[0],
-  params = "",
-  settings = null,
-  selected;
+  var errorFound = false,
+    errors = document.getElementsByClassName("errors")[0],
+    params = "",
+    settings = null,
+    selected;
 
-    $(".errors").empty();
-    $(".errors").css({ display: "none" });
+  $(".errors").empty();
+  $(".errors").css({ display: "none" });
 
-    //Validate the URL.
-    if ($("#url").val != "") {
-  var feed = new google.feeds.Feed($("#url").val());
+  //Validate the URL.
+  if ($("#url").val != "") {
+    //RSS URL
+    errorFound = (rssSettings.settings.validateRequired($("#url"), errors, "RSS URL")) ? true : errorFound;
 
-  feed.setNumEntries(1);
-  feed.load(function(result) {
-      if (result.error) {
-    errors.innerHTML += "RSS URL is invalid.<br />";
-    errorFound = true;
-      }
+    //Queue
+    errorFound = (rssSettings.settings.validateRequired($("#queue"), errors, "Queue")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#queue"), errors, "Queue")) ? true : errorFound;
 
-      //RSS URL
-      errorFound = (rssSettings.settings.validateRequired($("#url"), errors, "RSS URL")) ? true : errorFound;
+    if (parseInt($("#queue").val()) <= 0) {
+      errors.innerHTML += "Queue must be greater than 0.<br />";
+      errorFound = true;
+    }
 
-      //Queue
-      errorFound = (rssSettings.settings.validateRequired($("#queue"), errors, "Queue")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#queue"), errors, "Queue")) ? true : errorFound;
+    //Items Count
+    errorFound = (rssSettings.settings.validateRequired($("#itemsCount"), errors, "Items Count")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#itemsCount"), errors, "Items Count")) ? true : errorFound;
 
-      if (parseInt($("#queue").val()) <= 0) {
-    errors.innerHTML += "Queue must be greater than 0.<br />";
-    errorFound = true;
-      }
-
-      //Items Count
-      errorFound = (rssSettings.settings.validateRequired($("#itemsCount"), errors, "Items Count")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#itemsCount"), errors, "Items Count")) ? true : errorFound;
-
-      if ($("#itemsCount").is(":visible") && parseInt($("#itemsCount").val()) <= 0) {
-    errors.innerHTML += "Items Count must be greater than 0.<br />";
-    errorFound = true;
-      }
+    if ($("#itemsCount").is(":visible") && parseInt($("#itemsCount").val()) <= 0) {
+      errors.innerHTML += "Items Count must be greater than 0.<br />";
+      errorFound = true;
+    }
 
       //Separator Size
-      if ($("#separatorSize").is(":visible")) {
-    errorFound = (rssSettings.settings.validateNumeric($("#separatorSize"), errors, "Separator Size")) ? true : errorFound;
-      }
+    if ($("#separatorSize").is(":visible")) {
+      errorFound = (rssSettings.settings.validateNumeric($("#separatorSize"), errors, "Separator Size")) ? true : errorFound;
+    }
 
       //Transition Hold
-      errorFound = (rssSettings.settings.validateRequired($("#transitionHold"), errors, "Transition Hold")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#transitionHold"), errors, "Transition Hold")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateRequired($("#transitionHold"), errors, "Transition Hold")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#transitionHold"), errors, "Transition Hold")) ? true : errorFound;
 
-      if ($("#transitionHold").is(":visible") && parseInt($("#transitionHold").val()) <= 0) {
-    errors.innerHTML += "Transition Hold must be greater than 0.<br />";
-    errorFound = true;
-      }
-
-      //Transition Resumes
-      errorFound = (rssSettings.settings.validateRequired($("#transitionResumes"), errors, "Transition Resumes")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#transitionResumes"), errors, "Transition Resumes")) ? true : errorFound;
-
-      if ($("#transitionResumes").is(":visible") && parseInt($("#transitionResumes").val()) <= 0) {
-    errors.innerHTML += "Transition Resumes must be greater than 0.<br />";
-    errorFound = true;
-      }
-
-      //Padding
-      errorFound = (rssSettings.settings.validateNumeric($("#headlinePadding"), errors, "Headline Padding")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#storyPadding"), errors, "Summary / Story Padding")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#mediaPadding"), errors, "Media Padding")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#authorPadding"), errors, "Author Padding")) ? true : errorFound;
-      errorFound = (rssSettings.settings.validateNumeric($("#datePadding"), errors, "Date Padding")) ? true : errorFound;
-
-      //Required fields
-      if ($("input[type='radio'][name='layout']:checked").val() == "custom") {
-    errorFound = (rssSettings.settings.validateRequired($("#layoutURL"), errors, "Layout URL")) ? true : errorFound;
-      }
-
-      if (errorFound) {
-    $(".errors").fadeIn(200).css("display", "inline-block");
-    $("#wrapper").scrollTop(0);
-
-    return null;
-      }
-      else {
-    //Construct parameters string to pass to RVA.
-    params = "up_url=" + escape($("#url").val()) +
-        "&up_queue=" + $("#queue").val() +
-        "&up_itemsCount=" + $("#itemsCount").val() +
-        "&up_transition=" + $("#transition").val() +
-        "&up_scrollDirection=" + $("#scrollDirection").val() +
-        "&up_scrollSpeed=" + $("#scrollSpeed").val();
-    params += "&up_separatorColor=" + $("#separatorColor").val() +
-        "&up_separatorSize=" + $("#separatorSize").val() +
-        "&up_transitionHold=" + $("#transitionHold").val() +
-        "&up_transitionResumes=" + $("#transitionResumes").val() +
-        "&up_bgColor=" + $("#bgColor").val();
-    params += ($("#separator").is(":checked")) ? "&up_separator=true" : "&up_separator=false";
-
-    //Summary or Story
-    selected = $("input[type='radio'][name='contentType']:checked");
-
-    if (selected.length > 0) {
-        params += "&up_contentType=" + selected.val();
+    if ($("#transitionHold").is(":visible") && parseInt($("#transitionHold").val()) <= 0) {
+      errors.innerHTML += "Transition Hold must be greater than 0.<br />";
+      errorFound = true;
     }
 
-    params += ($("#author").is(":checked")) ? "&up_author=true" : "&up_author=false";
-    params += ($("#date").is(":checked")) ? "&up_date=true" : "&up_date=false";
+    //Transition Resumes
+    errorFound = (rssSettings.settings.validateRequired($("#transitionResumes"), errors, "Transition Resumes")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#transitionResumes"), errors, "Transition Resumes")) ? true : errorFound;
 
-    //Layout
-    selected = $("input[type='radio'][name='layout']:checked");
-
-    if (selected.length > 0) {
-        params += "&up_layout=" + selected.val();
+    if ($("#transitionResumes").is(":visible") && parseInt($("#transitionResumes").val()) <= 0) {
+      errors.innerHTML += "Transition Resumes must be greater than 0.<br />";
+      errorFound = true;
     }
 
-    params += "&up_layoutURL=" + $("#layoutURL").val();
+    //Padding
+    errorFound = (rssSettings.settings.validateNumeric($("#headlinePadding"), errors, "Headline Padding")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#storyPadding"), errors, "Summary / Story Padding")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#mediaPadding"), errors, "Media Padding")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#authorPadding"), errors, "Author Padding")) ? true : errorFound;
+    errorFound = (rssSettings.settings.validateNumeric($("#datePadding"), errors, "Date Padding")) ? true : errorFound;
 
-    settings = {
-        "params": params,
-        "additionalParams": JSON.stringify(rssSettings.saveAdditionalParams())
-    };
+    //Required fields
+    if ($("input[type='radio'][name='layout']:checked").val() == "custom") {
+      errorFound = (rssSettings.settings.validateRequired($("#layoutURL"), errors, "Layout URL")) ? true : errorFound;
+    }
 
-    //$(".errors").css({ display: "none" });
+    if (errorFound) {
+      $(".errors").fadeIn(200).css("display", "inline-block");
+      $("#wrapper").scrollTop(0);
 
-    gadgets.rpc.call("", "rscmd_saveSettings", null, settings);
+      return null;
+    }
+    else {
+      //Construct parameters string to pass to RVA.
+      params = "up_url=" + escape($("#url").val()) +
+          "&up_queue=" + $("#queue").val() +
+          "&up_itemsCount=" + $("#itemsCount").val() +
+          "&up_transition=" + $("#transition").val() +
+          "&up_scrollDirection=" + $("#scrollDirection").val() +
+          "&up_scrollSpeed=" + $("#scrollSpeed").val();
+      params += "&up_separatorColor=" + $("#separatorColor").val() +
+          "&up_separatorSize=" + $("#separatorSize").val() +
+          "&up_transitionHold=" + $("#transitionHold").val() +
+          "&up_transitionResumes=" + $("#transitionResumes").val() +
+          "&up_bgColor=" + $("#bgColor").val();
+      params += ($("#separator").is(":checked")) ? "&up_separator=true" : "&up_separator=false";
+
+      //Summary or Story
+      selected = $("input[type='radio'][name='contentType']:checked");
+
+      if (selected.length > 0) {
+          params += "&up_contentType=" + selected.val();
       }
-  });
+
+      params += ($("#author").is(":checked")) ? "&up_author=true" : "&up_author=false";
+      params += ($("#date").is(":checked")) ? "&up_date=true" : "&up_date=false";
+
+      //Layout
+      selected = $("input[type='radio'][name='layout']:checked");
+
+      if (selected.length > 0) {
+          params += "&up_layout=" + selected.val();
+      }
+
+      params += "&up_layoutURL=" + $("#layoutURL").val();
+
+      settings = {
+          "params": params,
+          "additionalParams": JSON.stringify(rssSettings.saveAdditionalParams())
+      };
+
+      gadgets.rpc.call("", "rscmd_saveSettings", null, settings);
     }
+  }
 }
 RiseVision.RSS.Settings.prototype.saveAdditionalParams = function() {
     var additionalParams = {};
