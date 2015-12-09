@@ -2361,16 +2361,13 @@ RiseVision.Common.Utility.scaleToFit = function(settings) {
   objImage.setAttribute("src", settings.url);
 }
 RiseVision.Common.Utility.getNodeValue = function(node) {
+  var value = "";
+
   if ((node != null) && (node.length > 0)) {
-    if (node[0].childNodes.length > 0) {
-      return node[0].childNodes[0].nodeValue;
-    }
-    else {
-      return "";
-    }
+    return node[0].textContent;
   }
 
-  return "";
+  return value;
 }
 //Helper function for node names that include a prefix and a colon, such as "<yt:rating>"
 RiseVision.Common.Utility.getElementByNodeName = function(parentNode, nodeName) {
