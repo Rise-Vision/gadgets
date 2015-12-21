@@ -525,6 +525,7 @@ RiseVision.FinancialChart.Controller.prototype.stopRotation = function() {
     clearTimeout(this.rotateTimer);
 }
 RiseVision.FinancialChart.Controller.prototype.setInstrument = function(instrument, resumeRotation) {
+  if (!this.isRefreshing) {
     this.resumeRotation = resumeRotation;	//Issue 905
 
     if (!resumeRotation) {
@@ -564,6 +565,7 @@ RiseVision.FinancialChart.Controller.prototype.setInstrument = function(instrume
 	//Now reload data and refresh charts.
 	this.load();
     }
+  }
 }
 //This isn't actually used anywhere yet.
 RiseVision.FinancialChart.Controller.prototype.setDuration = function(duration) {
