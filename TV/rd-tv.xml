@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="TV" title_url="https://docs.google.com/a/risevision.com/document/pub?id=1_q4xWByc-MQW0DubFTwen21R2hxW9NfooJszz2AGiV4">
-    <Require feature="rpc" />
-  <Optional feature="rise-api">
-    <Param name="reports_ready" />
-  </Optional>
-  </ModulePrefs>
-  <UserPref name="id" display_name="ID" default_value="" datatype="hidden"/>
-  <UserPref name="channel" display_name="Channel" default_value="0" required="true"/>
-  <UserPref name="cc" display_name="Closed Captioning" default_value="false" datatype="bool"/>
-  <UserPref name="port" display_name="Port Number" default_value="9393" datatype="int"/>
-  <UserPref name="terms" display_name="I acknowledge that there is currently no charge for the use of this Gadget, but, at an as yet to be determined date in the future this Gadget will have a one time charge of $500 to use and I will have 30 days to decide if I wish to continue using this Gadget or not." default_value="false" datatype="bool"/>
-  <Content type="html">
-  <![CDATA[
-    <style type="text/css">
-      body {
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-      }
-    </style>
-    <embed id="tv" type="application/nprisetv2" width="100%" height="100%">
-    <div id="termsError" style="position:absolute; left:0; top:0; width:100%; height:100%; padding: 1em; font-size: 20px; color: red; display: none;">You must check the acknowledgement setting in order to use this Gadget.</div>
-    <div id="licError" style="position:absolute; left:0; top:0; width:100%; height:100%; visibility:hidden; z-index:1000; text-align:center; vertical-align:middle; display:table-cell; line-height:400px; background-color:Black; color:White;"></div>
-    <script type='text/javascript' src='http://c811289.r89.cf2.rackcdn.com/rd.lic.min.js'></script>
-    <script type='text/javascript' src='http://c752668.r68.cf2.rackcdn.com/rd-tv.js'></script>
-  ]]>
-  </Content>
+	<ModulePrefs title="TV" title_url="https://docs.google.com/a/risevision.com/document/pub?id=1_q4xWByc-MQW0DubFTwen21R2hxW9NfooJszz2AGiV4">
+		<Require feature="rpc" />
+	<Optional feature="rise-api">
+		<Param name="reports_ready" />
+	</Optional>
+	</ModulePrefs>
+	<UserPref name="id" display_name="ID" default_value="" datatype="hidden"/>
+	<UserPref name="channel" display_name="Channel" default_value="0" required="true"/>
+	<UserPref name="cc" display_name="Closed Captioning" default_value="false" datatype="bool"/>
+	<UserPref name="port" display_name="Port Number" default_value="9393" datatype="int"/>
+	<UserPref name="terms" display_name="I acknowledge that there is currently no charge for the use of this Gadget, but, at an as yet to be determined date in the future this Gadget will have a one time charge of $500 to use and I will have 30 days to decide if I wish to continue using this Gadget or not." default_value="false" datatype="bool"/>
+	<Content type="html">
+	<![CDATA[
+		<style type="text/css">
+			body {
+				user-select: none;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+			}
+		</style>
+		<embed id="tv" type="application/nprisetv2" width="100%" height="100%">
+		<div id="termsError" style="position:absolute; left:0; top:0; width:100%; height:100%; padding: 1em; font-size: 20px; color: red; display: none;">You must check the acknowledgement setting in order to use this Gadget.</div>
+		<div id="licError" style="position:absolute; left:0; top:0; width:100%; height:100%; visibility:hidden; z-index:1000; text-align:center; vertical-align:middle; display:table-cell; line-height:400px; background-color:Black; color:White;"></div>
+		<script type='text/javascript' src='http://c811289.r89.cf2.rackcdn.com/rd.lic.min.js'></script>
+		<script type='text/javascript' src='http://c752668.r68.cf2.rackcdn.com/rd-tv.js'></script>
+
+		<script type="text/javascript">
+			//Add Analytics code.
+			var _gaq = _gaq || [];
+
+			_gaq.push(['_setAccount', 'UA-41395348-26']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	]]>
+	</Content>
 </Module>
