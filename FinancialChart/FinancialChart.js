@@ -1225,9 +1225,9 @@ RiseVision.FinancialChart.Controller.prototype.setChartData = function(isRefresh
     this.chartData.volume = [this.currentChart.primary.getVolumeX(), this.currentChart.primary.getVolumeY()];
 }
 RiseVision.FinancialChart.Controller.prototype.updateTitles = function() {
-    var lastPrice = parseFloat(this.titleData.getFormattedValue(0, 2)),
-	netChange = parseFloat(this.titleData.getFormattedValue(0, 3)),
-	volume = parseFloat(this.titleData.getFormattedValue(0, 4)),
+    var lastPrice = parseFloat(this.titleData.getValue(0, 2)),
+	netChange = parseFloat(this.titleData.getValue(0, 3)),
+	volume = parseFloat(this.titleData.getValue(0, 4)),
 	titleDecimals = prefs.getInt("titleDecimals"),
 	titleSign = prefs.getString("titleSign"),
 	last = "Last ";
@@ -2083,7 +2083,7 @@ RiseVision.FinancialChart.Instrument.prototype.save = function(result, callback)
 	    if (row < numDataRows) {
 		tickTradeTime = new Date(this.ticks[i].date);
 		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(result.data.getFormattedValue(row, 1)), timeZoneOffset);	//Convert this in common?
-		y = parseFloat(result.data.getFormattedValue(row, 0));
+		y = parseFloat(result.data.getValue(row, 0));
 
 		this.x.push(index);
 		this.y.push(y);
@@ -2147,7 +2147,7 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 		    //Prevent charts from showing two data points for yesterday if running before markets open.
 		    if (!Date.equals(tradeTime, this.lastTradeTime)) {
 			this.x.push(this.startIndex);
-			this.y.push(parseFloat(this.realTimeData.getFormattedValue(0, 1)));
+			this.y.push(parseFloat(this.realTimeData.getValue(0, 1)));
 			this.lastTradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 2)), timeZoneOffset);
 		    }
 		}
@@ -2180,7 +2180,7 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 			    //Update all data points between tickTradeTime and current time.
 			    while ((tickTradeTime.isAfter(tradeTime) || Date.equals(tickTradeTime, tradeTime)) && tickTradeTime.isBefore(new Date())) {
 				if (i < this.y.length) {	//Issue 938
-				    this.y[i] = parseFloat(this.realTimeData.getFormattedValue(0, 1))
+				    this.y[i] = parseFloat(this.realTimeData.getValue(0, 1))
 				    this.lastTradeTime = tradeTime;
 
 				    tickTradeTime.addMilliseconds(this.interval);
@@ -2195,7 +2195,7 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 		    //Issue 915 End
 		    //Other chart types have the last data point updated.
 		    else {
-			this.y[this.startIndex - 1] = parseFloat(this.realTimeData.getFormattedValue(0, 1));
+			this.y[this.startIndex - 1] = parseFloat(this.realTimeData.getValue(0, 1));
 			this.lastTradeTime = tradeTime;
 		    }
 		}
@@ -2396,14 +2396,14 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 
 		    //Store values of first available data points in case we need to use them to backfill data.
 		    if (this.doCompare) {
-			lastClosePrice = parseFloat(result.data.getFormattedValue(row, 0));
-			lastPercentChange = parseFloat(result.data.getFormattedValue(row, 3));
+			lastClosePrice = parseFloat(result.data.getValue(row, 0));
+			lastPercentChange = parseFloat(result.data.getValue(row, 3));
 		    }
 		    else {
-			lastClosePrice = parseFloat(result.data.getFormattedValue(row, 0));
+			lastClosePrice = parseFloat(result.data.getValue(row, 0));
 		    }
 
-		    lastVolume = parseFloat(result.data.getFormattedValue(row, 1));
+		    lastVolume = parseFloat(result.data.getValue(row, 1));
 		}
 
 		//Only add a data point if it falls between the collection times.
@@ -2436,11 +2436,11 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 
 		//Now plot data point received from data server.
 		if (this.doCompare) {
-		    closePrice = parseFloat(result.data.getFormattedValue(row, 0));
-		    lastPercentChange = parseFloat(result.data.getFormattedValue(row, 3));
+		    closePrice = parseFloat(result.data.getValue(row, 0));
+		    lastPercentChange = parseFloat(result.data.getValue(row, 3));
 		}
 		else {
-		    closePrice = parseFloat(result.data.getFormattedValue(row, 0));
+		    closePrice = parseFloat(result.data.getValue(row, 0));
 		}
 
 		//One plot point for every interval. This is needed to make it easier to plot comparative instruments.
@@ -2452,22 +2452,22 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 		    "collectionStartTime": result.collectionData.startTime.clone().clearTime(),
 		    "collectionEndTime": result.collectionData.endTime.clone().clearTime(),
 		    "closePrice": closePrice,
-		    "volume": parseFloat(result.data.getFormattedValue(row, 1)),
+		    "volume": parseFloat(result.data.getValue(row, 1)),
 		    "percentChange": lastPercentChange,
 		    "index": index
 		});
 
 		lastClosePrice = closePrice;
-		lastVolume = parseFloat(result.data.getFormattedValue(row, 1));
+		lastVolume = parseFloat(result.data.getValue(row, 1));
 	    }
 	    //All other chart types use data as is from data server.
 	    else {
 		if (this.doCompare) {
-		    closePrice = parseFloat(result.data.getFormattedValue(row, 0));
-		    this.percentChange.push(parseFloat(result.data.getFormattedValue(row, 3)));
+		    closePrice = parseFloat(result.data.getValue(row, 0));
+		    this.percentChange.push(parseFloat(result.data.getValue(row, 3)));
 		}
 		else {
-		    closePrice = parseFloat(result.data.getFormattedValue(row, 0))
+		    closePrice = parseFloat(result.data.getValue(row, 0))
 		}
 
 		this.ticks.push({
@@ -2479,8 +2479,8 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 
 		this.x.push(row);
 		this.volumeX.push(row);
-		this.y.push(parseFloat(result.data.getFormattedValue(row, 0)));
-		this.volumeY.push(parseFloat(result.data.getFormattedValue(row, 1)));
+		this.y.push(parseFloat(result.data.getValue(row, 0)));
+		this.volumeY.push(parseFloat(result.data.getValue(row, 1)));
 	    }
 	}
 
@@ -2608,7 +2608,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 	i = 0;
 
     if (this.realTimeData != null) {
-	plotValue = parseFloat(this.realTimeData.getFormattedValue(0, 2));
+	plotValue = parseFloat(this.realTimeData.getValue(0, 2));
 
 	if (this.isLoading) {
 	    if ((this.realTimeData.getFormattedValue(0, 5) != null) && (this.realTimeData.getFormattedValue(0, 5) != "") && (this.lastTradeTime != null)) {
@@ -2618,7 +2618,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 		if (this.duration == "Day") {
 		    for (i = 0; i < this.x.length; i++) {
 			this.historicCloseX.push(i);
-			this.historicCloseY.push(parseFloat(this.realTimeData.getFormattedValue(0, 6)));
+			this.historicCloseY.push(parseFloat(this.realTimeData.getValue(0, 6)));
 		    }
 		}
 
@@ -2635,10 +2635,10 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 			this.x.push(this.startIndex);
 			this.volumeX.push(this.startIndex);
 			this.y.push(plotValue);
-			this.volumeY.push(parseFloat(this.realTimeData.getFormattedValue(0, 4)));
+			this.volumeY.push(parseFloat(this.realTimeData.getValue(0, 4)));
 
 			if (this.doCompare) {
-			    this.percentChange.push(parseFloat(this.realTimeData.getFormattedValue(0, 7)));
+			    this.percentChange.push(parseFloat(this.realTimeData.getValue(0, 7)));
 			}
 
 			this.startIndex++;
@@ -2672,7 +2672,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 
 			if (found) {
 			    if (!Date.equals(tradeTime, this.lastTradeTime)) {
-				this.volume = parseFloat(this.realTimeData.getFormattedValue(0, 4)) - this.accumulatedVolume
+				this.volume = parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume
 			    }
 
 			    //Update all data points between tickTradeTime and current time.
@@ -2685,7 +2685,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 					this.volumeY[i] = this.volume;	//Issue 919
 
 					if (this.doCompare) {
-					    this.percentChange[i] = parseFloat(this.realTimeData.getFormattedValue(0, 7));
+					    this.percentChange[i] = parseFloat(this.realTimeData.getValue(0, 7));
 					}
 				    }
 				}
@@ -2693,16 +2693,16 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 				    this.ticks.push({
 					"date" : RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset).getTime(),
 					"close": plotValue,
-					"volume": parseFloat(this.realTimeData.getFormattedValue(0, 4)) - this.accumulatedVolume	//Issue 919
+					"volume": parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume	//Issue 919
 				    });
 
 				    this.x.push(i);
 				    this.volumeX.push(i);
 				    this.y.push(plotValue);
-				    this.volumeY.push(parseFloat(this.realTimeData.getFormattedValue(0, 4)) - this.accumulatedVolume);	//Issue 919
+				    this.volumeY.push(parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume);	//Issue 919
 
 				    if (this.doCompare) {
-					this.percentChange.push(parseFloat(this.realTimeData.getFormattedValue(0, 7)));
+					this.percentChange.push(parseFloat(this.realTimeData.getValue(0, 7)));
 				    }
 				}
 
@@ -2717,12 +2717,12 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 		    else {
 			this.ticks[this.startIndex - 1].date = new Date(this.realTimeData.getFormattedValue(0, 5)).getTime();
 			this.ticks[this.startIndex - 1].close = plotValue;
-			this.ticks[this.startIndex - 1].volume = parseFloat(this.realTimeData.getFormattedValue(0, 4)) - this.accumulatedVolume;	//Issue 919
+			this.ticks[this.startIndex - 1].volume = parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume;	//Issue 919
 			this.y[this.startIndex - 1] = plotValue;
-			this.volumeY[this.startIndex - 1] = parseFloat(this.realTimeData.getFormattedValue(0, 4)) - this.accumulatedVolume;	//Issue 919
+			this.volumeY[this.startIndex - 1] = parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume;	//Issue 919
 
 			if (this.doCompare) {
-			    this.percentChange[this.startIndex - 1] = parseFloat(this.realTimeData.getFormattedValue(0, 7));
+			    this.percentChange[this.startIndex - 1] = parseFloat(this.realTimeData.getValue(0, 7));
 			}
 
 			this.lastTradeTime = tradeTime;
@@ -2735,7 +2735,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 	    }
 	}
 
-	this.accumulatedVolume = parseFloat(this.realTimeData.getFormattedValue(0, 4));	//Issue 919
+	this.accumulatedVolume = parseFloat(this.realTimeData.getValue(0, 4));	//Issue 919
     }
     else {
 	this.isLoading = false;
