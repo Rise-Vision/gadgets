@@ -9,10 +9,10 @@
     <UserPref name="instrument" />
     <UserPref name="disclaimerFont" />
     <UserPref name="disclaimerLoc" />
-    <UserPref name="acceptance" />    
+    <UserPref name="acceptance" />
     <UserPref name="duration" />
     <UserPref name="previousCloseColor" />
-    <UserPref name="showTitles" />    
+    <UserPref name="showTitles" />
     <UserPref name="titleDecimals" />
     <UserPref name="titleSign" />
     <UserPref name="showVolume" />
@@ -28,16 +28,16 @@
     <UserPref name="durReturn" />
     <UserPref name="showComparison" />
     <UserPref name="compInstruments" />
-    <UserPref name="compNames" />    
+    <UserPref name="compNames" />
     <UserPref name="compLineColor" />
     <UserPref name="compButtonRadius" />
     <UserPref name="compButtonColor" />
-    <UserPref name="compSelButtonColor" />    
+    <UserPref name="compSelButtonColor" />
     <UserPref name="compReturn" />
     <UserPref name="showAxis" />
     <UserPref name="axisDecimals" />
     <UserPref name="axisLineColor" />
-    <UserPref name="gridLineColor" />    
+    <UserPref name="gridLineColor" />
     <UserPref name="chartPlotLineColor" />
     <UserPref name="chartFillColor" />
     <UserPref name="bgColor" />
@@ -81,7 +81,7 @@
 				<option value="Tahoma, Geneva, sans-serif">Tahoma</option>
 				<option value="Times New Roman, Times, serif">Times New Roman</option>
 				<option value="Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
-				<option value="Verdana, Verdana, Geneva, sans-serif" selected="selected">Verdana</option>				
+				<option value="Verdana, Verdana, Geneva, sans-serif" selected="selected">Verdana</option>
 			    </select>
 			</li>
 			<li>
@@ -99,7 +99,7 @@
 			    <label>Acceptance:</label>
 			    <input id="acceptance" name="acceptance" type="checkbox" />
 			    <label for="acceptance" class="right">I acknowledge that there is currently no charge for this Gadget, but at a date that has yet to be determined, it will cost $15 per display, per month.  At that time I will have 30 days to decide if I wish to continue using this Gadget.</label>
-			</li>			
+			</li>
 			<li>
 			    <label for="duration">Chart Duration</label>
 			    <select id="duration" name="duration" class="short">
@@ -193,7 +193,7 @@
 			    <input id="showDuration" name="showDuration" type="checkbox" />
 			</li>
 			<li class="duration drillDown" style="display: none;">
-			    <ol>				
+			    <ol>
 				<li>
 				    <label for="durButtonColor" class="multiline">Duration Button Color:</label>
 				    <input id="durButtonColor" name="durButtonColor" type="text" class="short" value="rgb(115, 111, 110)" />
@@ -228,7 +228,7 @@
 			    <input id="showComparison" name="showComparison" type="checkbox" />
 			</li>
 			<li class="comparison drillDown" style="display: none;">
-			    <ol>				
+			    <ol>
 				<li>
 				    <label for="compInstruments">Comparative Instruments*:</label>
 				    <input id="compInstruments" name="compInstruments" type="text" class="medium" value="MSFT.O, GOOG.O, INTC.O" required />
@@ -267,7 +267,7 @@
 				    <input id="compReturn" name="compReturn" type="text" class="short" value="25" />
 				</li>
 			    </ol>
-		        </li>    
+		        </li>
 			<li>
 			    <label for="showAxis">Show Axis:</label>
 			    <input id="showAxis" name="showAxis" type="checkbox" checked="checked" />
@@ -314,35 +314,35 @@
 		    </ol>
 		</form>
 	    </div>
-	    
+
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
-	    
+
 	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
 	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
+
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
 	    <script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
-    
+
             <script type="text/javascript">
 		var prefs = new gadgets.Prefs(),
 		    chart = null;
-                                
+
                 function init() {
 		    google.setOnLoadCallback(function() {
 			$(function() {
 			    chart = new RiseVision.FinancialChart.Settings();
-			    
+
 			    gadgets.rpc.register("rscmd_getSettings", chart.getSettings);
 			    gadgets.rpc.register("rscmd_financialSelectorCallback", chart.setStocks);
 			    gadgets.rpc.register("rscmd_colorPickerCallback", chart.setColor);
-			    gadgets.rpc.register("rscmd_fontSelectorCallback", chart.setFont);			    
-			    
+			    gadgets.rpc.register("rscmd_fontSelectorCallback", chart.setFont);
+
 			    chart.initSettings();
 			});
 		    });
                 }
-		
-                gadgets.util.registerOnLoadHandler(init); 
+
+                gadgets.util.registerOnLoadHandler(init);
             </script>
 	]]>
     </Content>
@@ -352,7 +352,7 @@
 	    * {
 		box-sizing: border-box;
 	    }
-	    
+
 	    body {
 		background-color: transparent;
 		-webkit-user-select: none;
@@ -361,12 +361,12 @@
 		-o-user-select: none;
 		user-select: none;
 	    }
-	    
+
 	    #container {
 		width: 100%;
 		height: 100%;
 	    }
-	    
+
 	    #buttons,
 	    #title,
 	    #disclaimer,
@@ -375,14 +375,14 @@
 	    .envision-finance {
 		width: 90%;
 	    }
-	    
+
 	    /* Chart Titles */
-	    #title {		
+	    #title {
 		overflow: hidden;
-	    }	    
+	    }
 		#title #instrument {
 		    float: left;
-		}		
+		}
 		#title #last {
 		    margin-right: 20px;
 		}
@@ -395,17 +395,17 @@
 		#title #changeLabel,
 		#title #changeValue {
 		    float: right;
-		}		
-		
+		}
+
 	    #priceChart {
 		margin-top: 5px;
 		margin-bottom: 2em; /* Because priceChart has the axis_font-style CSS class applied to it, the margin will be relative to the font size of the axis. */
 	    }
-	    
+
 	    #volumeTitle {
 		margin-top: 0.5em;
 	    }
-	    
+
 	    /* Disclaimer */
 	    #disclaimer {
 		display: none;
@@ -414,9 +414,9 @@
 		font-size: 10px;
 	    }
 	    #disclaimer.right, #volumeTitle {
-		text-align: right;	
+		text-align: right;
 	    }
-	    
+
 	    /* Duration buttons */
 	    #durations {
 		text-align: center;
@@ -432,10 +432,10 @@
 		text-decoration: none;
 		background-color: __UP_durButtonColor__;
 	    }
-	    .duration.selected {		
+	    .duration.selected {
 		background-color: __UP_durSelButtonColor__;
 	    }
-	    
+
 	    /* Comparative instrument buttons */
 	    #buttons {
 		display: none;
@@ -452,30 +452,30 @@
 		text-decoration: none;
 		background-color: __UP_compButtonColor__;
 	    }
-	    .button.selected {		
+	    .button.selected {
 		background-color: __UP_compSelButtonColor__;
 	    }
-	    
+
 	    #error {
 		display: none;
 	    }
-	    
-	    .error {		
+
+	    .error {
 		padding: 1em;
 		font-size: 20px;
 		color: red;
 	    }
-	    
+
 	    .hidden {
 		visibility: hidden;
 	    }
 	</style>
-	
-	<div id="container">	    
+
+	<div id="container">
 	    <div id="disclaimer" class="hidden">Market Data by Thomson Reuters - Delayed 20 Minutes</div>
 	    <div id="buttons" class="hidden compButton_font-style">Compare To:  </div>
 	    <div id="title" class="hidden">
-		<span id="instrument" class="title_font-style"></span>		
+		<span id="instrument" class="title_font-style"></span>
 		<span id="changeValue" class="title_font-style"></span>
 		<div id="arrow"></div>
 		<span id="changeLabel" class="title_font-style">Change&nbsp;</span>
@@ -486,14 +486,14 @@
 	    <div id="volumeChart" class="volume hidden"></div>
 	    <div id="durations" class="hidden"></div>
 	    <div id="error" class="error"></div>
-	</div>	
-	
+	</div>
+
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/envision/css/envision.css" />
-	
+
 	<script type="text/javascript" src="//www.google.com/jsapi"></script>
-	<script type="text/javascript" src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
+
+  <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
@@ -502,95 +502,95 @@
 
 	<!-- Load after envision.js. -->
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/grid.min.js"></script>
-    
+
 	<script>
 	    var prefs = new gadgets.Prefs(),
 		controller = null,
 		pageInitialized = false;
-		
+
 	    //Issue 1058 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
 	    };
-		
+
 	    //Add Analytics code.
 	    var _gaq = _gaq || [];
-	    
+
 	    _gaq.push(['_setAccount', 'UA-41395348-2']);
 	    _gaq.push(['_trackPageview']);
-	  
+
 	    (function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    })();
-		    
+
 	    function init() {
 		var id = prefs.getString("id");
-		
+
 		//Ready event seems to fire twice sometimes.
 		if (pageInitialized) {
 		    return;
 		}
-		
+
 		pageInitialized = true;
-		
+
 		gadgets.rpc.register("rscmd_play_" + id, play);
 		gadgets.rpc.register("rscmd_pause_" + id, pause);
 		gadgets.rpc.register("rscmd_stop_" + id, stop);
-		
+
 		google.setOnLoadCallback(function() {
 		    gadgets.rpc.register("rsparam_set_" + id, function(name, value) {
 			if (prefs.getBool("acceptance")) {
 			    initChart(value);
-			}		    
+			}
 			else {
 			    $("#container").text("You must check the Acceptance setting in order to use this Gadget.");
 			    $("#container").addClass("error");
 			    readyEvent();
 			}
 		    });
-		    
+
 		    gadgets.rpc.call("", "rsparam_get", null, id, "displayId");
 		});
             }
-	    
-	    //Initialize the gadget.		
+
+	    //Initialize the gadget.
 	    function initChart(displayID) {
 		var id = prefs.getString("id");
-		
+
 		controller = new RiseVision.FinancialChart.Controller(displayID);
-		
+
 		gadgets.rpc.register("rscmd_setInstrument", function(instrument, resumeRotation) {
 		    controller.setInstrument.call(controller, instrument, resumeRotation);
 		});
-		
+
 		gadgets.rpc.register("rscmd_setDuration", function(duration) {
 		    controller.setDuration.call(controller, duration);
 		});
-		
+
 		gadgets.rpc.register("rscmd_stopRotation", function() {
 		    controller.stopRotation.call(controller);
 		});
-		
+
 		gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
 		gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
 	    }
-	    
+
 	    function play() {
 		controller.play();
 	    }
-	    
+
 	    function pause() {
 		controller.pause();
 	    }
-	    
+
 	    function stop() {
 		controller.pause();
 	    }
-	    
+
 	    //Send "READY" event to the Viewer.
-	    function readyEvent() {		
+	    function readyEvent() {
 		gadgets.rpc.call("", "rsevent_ready", null, prefs.getString("id"), true, true, true, true, true);
 	    }
 
@@ -598,10 +598,10 @@
 	    function doneEvent() {
 		gadgets.rpc.call("", "rsevent_done", null, prefs.getString("id"));
 	    }
-	    
+
 	    $(document).ready(function() {
 		init();
-	    });																													    
+	    });
 	</script>]]>
-    </Content> 
+    </Content>
 </Module>
