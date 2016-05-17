@@ -332,7 +332,7 @@ RiseVision.Common.Financial.RealTime.prototype.getData = function(fields, loadLo
   //Perform a search for the instruments.
   if (codes) {
     var self = this, options = {
-      url : this.url + "id=" + this.displayID + "&codes=" + codes,
+      url : this.url + "id=" + this.displayID + "&codes=" + encodeURIComponent(codes),
       refreshInterval : 0,
       queryString : queryString,
       callback : function rtCallback(data) {
