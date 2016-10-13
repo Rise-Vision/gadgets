@@ -10,6 +10,9 @@ rd.ip.core.init = function() {
 
     var me = this;
 
+    me.pingReceived = false;
+    me.isV2 = false;
+
     me.profiles = []; //all current profiles
     me.filteredProfiles = []; //filtered profiles
     me.featuredProfiles = []; //featured profiles
@@ -96,7 +99,7 @@ rd.ip.core.clearFilters = function() {
     this.filter1.clear();
     this.filter2.clear();
     this.keyboard.clear();
-    
+
     this.filteredProfiles = []; //clear array
     this.filteredProfiles = this.profiles.slice(0); //copy all elements of the profiles array
 
@@ -114,11 +117,11 @@ rd.ip.core.handleOnDataLoaded = function(newProfiles, headerData) {
         me.filter1.updateLabel(headerProfile.filter1);
         me.filter2.updateLabel(headerProfile.filter2);
     }
-    
+
     //Issue 928 Start
     //me.filterProfiles();
     me.filteredProfiles = [];
-    
+
     for (var i in me.profiles) {
         me.filteredProfiles.push(me.profiles[i]);
     }
@@ -142,16 +145,16 @@ rd.ip.core.initWorldObjects = function() {
     rd.ip.floatingProfileCard.initTexturePool();
     //rd.ip.floatingProfileCard.clearTexturePool();
     //Issue 928 End
-    
+
     rd.ip.core.activeCards = [];
-    
+
     if (rd.ip.core.filteredProfiles.length > 0) {
-        for (var i = 0; i < rd.ip.globals.MAX_ACTIVE_CARDS; i++) {	   	    
-            var card = new rd.ip.FloatingProfileCard();    
+        for (var i = 0; i < rd.ip.globals.MAX_ACTIVE_CARDS; i++) {
+            var card = new rd.ip.FloatingProfileCard();
             card.profile = rd.ip.floatingProfileCard.getNextProfile(card, 1);
             rd.ip.core.activeCards.push(card);
         }
-	
+
         //sort by Z
         rd.ip.core.activeCards.sort(function(a, b) { return a.z - b.z; });
     }
@@ -236,3 +239,66 @@ rd.ip.core.splitMultilineText = function (str) {
     }
     return str;
 };
+
+rd.ip.core.ping = function(callback) {
+  var r = new XMLHttpRequest(),
+    self = this;
+
+  if (typeof callback !== "function") {
+    return;
+  }
+
+  if (!this.isV2) {
+    r.open("GET", "//localhost:9494/ping?callback=_", true);
+  }
+  else {
+    r.open("GET", "//localhost:9494/", true);
+  }
+
+  r.onreadystatechange = function() {
+    try {
+      if (r.readyState === 4 ) {
+        // save this result for use in getFile()
+        self.pingReceived = true;
+
+        if (r.status === 200) {
+          self.isCacheRunning = true;
+
+          callback(true, r.responseText);
+        } else if (r.status === 404) {
+          // Rise Cache V2 is running
+          self.isV2 = true;
+
+          // call ping again so correct ping URL is used for Rise Cache V2
+          return self.ping(callback);
+        } else {
+          self.isCacheRunning = false;
+
+          callback(false, null);
+        }
+      }
+    }
+    catch (e) {
+      console.debug("Caught exception: ", e.description);
+    }
+  };
+  
+  r.send();
+}
+
+rd.ip.core.isV2Running = function(callback) {
+  var self = this;
+  
+  if (typeof callback !== "function") {
+    return;
+  }
+
+  if (!this.pingReceived) {
+    return this.ping(function() {
+      callback(self.isV2);
+    });
+  }
+  else {
+    callback(this.isV2);
+  }
+}
