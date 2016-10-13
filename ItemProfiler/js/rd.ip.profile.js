@@ -2,6 +2,8 @@ if (!window['rd']) { window['rd'] = {}; }
 if (!window['rd']['ip']) { window['rd']['ip'] = {}; }
 
 rd.ip.Profile = function(data) {
+    var self = this,
+      RISE_CACHE_PATH = "http://localhost:9494/files?url=";
 
     this.data = data;
 
@@ -12,13 +14,24 @@ rd.ip.Profile = function(data) {
             rd.ip.globals.createProfile(this, data);
         }
 
-        if (rd.ip.core.useProxy) {
-            this.imageUrl = rd.ip.globals.IMAGE_PROXY_PATH + escape(this.imageUrl);
-        }
-
         this.image = null;
         this.imageState = ""; //"" or "loaded" or "error"
-        this.loadImage();
+
+        if (rd.ip.core.useProxy) {
+          rd.ip.core.isV2Running(function(isV2) {
+            if (self.imageUrl) {
+              if (isV2) {
+                self.imageUrl = RISE_CACHE_PATH + encodeURIComponent(self.imageUrl);
+              } else {
+                self.imageUrl = rd.ip.globals.IMAGE_PROXY_PATH + escape(self.imageUrl);
+              }
+
+              self.loadImage();
+            }
+          })
+        } else {
+          this.loadImage();
+        }
     }
 };
 
