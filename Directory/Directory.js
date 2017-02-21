@@ -1542,9 +1542,6 @@ RiseVision.Directory.Controller.prototype.onBgImageLoaded = function(row, img) {
 
 	if ($image.length > 0) {
 		$img.attr("src", this.data.getFormattedValue(row, this.imageIndex));
-		// $img.height(0);
-		$img.css("max-width", img.width);
-		$img.css("max-height", img.height);
 		$image.append($img);
 	}
 
@@ -1605,15 +1602,7 @@ RiseVision.Directory.Controller.prototype.initTable = function() {
 
 	$("#scrollContainer").show();
 	$("#nav").show();
-
-	//Find the maximum height of all images.
-	maxHeight = Math.max.apply(null, $(".image").map(function () {
-		return $(this).height();
-	}).get());
-
-	//Set the height of the images now that we know maxHeight.
-	$(".image img").height(maxHeight);
-	$("#directory").dataTable(this.sortConfig);	//TODO: Change this to table to remove dependency on id.
+	$("#directory").dataTable(this.sortConfig);
 
 	if (!this.hasHeadings()) {
 		$(".dataTables_wrapper table thead").css("display", "none");
@@ -1641,6 +1630,9 @@ RiseVision.Directory.Controller.prototype.initTable = function() {
 	$("table tr th:last-child, td:last-child").css({
 		"padding-right": "10px"
 	});
+
+  // Collapse the table borders now, since setting it too soon causes problems calculating column widths.
+  $("table").css("border-collapse", "collapse");
 
 	this.configureCard();
 

@@ -118,7 +118,7 @@
 			    <label for="refresh">
 				<a href="#" class="tooltip">Data Refresh (seconds):<span>How often to check the spreadsheet for new data</span></a>
 			    </label>
-			    <input id="refresh" name="refresh" type="text" class="short" value="10" />
+			    <input id="refresh" name="refresh" type="text" class="short" value="300" />
 			</li>
 			<li>
 			    <label for="imageCol">
