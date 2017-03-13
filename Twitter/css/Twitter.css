@@ -40,7 +40,7 @@ a {
     text-indent: -9999;
     display: inline-block;
     vertical-align: middle;
-    background: transparent url('//s3.amazonaws.com/Gadget-Twitter/images/twitter-bird.png') no-repeat center;
+    background: transparent url('https://s3.amazonaws.com/Gadget-Twitter/images/twitter-bird.png') no-repeat center;
     background-size: 100%;
 }
 /* List item */
@@ -101,7 +101,7 @@ a {
     margin-right: 4px;
     display: inline-block;
     vertical-align: middle;
-    background: transparent url('//s3.amazonaws.com/Gadget-Twitter/images/retweet.png') no-repeat center;
+    background: transparent url('https://s3.amazonaws.com/Gadget-Twitter/images/retweet.png') no-repeat center;
 }
 .separator {
     border-bottom: 1px solid gray;

@@ -645,8 +645,8 @@ RiseVision.Directory.Controller = function() {
 	};
 
 	this.viz = new RiseVision.Common.Visualization();
-	this.verticalLayout = "//s3.amazonaws.com/Gadget-Directory/css/Vertical.css";
-	this.horizontalLayout = "//s3.amazonaws.com/Gadget-Directory/css/Horizontal.css";
+	this.verticalLayout = "https://s3.amazonaws.com/Gadget-Directory/css/Vertical.css";
+	this.horizontalLayout = "https://s3.amazonaws.com/Gadget-Directory/css/Horizontal.css";
 }
 RiseVision.Directory.Controller.prototype.getAdditionalParams = function(name, value) {
 	if (name == "additionalParams") {

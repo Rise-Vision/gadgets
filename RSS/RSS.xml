@@ -376,16 +376,16 @@
 	    <section class="page"></section>
 	</div>
 
-	<script type="text/javascript" src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://datejs.googlecode.com/svn/trunk/build/date.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-	<script type="text/javascript" src="//9f8bd5014b970769c55f-6711414115c6e178c6b93552aded8da6.r34.cf2.rackcdn.com/common/JWPlayer/jwplayer.js"></script>
+	<script type="text/javascript" src="https://9f8bd5014b970769c55f-6711414115c6e178c6b93552aded8da6.r34.cf2.rackcdn.com/common/JWPlayer/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="xBXyUtAJ+brFzwc2kNhDg/Sqk8W7rmktAYliYHzVgxo=";</script>
 
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dotdotdot/jquery.dotdotdot-1.5.6.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-RSS/RSS.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/dotdotdot/jquery.dotdotdot-1.5.6.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-RSS/RSS.min.js"></script>
 
 	<script type="text/javascript">
 	    var prefs = new gadgets.Prefs(),

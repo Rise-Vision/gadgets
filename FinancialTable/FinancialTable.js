@@ -412,7 +412,7 @@ RiseVision.Financial = function(displayID) {
 	this.layoutURL = prefs.getString("layoutURL");
     }
 
-    this.logosURL = "//s3.amazonaws.com/risecontentlogos/financial/";
+    this.logosURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
     this.hasLogos = false;
     this.hasLastItemScrolled = false;
     this.updateInterval = 60000;

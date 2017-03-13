@@ -572,15 +572,15 @@
 	
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/AlphaNav/css/AlphaNav.css" />
 	
-	<script src="//www.google.com/jsapi"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     	
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/AlphaNav/AlphaNav.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/bPopup/jquery.bpopup-0.7.0.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Directory/Directory.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/AlphaNav/AlphaNav.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/bPopup/jquery.bpopup-0.7.0.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Directory/Directory.min.js"></script>
 	
         <script type="text/javascript">
             var prefs = new gadgets.Prefs(),
