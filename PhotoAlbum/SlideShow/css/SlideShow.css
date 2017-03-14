@@ -54,7 +54,7 @@
     height:86px;
     width:60px;
     position:absolute;
-    background:url('//s3.amazonaws.com/Gadget-Photo-Album/SlideShow/images/arrows.png') no-repeat;
+    background:url('https://s3.amazonaws.com/Gadget-Photo-Album/SlideShow/images/arrows.png') no-repeat;
     top:50%;
     margin-top:-43px;
     cursor:pointer;

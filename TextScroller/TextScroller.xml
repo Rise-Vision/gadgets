@@ -31,10 +31,10 @@
     
 	<div class="text_font-style" style="visibility: hidden; position:absolute;">Trigger custom font download</div>
     
-	<script src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script src="//s3.amazonaws.com/Gadget-Text-Scroller/Controller.min.js"></script>
-	<script src="//s3.amazonaws.com/Gadget-Text-Scroller/TextScroller.min.js"></script>
-	<script src="//s3.amazonaws.com/Gadget-Text-Scroller/Item.min.js"></script>
+	<script src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script src="https://s3.amazonaws.com/Gadget-Text-Scroller/Controller.min.js"></script>
+	<script src="https://s3.amazonaws.com/Gadget-Text-Scroller/TextScroller.min.js"></script>
+	<script src="https://s3.amazonaws.com/Gadget-Text-Scroller/Item.min.js"></script>
     
 	<script>
 	    var prefs = new gadgets.Prefs(),

@@ -325,14 +325,14 @@
 	<div id="container">
 	</div>
 
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
 
         <script type="text/javascript">
             var prefs = new gadgets.Prefs(),

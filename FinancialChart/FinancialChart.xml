@@ -490,18 +490,18 @@
 
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/envision/css/envision.css" />
 
-	<script type="text/javascript" src="//www.google.com/jsapi"></script>
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/RiseVision.Templates.Finance.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
+  <script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Chart/RiseVision.Templates.Finance.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.min.js"></script>
 
 	<!-- Load after envision.js. -->
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/grid.min.js"></script>
+	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/envision/grid.min.js"></script>
 
 	<script>
 	    var prefs = new gadgets.Prefs(),

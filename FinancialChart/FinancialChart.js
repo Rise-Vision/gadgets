@@ -402,8 +402,8 @@ RiseVision.FinancialChart.Controller = function(displayID) {
     this.durations = [{type: "Day", description: "Day"}, {type: "Week", description: "Week"}, {type: "1M", description: "Month"}, {type: "3M", description: "3 Months"},
 	{type: "6M", description: "6 Months"}, {type: "1Y", description: "1 Year"}, {type: "5Y", description: "5 Years"}];
     this.realTime = new RiseVision.Common.Financial.RealTime(this.displayID, this.instrument);
-    this.arrowURL = "//s3.amazonaws.com/risecontentlogos/financial/";
-    this.url = "//contentfinancial2.appspot.com/reserve?id=" + this.displayID + "&codes=" + this.instrument;
+    this.arrowURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
+    this.url = "https://contentfinancial2.appspot.com/reserve?id=" + this.displayID + "&codes=" + this.instrument;
 
     //Create one chart instance for each combination of instrument and chart duration.
     if (this.showDuration) {
@@ -818,7 +818,7 @@ RiseVision.FinancialChart.Controller.prototype.getRemainingData = function(succe
 	    //Display a spinner while the data loads.
 	    if (!this.isSpinnerVisible) {
 		$("#priceChart").spinner({
-		    img: "//preview.risevision.com/images/ajax-loader-circle-notext.gif",
+		    img: "https://preview.risevision.com/images/ajax-loader-circle-notext.gif",
 		    width: 100,
 		    height: 100,
 		    position: "center"

@@ -551,7 +551,7 @@ RiseVision.Spreadsheet.prototype.initialize = function() {
 
 	//Same CSS file is used for default table layout and when a custom layout is not used.
 	if (!this.useLayoutURL && !this.isHorizontal()) {	//Issue 911
-		self.loadCSS("//s3.amazonaws.com/Gadget-Spreadsheet/layouts/Table/Table.css");
+		self.loadCSS("https://s3.amazonaws.com/Gadget-Spreadsheet/layouts/Table/Table.css");
 	}
 
 	//Load XML layout.
@@ -951,7 +951,7 @@ RiseVision.Spreadsheet.prototype.buildMenu = function() {
 /* Format each column. */
 RiseVision.Spreadsheet.prototype.formatColumns = function($elem) {
 	var self = this,
-	logosURL = "//s3.amazonaws.com/risecontentlogos/financial/";
+	logosURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
 
 	$.each(this.columns, function(index, value) {
 		if (value.column) {
