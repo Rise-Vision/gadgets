@@ -146,8 +146,9 @@ RiseVision.Common.Visualization.prototype.getData = function(opts) {
 RiseVision.Common.Visualization.prototype.loadVisualizationAPI = function() {
   var self = this;
 
-  google.load("visualization", "1", {
-    "callback" : function() {
+  google.charts.load('current', {
+    packages: ['corechart'],
+    callback: function() {
       self.isVisualizationLoaded = true;
       self.sendQuery();
     }
@@ -2051,7 +2052,7 @@ RiseVision.Common.Scroller.prototype.drawCanvasFromEnd = function(canvas, curren
 
 RiseVision.Common.Authorization = function() {
   this.clientID = "726689182011.apps.googleusercontent.com";
-  this.scope = "https://www.googleapis.com/auth/drive";
+  this.scope = "https://www.googleapis.com/auth/drive.file";
 }
 RiseVision.Common.Authorization.prototype.checkAuth = function() {
   var self = this;
