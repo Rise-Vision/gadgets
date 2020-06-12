@@ -216,8 +216,8 @@
 
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 
+
 	    <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
-	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
 	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -225,27 +225,46 @@
 
             <script type="text/javascript">
                 var prefs = new gadgets.Prefs(),
-		    spreadsheet = null;
+  spreadsheet = null,
+  apiLoaded = false;
 
-		google.load('picker', '1');
+function onApiLoad() {
+  console.log("api loaded");
+  apiLoaded = true;
+}
 
-                function init() {
-		    google.setOnLoadCallback(function() {
-			$(function() {
-			    spreadsheet = new RiseVision.Spreadsheet();
+function init() {
+console.log("init", apiLoaded);
+  if ( apiLoaded ) {
+    gapi.load('picker', onPickerLoad);
+  } else {
+    setTimeout(function() {
+      init();
+    }, 500);
+  }
 
-			    gadgets.rpc.register("rscmd_getSettings", spreadsheet.getSettings);
-			    gadgets.rpc.register("rscmd_googlePickerCallback", spreadsheet.setURL);
-			    gadgets.rpc.register("rscmd_colorPickerCallback", spreadsheet.setColor);
-			    gadgets.rpc.register("rscmd_fontSelectorCallback", spreadsheet.setFont);
+}
 
-			    spreadsheet.initSettings();
-			});
-		    });
-                }
+function onPickerLoad() {
+console.log("onPickerLoad");
+  $(function() {
+    spreadsheet = new RiseVision.Spreadsheet();
 
-                gadgets.util.registerOnLoadHandler(init);
+    gadgets.rpc.register("rscmd_getSettings", spreadsheet.getSettings);
+    gadgets.rpc.register("rscmd_googlePickerCallback", spreadsheet.setURL);
+    gadgets.rpc.register("rscmd_colorPickerCallback", spreadsheet.setColor);
+    gadgets.rpc.register("rscmd_fontSelectorCallback", spreadsheet.setFont);
+
+    console.log("init settings!");
+    spreadsheet.initSettings();
+  });
+}
+
+gadgets.util.registerOnLoadHandler(init);
             </script>
+            <script type="text/javascript" src="//apis.google.com/js/api.js?onload=onApiLoad></script>
+
+
 	]]>
     </Content>
     <Content type="html">
