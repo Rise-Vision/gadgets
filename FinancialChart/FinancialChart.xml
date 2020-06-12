@@ -317,7 +317,6 @@
 
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 
-	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
 	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -328,8 +327,7 @@
 		    chart = null;
 
                 function init() {
-		    google.setOnLoadCallback(function() {
-			$(function() {
+		    $(function() {
 			    chart = new RiseVision.FinancialChart.Settings();
 
 			    gadgets.rpc.register("rscmd_getSettings", chart.getSettings);
@@ -339,7 +337,6 @@
 
 			    chart.initSettings();
 			});
-		    });
                 }
 
                 gadgets.util.registerOnLoadHandler(init);
@@ -490,7 +487,7 @@
 
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/envision/css/envision.css" />
 
-	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
   <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
@@ -539,8 +536,7 @@
 		gadgets.rpc.register("rscmd_pause_" + id, pause);
 		gadgets.rpc.register("rscmd_stop_" + id, stop);
 
-		google.setOnLoadCallback(function() {
-		    gadgets.rpc.register("rsparam_set_" + id, function(name, value) {
+		gadgets.rpc.register("rsparam_set_" + id, function(name, value) {
 			if (prefs.getBool("acceptance")) {
 			    initChart(value);
 			}
@@ -552,7 +548,6 @@
 		    });
 
 		    gadgets.rpc.call("", "rsparam_get", null, id, "displayId");
-		});
             }
 
 	    //Initialize the gadget.
