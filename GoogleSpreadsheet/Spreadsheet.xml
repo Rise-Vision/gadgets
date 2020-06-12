@@ -262,7 +262,7 @@ console.log("onPickerLoad");
 
 gadgets.util.registerOnLoadHandler(init);
             </script>
-            <script type="text/javascript" src="//apis.google.com/js/api.js?onload=onApiLoad></script>
+            <script type="text/javascript" src="//apis.google.com/js/api.js?onload=onApiLoad"></script>
 
 
 	]]>
