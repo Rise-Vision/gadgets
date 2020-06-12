@@ -302,7 +302,7 @@ gadgets.util.registerOnLoadHandler(init);
 	    <div class="data_font-style" style="visibility: hidden; position:absolute;">Trigger custom font download</div>
 
 	    <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
-	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+	    <script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
 	    <!-- Don't upgrade jQuery as jquery.dataTables library uses a jQuery function that is now deprecated. -->
 	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
@@ -348,15 +348,13 @@ gadgets.util.registerOnLoadHandler(init);
 			document.body.style.background = backgroundColor;
 		    }
 
-		    google.setOnLoadCallback(function() {
-			spreadsheet = new RiseVision.Spreadsheet();
+		    spreadsheet = new RiseVision.Spreadsheet();
 
 			gadgets.rpc.register("rsparam_set_" + id, spreadsheet.getAdditionalParams);
 			gadgets.rpc.register("rscmd_getSpreadsheetData", function(url) {
 			    spreadsheet.getData.call(spreadsheet, url);
 			});
 			gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
-		    });
                 }
 
 		function play() {
