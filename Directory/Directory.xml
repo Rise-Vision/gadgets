@@ -449,7 +449,6 @@
 	    
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 	    
-	    <script src="//www.google.com/jsapi"></script>
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -459,25 +458,40 @@
 		var prefs = new gadgets.Prefs(),
 		    directorySettings = null;
 		    
-		google.load("picker", "1");
-                                
+                var apiLoaded = false;
+
+                function onApiLoad() {
+                  console.log("api loaded");
+                  apiLoaded = true;
+                }
+
                 function init() {
-		    google.setOnLoadCallback(function() {
-			$(function() {
-			    directorySettings = new RiseVision.Directory.Settings();
-			    
-			    gadgets.rpc.register("rscmd_getSettings", directorySettings.getSettings);
-			    gadgets.rpc.register("rscmd_googlePickerCallback", directorySettings.setURL);
-			    gadgets.rpc.register("rscmd_colorPickerCallback", directorySettings.setColor);
-			    gadgets.rpc.register("rscmd_fontSelectorCallback", directorySettings.setFont);
-			    
-			    directorySettings.initSettings();
-			});
-		    });
+                  if (apiLoaded) {
+                    gapi.load('picker', onPickerLoad);
+                  } else {
+                    setTimeout(function() {
+                      init();
+                    }, 500);
+                  }
+                }
+
+                function onPickerLoad() {
+                  console.log("picker loaded");
+                  $(function() {
+                    directorySettings = new RiseVision.Directory.Settings();
+
+                    gadgets.rpc.register("rscmd_getSettings", directorySettings.getSettings);
+                    gadgets.rpc.register("rscmd_googlePickerCallback", directorySettings.setURL);
+                    gadgets.rpc.register("rscmd_colorPickerCallback", directorySettings.setColor);
+                    gadgets.rpc.register("rscmd_fontSelectorCallback", directorySettings.setFont);
+
+                    directorySettings.initSettings();
+                  });
                 }
 		
                 gadgets.util.registerOnLoadHandler(init); 
             </script>
+            <script type="text/javascript" src="//apis.google.com/js/api.js?onload=onApiLoad"></script>
 	]]>
     </Content>
     <Content type="html">
@@ -573,6 +587,7 @@
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/AlphaNav/css/AlphaNav.css" />
 	
 	<script src="//www.google.com/jsapi"></script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     	
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
