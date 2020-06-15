@@ -252,7 +252,6 @@
     
 	<link rel="stylesheet" href="https://s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 	    
-	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     
 	<script type="text/javascript" src="https://s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -262,7 +261,6 @@
 	    var clockSettings = null;
 			    
 	    function init() {
-		google.setOnLoadCallback(function() {
 		    $(function() {
 			clockSettings = new RiseVision.WorldClock.Settings();
 			
@@ -272,7 +270,6 @@
 			
 			clockSettings.initSettings();
 		    });
-		});
 	    }
 	    
 	    gadgets.util.registerOnLoadHandler(init); 
