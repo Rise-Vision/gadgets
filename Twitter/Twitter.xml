@@ -48,7 +48,6 @@
 
     <link type="text/css" rel="stylesheet" href="//s3.amazonaws.com/Gadget-Twitter/css/Twitter.css"></link>
 
-    <script src="//www.google.com/jsapi"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//datejs.googlecode.com/svn/trunk/build/date.js"></script>
 
@@ -89,15 +88,13 @@
           gadgets.rpc.register("rscmd_stop_" + id, stop);
         }
 
-        google.setOnLoadCallback(function() {
-          twitterList = new RiseVision.TwitterList();
+        twitterList = new RiseVision.TwitterList();
 
-          gadgets.rpc.register("rsparam_set_" + id, function(name, value) {
-          twitterList.processData.call(twitterList, name, value);
-          });
-
-          twitterList.getData();
+        gadgets.rpc.register("rsparam_set_" + id, function(name, value) {
+        twitterList.processData.call(twitterList, name, value);
         });
+
+        twitterList.getData();
       }
 
       function play() {
