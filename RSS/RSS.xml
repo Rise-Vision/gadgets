@@ -294,7 +294,7 @@
 
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 
-	    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+	    <script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
 	    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -303,10 +303,7 @@
             <script type="text/javascript">
                 var rssSettings = null;
 
-		google.load("feeds", "1");
-
                 function init() {
-		    google.setOnLoadCallback(function() {
 			$(function() {
 			    rssSettings = new RiseVision.RSS.Settings();
 
@@ -315,7 +312,6 @@
 			    gadgets.rpc.register("rscmd_fontSelectorCallback", rssSettings.setFont);
 
 			    rssSettings.initSettings();
-			});
 		    });
                 }
 
