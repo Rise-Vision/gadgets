@@ -600,8 +600,6 @@
             var prefs = new gadgets.Prefs(),
 		controller = null;
 	    
-	    google.load("gdata", "1");
-	    
 	    //Issue 1056 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
@@ -635,16 +633,14 @@
 		    gadgets.rpc.register("rscmd_stop_" + id, stop);
 		}
 				
-		google.setOnLoadCallback(function() {
-		    controller = new RiseVision.Directory.Controller();
+                controller = new RiseVision.Directory.Controller();
+
+                $(window).resize(function() {
+		    controller.onresize();
+                });
 		    
-		    $(window).resize(function() {
-			controller.onresize();
-		    });
-		    
-		    gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
-		    gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
-		});
+                gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
+                gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
             }
 	    
 	    function play() {
