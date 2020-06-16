@@ -72,7 +72,6 @@
 				<a href="#" class="tooltip">Data URL*:<span>Query data source URL of the spreadsheet that holds the data</span></a>
 			    </label>
 			    <input id="url" name="url" type="text" class="medium" required autofocus />
-			    <a id="googleDrive" href="#" data-for="url"><span>Google Drive&#8482;</span></a>
 			</li>
 			<li class="more drillDown" style="display: none;">
 			    <ol>
