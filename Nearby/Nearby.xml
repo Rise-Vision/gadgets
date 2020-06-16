@@ -16,12 +16,12 @@
     </UserPref>
     <UserPref name="location" display_name="If you are showing the current location as a custom address, as chosen above, enter the complete address" default_value="" datatype="string"/>
     <UserPref name="_table_query_url" display_name="Location List Spreadsheet URL" required="true" default_value="" />
-    <UserPref name="_table_query_refresh_interval" display_name="Data Refresh Interval (minutes)" default_value="300" datatype="enum" required="false"> 
-	<EnumValue value="0" display_value="Do not refresh"/> 
-	<EnumValue value="60" display_value="1"/> 
-	<EnumValue value="300" display_value="5"/> 
-	<EnumValue value="1800" display_value="30"/> 
-	<EnumValue value="3600" display_value="60"/> 
+    <UserPref name="_table_query_refresh_interval" display_name="Data Refresh Interval (minutes)" default_value="300" datatype="enum" required="false">
+	<EnumValue value="0" display_value="Do not refresh"/>
+	<EnumValue value="60" display_value="1"/>
+	<EnumValue value="300" display_value="5"/>
+	<EnumValue value="1800" display_value="30"/>
+	<EnumValue value="3600" display_value="60"/>
     </UserPref>
     <UserPref name="tablePosition" display_name="Location List Position" default_value="2" datatype="enum">
 	<EnumValue value="0" display_value="none"/>
@@ -30,15 +30,15 @@
 	<EnumValue value="3" display_value="left"/>
 	<EnumValue value="4" display_value="right"/>
     </UserPref>
-    <UserPref name="tableSize" display_name="Location List Size (pixels)" required="false" default_value="200" /> 
-    <UserPref name="backColor" display_name="Background Color" required="false" default_value="transparent" /> 
-    <UserPref name="borderColor" display_name="Dialogue Border Color" required="false" default_value="transparent" /> 
+    <UserPref name="tableSize" display_name="Location List Size (pixels)" required="false" default_value="200" />
+    <UserPref name="backColor" display_name="Background Color" required="false" default_value="transparent" />
+    <UserPref name="borderColor" display_name="Dialogue Border Color" required="false" default_value="transparent" />
     <UserPref name="dialogBackColor" display_name="Dialogue Background Color" required="false" default_value="#ffffff" />
-    <UserPref name="resetTimeout" display_name="Inactivity Timeout (seconds)" required="false" default_value="60" /> 
+    <UserPref name="resetTimeout" display_name="Inactivity Timeout (seconds)" required="false" default_value="60" />
     <UserPref name="showHeader" display_name="Show Location List Header" datatype="bool" default_value="true" />
     <UserPref name="data_font-style" display_name="Location List Font" datatype="string" default_value=".data_font-style{font-family:Verdana, Verdana, Geneva, sans-serif;color:rgb(0, 0, 0);font-size:16px;}" required="true" />
     <UserPref name="tableColor" display_name="Location List Background" required="false" default_value="#ffffff" datatype="string"/>
-    <UserPref name="altColor" display_name="Location List Alternating Row Background" required="false" default_value="" datatype="string"/> 
+    <UserPref name="altColor" display_name="Location List Alternating Row Background" required="false" default_value="" datatype="string"/>
     <UserPref name="rowSepWidth" display_name="Location List Row Separator Width (pixels)" required="false" default_value="0" datatype="string"/>
     <UserPref name="rowSepColor" display_name="Location List Row Separator Color" required="false" default_value="#000000" datatype="string"/>
     <Content type="html">
@@ -73,9 +73,9 @@
 	    .altrow {
 		background-color: __UP_altColor__;
 	    }
-	    
+
 	    __UP_data_font-style__
-	    
+
 	    .popupborder
 	    {
 		position: absolute;
@@ -149,31 +149,31 @@
 	    {
 		position:absolute;
 		top: 0px;
-		left: 0px; 
+		left: 0px;
 	    }
         </style>
 
-	<!-- Load the Google common loader, that is later used to load the Visualization API. --> 
-	<script type="text/javascript" src="//www.google.com/jsapi"></script> 
+	<!-- Load the Google common loader, that is later used to load the Visualization API. -->
+	<script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-	
+
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Nearby/js/infobubble.js"></script>
 
 	<div id="mapbox"></div>
 	<div id="tablebox">
 	    <div id="tableheader" style="display:none;"></div>
-	    <div id="tabledata"> 
-		<div id="scrollbox"> 
-		    <div class="container"> 
-			<div class="content"></div> 
-		    </div> 
-		</div> 
+	    <div id="tabledata">
+		<div id="scrollbox">
+		    <div class="container">
+			<div class="content"></div>
+		    </div>
+		</div>
 	    </div>
 	    <img id="thepin" width="50" height="50" style="display:none;" src="//s3.amazonaws.com/Gadget-Nearby/images/pointofinterest.png" />
 	</div>
-			
+
 	<script>
 	    var SERVER_PATH = '//s3.amazonaws.com/Gadget-Nearby';
 	    var gadgetHelper = null;
@@ -195,50 +195,50 @@
 	    var inactivityInt = 0;
 	    var totalWidth = -1;
 	    var totalHeight = -1;
-	    
+
 	    //Issue 1049 - Disable right-click.
 	    window.oncontextmenu = function() {
 		return false;
 	    };
-	    
+
 	    //Add Analytics code.
 	    var _gaq = _gaq || [];
-	    
+
 	    _gaq.push(['_setAccount', 'UA-41395348-17']);
 	    _gaq.push(['_trackPageview']);
-	  
+
 	    (function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    })();
-	
+
 	    if (id != null && id != "") {
 		gadgets.rpc.register("rscmd_play_" + id, play);
 		gadgets.rpc.register("rscmd_pause_" + id, pause);
 	    }
-	
+
 	    var backgroundColor = prefs.getString("backColor");
-	    
+
 	    if (backgroundColor !== null && backgroundColor != "") {
 		document.body.style.background = backgroundColor;
 	    }
-    
-	    gadgets.util.registerOnLoadHandler(loadGadget);    		    		    			
-	
-	    function closePopup(destIndex) {		
-		if (popupElement != null) {	
+
+	    gadgets.util.registerOnLoadHandler(loadGadget);
+
+	    function closePopup(destIndex) {
+		if (popupElement != null) {
 		    popupElement.parentNode.removeChild(popupElement);
 		    popupElement =  null;
 		}
-		
+
 		if (destIndex != -1) {
 		    labels[destIndex].open(map);
 		}
-		
+
 	    }
-			
-	    function resetMap() {	
+
+	    function resetMap() {
 		for (var i = 0; i < labels.length; i++) {
 		    if (labels[i] != null) {
 			if (labels[i].isOpen()) {
@@ -246,41 +246,41 @@
 			}
 		    }
 		}
-		
+
 		map.fitBounds(latlngbounds);
 		closePopup(-1);
 	    }
-					
+
 	    function resetInactivityTimer()
 	    {
 		clearInterval(inactivityInt);
 		inactivityInt = setInterval("resetMap()", prefs.getInt("resetTimeout") * 1000);
 	    }
-		
+
 	    function openInfo(url, destIndex) {
 		labels[destIndex].close();
-	
+
 		var popUpWidth = totalWidth - 100;
-		var popUpHeight = totalHeight - 100;		  
+		var popUpHeight = totalHeight - 100;
 		var popUpCode = '<div style="height: ' + totalHeight + 'px; width: ' + totalWidth + 'px;" class="popupborder">'+
 		    '<img width="50" height="50" class="closebutton" src="' + SERVER_PATH + '/images/close.png" onclick="closePopup(' + destIndex + ');" />'+
 		    '<div style="height: ' + popUpHeight + 'px; width: ' + popUpWidth + 'px;" class="popup">' +
-		    '<img class="infoimage" src="' + url + '" /></div></div>';		
+		    '<img class="infoimage" src="' + url + '" /></div></div>';
 		var div = document.createElement('div');
-		
+
 		div.innerHTML = popUpCode;
 		popupElement = div.firstChild;
 		document.body.appendChild(popupElement);
 	    }
-	
-	    function openDirections(destIndex, mode) {	
+
+	    function openDirections(destIndex, mode) {
 		labels[destIndex].close();
-		
+
 		var popUpWidth = totalWidth - 100;
 		var popUpHeight = totalHeight - 100;
 		var dirWidth = popUpWidth / 2 - 1;
 		var dirHeight = popUpHeight;
-		var dirUrl = SERVER_PATH + '/directions.html?' + (displayAddress != null ? 'org=' + escape(displayAddress) : 'orglat=' + currentLocation.lat() + "&orglng=" + currentLocation.lng()) + "&dest=" + escape(dataTable.getValue(destIndex, 1)) + "&mode=" + mode;     		  
+		var dirUrl = SERVER_PATH + '/directions.html?' + (displayAddress != null ? 'org=' + escape(displayAddress) : 'orglat=' + currentLocation.lat() + "&orglng=" + currentLocation.lng()) + "&dest=" + escape(dataTable.getValue(destIndex, 1)) + "&mode=" + mode;
 		var popUpCode = '<div style="height: ' + totalHeight + 'px; width: ' + totalWidth + 'px;" class="popupborder">'+
 		    '<img width="50" height="50" style="position:absolute; top: 0px; right:0px;" class="closebutton" src="' + SERVER_PATH + '/images/close.png" onclick="closePopup(' + destIndex + ');" />' +
 		    '<div style="height: ' + popUpHeight + 'px; width: ' + popUpWidth + 'px; display: table;" class="popup">'+
@@ -289,49 +289,49 @@
 		    '<img width="200" height="200" style="position: absolute; bottom: 0px; right: 0px;" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + escape(dirUrl) + '&choe=UTF-8" />'+
 		    '</div></div>';
 		var div = document.createElement('div');
-		
+
 		div.innerHTML = popUpCode;
 		popupElement = div.firstChild;
 		document.body.appendChild(popupElement);
-			
-		var dirmap = new google.maps.Map(document.getElementById("dirmapbox"), { 
+
+		var dirmap = new google.maps.Map(document.getElementById("dirmapbox"), {
 		    zoom: 8,
 		    disableDefaultUI: true,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP 
-		}); 
-			
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+
 		dirmap.fitBounds(map.getBounds());
-		directionsDisplay.setMap(dirmap);		
+		directionsDisplay.setMap(dirmap);
 		directionsDisplay.setPanel(document.getElementById("dirlistbox"));
-		
+
 		var request = {
-		    origin: displayAddress != null ? displayAddress : currentLocation, 
+		    origin: displayAddress != null ? displayAddress : currentLocation,
 		    destination: dataTable.getValue(destIndex, 1),
 		    travelMode: mode
 		};
-		
+
 		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
 		    }
 		});
 	    }
-	
+
 	    function openStreetView(destIndex) {
 		labels[destIndex].close();
-	
+
 		var popUpWidth = totalWidth - 100;
-		var popUpHeight = totalHeight - 100;		
+		var popUpHeight = totalHeight - 100;
 		var popUpCode = '<div style="height: ' + totalHeight + 'px; width: ' + totalWidth + 'px;" class="popupborder">'+
 		'<img width="50" height="50" class="closebutton" src="' + SERVER_PATH + '/images/close.png" onclick="closePopup(' + destIndex + ');" />'+
 		'<div id="panobox" style="height: ' + popUpHeight + 'px; width: ' + popUpWidth + 'px;" class="popup">' +
-		'</div></div>';		
+		'</div></div>';
 		var div = document.createElement('div');
-		
+
 		div.innerHTML = popUpCode;
 		popupElement = div.firstChild;
 		document.body.appendChild(popupElement);
-			
+
 		var panorama = new google.maps.StreetViewPanorama(document.getElementById("panobox"), {
 		    position: labels[destIndex].getPosition(),
 		    pov: {
@@ -341,54 +341,54 @@
 		    }
 		});
 	    }
-	
-	    function changeZoom(delta) {		
+
+	    function changeZoom(delta) {
 		var z = map.getZoom();
 		map.setZoom(z+delta);
 	    }
-	
-	    function loadGadget() {	
-		google.load("visualization", "1");
-		
+
+	    function loadGadget() {
+		google.charts.load('current', {packages: ['corechart']});
+
 		if (locationType == "address") {
 		    // get the address from Viewer
-		    google.setOnLoadCallback(requestAddress);
-		
+		    google.charts.setOnLoadCallback(requestAddress);
+
 		}
 		else if (locationType == "custom") {
 		    // geocode custom address
-		    displayAddress = prefs.getString("location"); 
-		    google.setOnLoadCallback(geocodeAddress);
-			
+		    displayAddress = prefs.getString("location");
+		    google.charts.setOnLoadCallback(geocodeAddress);
+
 		}
 		else if (locationType == "geolocation") {
 		    // use browser's geolocation
-		    google.setOnLoadCallback(useGeolocation);
+		    google.charts.setOnLoadCallback(useGeolocation);
 		}
 	    }
-	
+
 	    function showError(msg) {
 		console.error(msg);
 	    }
-	
-	    //  request display address from Viewer 
-	    function requestAddress() {    			
+
+	    //  request display address from Viewer
+	    function requestAddress() {
 		if (id != null && id != "") {
 		    gadgets.rpc.register("rsparam_set_" + id, receiveAddress);
 		    gadgets.rpc.call('', 'rsparam_get', null, id, "displayAddress");
 		}
-		else {		
+		else {
 		    showError("Unable to communicate with Viewer (ID is not defined).");
 		}
 	    }
-	
-	    // callback for receiving display address from Viewer  
+
+	    // callback for receiving display address from Viewer
 	    function receiveAddress(name, value) {
-		if (name=='displayAddress') {		
+		if (name=='displayAddress') {
 		    var addr = (value != null && value != '') ? eval('(' + value + ')') : null;
 
 		    displayAddress = addr != null ? getFullAddress(addr) : null;
-		
+
 		    if (displayAddress != null && displayAddress != '') {
 			geocodeAddress();
 		    }
@@ -396,14 +396,14 @@
 			showError("Invalid/empty address received. Attempting to use geolocation instead.");
 			useGeolocation();
 		    }
-		} 
+		}
 	    }
-            
+
             function geocodeAddress() {
             	geocoder.geocode( { 'address': displayAddress}, receiveLocation);
             }
-            
-            function receiveLocation(results, status) {            
+
+            function receiveLocation(results, status) {
             	if (status == google.maps.GeocoderStatus.OK) {
 		    currentLocation = results[0].geometry.location;
 		    initGadget();
@@ -412,32 +412,32 @@
 		    useGeolocation();
 		}
             }
-            
-            function useGeolocation() {           	    
+
+            function useGeolocation() {
            	var browserSupportFlag =  new Boolean();
-            
+
             	// Try W3C Geolocation method (Preferred)
 		if(navigator.geolocation) {
 		    browserSupportFlag = true;
-		    navigator.geolocation.getCurrentPosition(function(position) { 
+		    navigator.geolocation.getCurrentPosition(function(position) {
 			currentLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			initGadget();
-		    }, function() { 
+		    }, function() {
 			handleNoGeolocation(browserSupportFlag);
-			initGadget(); 
-		    });	
+			initGadget();
+		    });
 		}
-		else if (google.gears) {		
+		else if (google.gears) {
 		    // Try Google Gears Geolocation
 		    browserSupportFlag = true;
-		    
+
 		    var geo = google.gears.factory.create('beta.geolocation');
-		    
-		    geo.getCurrentPosition(function(position) { 
+
+		    geo.getCurrentPosition(function(position) {
 			currentLocation = new google.maps.LatLng(position.latitude,position.longitude);
 			initGadget();
-		    }, function() { 
-			handleNoGeolocation(browserSupportFlag); 
+		    }, function() {
+			handleNoGeolocation(browserSupportFlag);
 			initGadget();
 		    });
 		}
@@ -448,8 +448,8 @@
 		    initGadget();
 		}
             }
-                        
-	    function handleNoGeolocation(errorFlag) {			
+
+	    function handleNoGeolocation(errorFlag) {
 		if (errorFlag == true) {
 		    showError("Geolocation service failed.");
 		}
@@ -457,128 +457,128 @@
 		    showError("Browser doesn't support geolocation.");
 		}
 	    }
-		
+
 	    function initGadget() {
 		initGadget2();
 		readyEvent();
 	    }
 
 	    // initialize gadget
-	    function initGadget2() {    
+	    function initGadget2() {
 		$('body').click(resetInactivityTimer);
 		$('body').keypress(resetInactivityTimer);
 		$('body').mousemove(resetInactivityTimer);
 		$('body').scroll(resetInactivityTimer);
-		
+
 		totalHeight = prefs.getInt("rsH") != null && prefs.getInt("rsH") > 0 && prefs.getString("rsH").indexOf('%') == -1 ? prefs.getInt("rsH") : document.body.clientHeight;
 		totalWidth = prefs.getInt("rsW") != null && prefs.getInt("rsW") > 0 && prefs.getString("rsW").indexOf('%') == -1 ? prefs.getInt("rsW") : document.body.clientWidth;
-		
-		var tableSize = prefs.getInt("tableSize");     	
-		var showHeader = prefs.getBool("showHeader");				
-		var tablePos = {left: 0, top: 0, height: 0, width: 0}; 
+
+		var tableSize = prefs.getInt("tableSize");
+		var showHeader = prefs.getBool("showHeader");
+		var tablePos = {left: 0, top: 0, height: 0, width: 0};
 		var mapPos = {left: 0, top: 0, height: 0, width: 0};
 		var headerPos = {left: 0, top: 0, height: 30, width: 0};
 		var dataPos = {left: 0, top: 0, height: 0, width: 0};
 		var zoomInPos = {left: 20, top: 60};
 		var zoomHomePos = {left: 20, top: 130};
 		var zoomOutPos = {left: 20, top: 200};
-		
-		switch(prefs.getInt("tablePosition")) {			
+
+		switch(prefs.getInt("tablePosition")) {
 		    // none
-		    case 0:		
-			mapPos.height = totalHeight; 
+		    case 0:
+			mapPos.height = totalHeight;
 			mapPos.width = totalWidth;
-				
-			break;		
+
+			break;
 		    // top
-		    case 1:		
-			mapPos.height = totalHeight - tableSize; 
+		    case 1:
+			mapPos.height = totalHeight - tableSize;
 			mapPos.width = totalWidth;
 			mapPos.top = tableSize;
-			
-			tablePos.height = tableSize; 
+
+			tablePos.height = tableSize;
 			tablePos.width = totalWidth;
-			
-			dataPos.height = showHeader ? tableSize - headerPos.height : tableSize; 
+
+			dataPos.height = showHeader ? tableSize - headerPos.height : tableSize;
 			dataPos.width = totalWidth;
 			dataPos.top = showHeader ? headerPos.height : 0;
-			
+
 			zoomInPos.top += tableSize;
 			zoomHomePos.top += tableSize;
 			zoomOutPos.top += tableSize;
-				
-			break;				
+
+			break;
 		    // bottom
-		    case 2:		
-			mapPos.height = totalHeight - tableSize; 
+		    case 2:
+			mapPos.height = totalHeight - tableSize;
 			mapPos.width = totalWidth;
-		
-			tablePos.height = tableSize; 
+
+			tablePos.height = tableSize;
 			tablePos.width = totalWidth;
 			tablePos.top = totalHeight - tableSize;
-			
-			dataPos.height = showHeader ? tableSize - headerPos.height : tableSize; 
+
+			dataPos.height = showHeader ? tableSize - headerPos.height : tableSize;
 			dataPos.width = totalWidth;
 			dataPos.top = showHeader ? headerPos.height : 0;
-			
-			break;			
+
+			break;
 		    // left
-		    case 3:		
-			mapPos.height = totalHeight; 
+		    case 3:
+			mapPos.height = totalHeight;
 			mapPos.width = totalWidth - tableSize;
 			mapPos.left = tableSize;
-			
-			tablePos.height = totalHeight; 
+
+			tablePos.height = totalHeight;
 			tablePos.width = tableSize;
-		
-			dataPos.height = showHeader ? totalHeight - headerPos.height : totalHeight; 
+
+			dataPos.height = showHeader ? totalHeight - headerPos.height : totalHeight;
 			dataPos.width = tableSize;
 			dataPos.top = showHeader ? headerPos.height : 0;
-			
+
 			zoomInPos.left += tableSize;
 			zoomHomePos.left += tableSize;
 			zoomOutPos.left += tableSize;
-			
-			break;			
+
+			break;
 		    // right
-		    case 4:		
-			mapPos.height = totalHeight; 
+		    case 4:
+			mapPos.height = totalHeight;
 			mapPos.width = totalWidth - tableSize;
-			
-			tablePos.height = totalHeight; 
+
+			tablePos.height = totalHeight;
 			tablePos.width = tableSize;
 			tablePos.left = totalWidth - tableSize;
-				
-			dataPos.height = showHeader ? totalHeight - headerPos.height : totalHeight; 
+
+			dataPos.height = showHeader ? totalHeight - headerPos.height : totalHeight;
 			dataPos.width = tableSize;
 			dataPos.top = showHeader ? headerPos.height : 0;
-			
-			break;			
-		} 
-			
-		$("#mapbox").css({'height' : mapPos.height + 'px', 'width' : mapPos.width + 'px', 'top' : mapPos.top + 'px', 'left': mapPos.left + 'px'});	
-			
-		if (prefs.getInt("tablePosition") > 0) {		
+
+			break;
+		}
+
+		$("#mapbox").css({'height' : mapPos.height + 'px', 'width' : mapPos.width + 'px', 'top' : mapPos.top + 'px', 'left': mapPos.left + 'px'});
+
+		if (prefs.getInt("tablePosition") > 0) {
 		    $("#tablebox").css({'height' : tablePos.height + 'px', 'width' : tablePos.width + 'px', 'top' : tablePos.top + 'px', 'left': tablePos.left + 'px'});
 		    $("#tabledata").css({'height' : dataPos.height + 'px', 'width' : dataPos.width + 'px', 'top' : dataPos.top + 'px', 'left': dataPos.left + 'px'});
-		    
+
 		    var containerWidth = dataPos.width;
-			    
+
 		    $("#tabledata .container").css({'width' : containerWidth + 'px'});
-		    
+
 		    if (showHeader) {
 			$("#tableheader").show();
 			$("#thepin").show();
-		    }	
-						
+		    }
+
 		}
-		else {		
-		    $("#tablebox").hide();		
+		else {
+		    $("#tablebox").hide();
 		}
-		
+
 		directionsDisplay = new google.maps.DirectionsRenderer();
-				
-		map = new google.maps.Map(document.getElementById("mapbox"), { 
+
+		map = new google.maps.Map(document.getElementById("mapbox"), {
 		    zoom: 8,
 		    panControl: false,
 		    zoomControl: false,
@@ -586,45 +586,45 @@
 		    mapTypeControl: true,
 		    streetViewControl: false,
 		    overviewMapControl: false,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP 
-		}); 
-		
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+
 		$('body').append('<img width="50" height="50" style="top:' + zoomInPos.top + 'px;left:' + zoomInPos.left + 'px;" class="zoombutton" src="' + SERVER_PATH + '/images/plus.png" onclick="changeZoom(1);" />');
 		$('body').append('<img width="50" height="50" style="top:' + zoomHomePos.top + 'px;left:' + zoomHomePos.left + 'px;" class="zoombutton" src="' + SERVER_PATH + '/images/home.png" onclick="resetMap();" />');
 		$('body').append('<img width="50" height="50" style="top:' + zoomOutPos.top + 'px;left:' + zoomOutPos.left + 'px;" class="zoombutton" src="' + SERVER_PATH + '/images/minus.png" onclick="changeZoom(-1);" />');
-			
+
 		if (currentLocation != null) {
 		    var marker = new google.maps.Marker({
-			map: map, 
+			map: map,
 			animation: google.maps.Animation.DROP,
 			title: 'You Are Here',
 			position: currentLocation,
 			icon: SERVER_PATH + '/images/youarehere.png',
 			zIndex: 1000	//Issue 642
 		    });
-		    
+
 		    google.maps.event.addListener(marker, 'click', function() {
 			map.fitBounds(latlngbounds);
 		    });
-		    
+
 		    latlngbounds.extend(currentLocation);
 		}
-				
+
 		gadgetHelper = new google.visualization.GadgetHelper();
 		var query = gadgetHelper.createQueryFromPrefs(prefs);
 		query.send(receiveData);
 	    }
 
-	    function receiveData(response) {	    
+	    function receiveData(response) {
 		// Use the visualization GadgetHelper class to validate the data, and for error handling.
 		if (!gadgetHelper.validateResponse(response)) {
 		    showError("Error receiving data from the data source.");
 		    return;
 		};
-      
+
 		dataTable = response.getDataTable();
-		
-		// remove the previous markers and labels		
+
+		// remove the previous markers and labels
 		if (markers != null && markers.length && markers.length > 0) {
 		    for (i = 0; i < markers.length; i++) {
 			if (markers[i] != null) {
@@ -633,7 +633,7 @@
 			    }
 		    }
 		}
-		
+
 		if (labels != null && labels.length && labels.length > 0) {
 		    for (i = 0; i < labels.length; i++) {
 			if (labels[i] != null) {
@@ -642,57 +642,57 @@
 			}
 		    }
 		}
-		
+
 		markers = new Array();
 		markers.length = dataTable.getNumberOfRows();
-		
+
 		for (i = 0; i < markers.length; i++) {
 		    markers[i] = null;
 		}
-		
+
 		labels = new Array();
 		labels.length = dataTable.getNumberOfRows();
-		
+
 		for (i = 0; i < labels.length; i++) {
 		    labels[i] = null;
 		}
-		
-		for (i = 0; i < dataTable.getNumberOfRows(); i++) {		
+
+		for (i = 0; i < dataTable.getNumberOfRows(); i++) {
 		    mapLocation(i);
 		}
-		
+
 		map.fitBounds(latlngbounds);
 		createLocationList();
 		resetInactivityTimer();
-		
+
 		if (isLoading) {
 		    isLoading = false;
-		}			    
+		}
 	    }
-	    
-	    function mapLocation(index) {	    
-		var infowindow =  new InfoBubble({ 
+
+	    function mapLocation(index) {
+		var infowindow =  new InfoBubble({
 		    shadowStyle: 1,
 		    padding: 30,
 		    borderRadius: 12,
 		    arrowSize: 15,
 		    arrowStyle: 0
-		});			    
-		var locationPos = new google.maps.LatLng(dataTable.getValue(index, 2), dataTable.getValue(index, 3));		
-			    
+		});
+		var locationPos = new google.maps.LatLng(dataTable.getValue(index, 2), dataTable.getValue(index, 3));
+
 		latlngbounds.extend(locationPos);
-	    
+
 		var marker = new google.maps.Marker({
-		    map: map, 
+		    map: map,
 		    animation: google.maps.Animation.DROP,
 		    title: dataTable.getValue(i, 0),
 		    position: locationPos,
 		    icon: SERVER_PATH + '/images/pointofinterest.png'
 		});
-			    
+
 		markers[index] = marker;
-			    
-		var moreInfoUrl = (dataTable.getNumberOfColumns() > 4) ? dataTable.getValue(i, 4) :  null;	    
+
+		var moreInfoUrl = (dataTable.getNumberOfColumns() > 4) ? dataTable.getValue(i, 4) :  null;
 		var labelContent = '<div id="maplabel' + i + '"><h3>' + dataTable.getValue(i, 0) + '</h3>'+
 		    '<h5>' + dataTable.getValue(i, 1) + '</h5>'+
 		    '<table border="0"><tbody><tr>'+
@@ -710,81 +710,81 @@
 		    '</tr><tr>'+
 		    ((moreInfoUrl != null && moreInfoUrl != '') ?'<td></td>' : '') +
 		    '<td colspan="3" align="center">Directions</td>' +
-		    '<td></td>' 
+		    '<td></td>'
 		    '</tr></tbody></table><div>';
-			    
+
 		infowindow.setContent(labelContent);
 		infowindow.setPosition(locationPos);
-			    
-		google.maps.event.addListener(marker, 'click', function() {				
+
+		google.maps.event.addListener(marker, 'click', function() {
 		    for (i=0;i<labels.length;i++) {
 			if (labels[i] != null) {
 			    labels[i].close();
 			}
 		    }
-				    
+
 		    infowindow.open(map, marker);
 		    // map.fitBounds(latlngbounds); fix for 293
-				    
+
 		});
-				    
-		google.maps.event.addListener(infowindow, 'closeclick', function() {				
+
+		google.maps.event.addListener(infowindow, 'closeclick', function() {
 		    map.fitBounds(latlngbounds);
 		});
-		    
-		labels[index] = infowindow;	    
-	    }    		
-                       
-            function getFullAddress(addr) {            	
+
+		labels[index] = infowindow;
+	    }
+
+            function getFullAddress(addr) {
             	var result = '';
-            
+
             	result += (addr.street && addr.street != '') ? addr.street : '';
             	result += (addr.unit && addr.unit != '') ? (result != '' ? ', ' : '') + addr.unit : '';
             	result += (addr.city && addr.city != '') ? (result != '' ? ', ' : '') + addr.city : '';
             	result += (addr.province && addr.province != '') ? (result != '' ? ', ' : '') + addr.province : '';
             	result += (addr.postalCode && addr.postalCode != '') ? (result != '' ? ' ' : '') + addr.postalCode : '';
             	result += (addr.country && addr.country != '' && addr.country != 'CA' && addr.country != 'US') ? (result != '' ? ', ' : '') + addr.country : '';
-            	
+
             	return result;
             }
-            
-            function popLabel(index) {            
+
+            function popLabel(index) {
            	for (var i=0;i<labels.length;i++) {
                     if (labels[i] != null) {
 			labels[i].close();
 		    }
 		}
-                
+
 		labels[index].open(map, markers[index]);	//Issue 641 - Added markers parameter.
                 map.fitBounds(latlngbounds);
             }
-            
-            function createLocationList() {  	
+
+            function createLocationList() {
             	$("#loclist").remove();
-            	
+
             	var $wrap = $('<div id="test">');
             	var $data = $('<table class="page">');
-		
+
             	$data.attr("id", "loclist");
             	$data.addClass("listtbl");
-                        
+
 		for (i = 0; i < dataTable.getNumberOfRows(); i++) {
 		    var $tr = $('<tr onclick="popLabel(' + i + ');">'),
 			$td = $('<td>');
-				
+
 		    $tr.addClass('trow item');
 		    $td.addClass('tcell');
 		    $td.addClass('data_font-style');
 		    $td.text(dataTable.getValue(i, 0));
 		    ($tr).append($td);
-			
+
 		    $data.append($tr).find("tr:odd").addClass("altrow");
 		    $data.append($tr).find("tr:odd").addClass('data_font-style');
 		}
-	      		
+
 		($wrap).append($data);
 		$("#tabledata .content").append($wrap);
-		
+
 		var scrollStartTop=0;
 		var swipeOptions = {
 		    click: function(event, target) {
@@ -793,7 +793,7 @@
 		    },
 		    swipeStatus: function(event, phase, direction, distance) {
 			var box = document.getElementById("scrollbox");
-			
+
 			if (phase == "start") {
 			    if (direction == 'down') {
 				    scrollStartTop = box.scrollTop - distance;
@@ -802,7 +802,7 @@
 				scrollStartTop = box.scrollTop + distance;
 			    }
 			}
-			else if (phase == "move") {			
+			else if (phase == "move") {
 			    if (direction == 'down') {
 				box.scrollTop = scrollStartTop - distance;
 			    }
@@ -814,31 +814,31 @@
 		    allowPageScroll:"none",
 		    threshold:50
 		}
-				
-		$("#tabledata").infiniteScroll({ direction: "none" });	
+
+		$("#tabledata").infiniteScroll({ direction: "none" });
             }
-                        
+
             //Send "READY" event to the Viewer.
             function readyEvent() {
             	gadgets.rpc.call('', 'rsevent_ready', null, id, false, false, false, true, false);
             }
-	    
+
 	    function play() {
-	    
+
 	    }
-	    
+
 	    function pause() {
-	    
+
 	    }
-                        
+
             /* function to fix the -10000 pixel limit of jquery.animate */
 	    $.fx.prototype.cur = function(){
 		if ( this.elem[this.prop] != null && (!this.elem.style || this.elem.style[this.prop] == null) ) {
 		    return this.elem[ this.prop ];
 		}
-		
+
 		var r = parseFloat( jQuery.css(this.elem, this.prop));
-		
+
 		return typeof r == 'undefined' ? 0 : r;
 	    }
 	</script>
