@@ -492,7 +492,7 @@
 
   <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/envision/envision.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common-2020.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/spinner/jquery.spinner.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/RiseVision.Templates.Finance.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Chart/FinancialChart.js"></script>

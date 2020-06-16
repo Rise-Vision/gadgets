@@ -413,8 +413,8 @@ RiseVision.Common.Financial.RealTime.prototype.saveCollectionTimes = function() 
         if (startTime && endTime && timeZoneOffset != "N/P") {
           this.collectionTimes.push({
             "instrument" : this.instruments[0],
-            "startTime" : startTime.setTimezoneOffset(timeZoneOffset),
-            "endTime" : endTime.setTimezoneOffset(timeZoneOffset),
+            "startTime" : RiseVision.Common.Utility.adjustTimeZone(startTime, timeZoneOffset),
+            "endTime" : RiseVision.Common.Utility.adjustTimeZone(endTime, timeZoneOffset),
             "daysOfWeek" : this.data.getFormattedValue(0, this.startTimeIndex + 2).split(",")
           });
         }
@@ -437,8 +437,8 @@ RiseVision.Common.Financial.RealTime.prototype.saveCollectionTimes = function() 
           if (startTime && endTime && timeZoneOffset != "N/P") {
             this.collectionTimes.push({
               "instrument" : this.instruments[row],
-              "startTime" : startTime.setTimezoneOffset(timeZoneOffset),
-              "endTime" : endTime.setTimezoneOffset(timeZoneOffset),
+              "startTime" : RiseVision.Common.Utility.adjustTimeZone(startTime, timeZoneOffset),
+              "endTime" : RiseVision.Common.Utility.adjustTimeZone(endTime, timeZoneOffset),
               "daysOfWeek" : this.data.getFormattedValue(row, this.startTimeIndex + 2).split(",")
             });
           }
@@ -767,8 +767,8 @@ var CollectionTimes = (function() {
 
             instruments[i].collectionTimes = {
               "instrument" : instrument,
-              "startTime" : startTime.setTimezoneOffset(timeZoneOffset),
-              "endTime" : endTime.setTimezoneOffset(timeZoneOffset),
+              "startTime" : RiseVision.Common.Utility.adjustTimeZone(startTime, timeZoneOffset),
+              "endTime" : RiseVision.Common.Utility.adjustTimeZone(endTime, timeZoneOffset),
               "daysOfWeek" : data.getFormattedValue(0, 2).split(","),
               "timeZoneOffset" : timeZoneOffset,
               "isUpdated" : true
@@ -2387,6 +2387,28 @@ RiseVision.Common.Utility.getElementByNodeName = function(parentNode, nodeName) 
  */
 RiseVision.Common.Utility.adjustTime = function(date, offset) {
   return date.setTimezoneOffset(offset);
+}
+/*
+ * June 15, 2020 - adjustment for new Visualization API i.e. "www.gstatic.com/charts/loader.js"
+ * The API returns date as string. Example: "2020-06-15T13:30:00.000Z"
+ */
+RiseVision.Common.Utility.adjustTimeZone = function(date, offset) {
+  try {
+    if (date) {
+
+      if (date instanceof Date) {
+        return date.setTimezoneOffset(offset);
+      }
+
+      if (typeof date === 'string' || date instanceof String) {
+        return new Date(date).setTimezoneOffset(offset);
+      }
+    }
+  } catch(err) {
+    console.error(err);
+  }
+
+  return null;
 }
 //Find and return the contents of a particular CSS rule.
 RiseVision.Common.Utility.getStyle = function(className) {
