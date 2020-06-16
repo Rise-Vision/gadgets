@@ -106,7 +106,6 @@
 
 	<link rel="stylesheet" href="//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/css/ContentFlow.css" />
 
-	<script src="//www.gstatic.com/charts/loader.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
 	<script src="//s3.amazonaws.com/Gadget-Photo-Album/CoverFlow/js/CoverFlow.min.js"></script>
