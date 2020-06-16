@@ -2082,7 +2082,7 @@ RiseVision.FinancialChart.Instrument.prototype.save = function(result, callback)
 	for (var i = 0; i < this.ticks.length; i++) {
 	    if (row < numDataRows) {
 		tickTradeTime = new Date(this.ticks[i].date);
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(result.data.getFormattedValue(row, 1)), timeZoneOffset);	//Convert this in common?
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(result.data.getValue(row, 1)), timeZoneOffset);	//Convert this in common?
 		y = parseFloat(result.data.getValue(row, 0));
 
 		this.x.push(index);
@@ -2139,8 +2139,8 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 
     if (this.realTimeData != null) {
 	if (this.isLoading) {
-	    if ((this.realTimeData.getFormattedValue(0, 2) != null) && (this.realTimeData.getFormattedValue(0, 2) != "") && (this.lastTradeTime != null)) {
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 2)), timeZoneOffset).clearTime();
+	    if ((this.realTimeData.getValue(0, 2) != null) && (this.realTimeData.getValue(0, 2) != "") && (this.lastTradeTime != null)) {
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 2)), timeZoneOffset).clearTime();
 
 		//Real-time data is the last data point.
 		if ((this.duration != "Day") && (this.duration != "Week")) {
@@ -2148,7 +2148,7 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 		    if (!Date.equals(tradeTime, this.lastTradeTime)) {
 			this.x.push(this.startIndex);
 			this.y.push(parseFloat(this.realTimeData.getValue(0, 1)));
-			this.lastTradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 2)), timeZoneOffset);
+			this.lastTradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 2)), timeZoneOffset);
 		    }
 		}
 	    }
@@ -2157,8 +2157,8 @@ RiseVision.FinancialChart.Instrument.prototype.plotRealTimeData = function() {
 	}
 	//After initial load, data is updated from the real-time server.
 	else {
-	    if ((this.realTimeData.getFormattedValue(0, 2) != null) && (this.realTimeData.getFormattedValue(0, 2) != "") && (this.lastTradeTime != null)) {
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 2)), timeZoneOffset);
+	    if ((this.realTimeData.getValue(0, 2) != null) && (this.realTimeData.getValue(0, 2) != "") && (this.lastTradeTime != null)) {
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 2)), timeZoneOffset);
 		tradeDay = tradeTime.clone().clearTime();
 		lastTradeDay = this.lastTradeTime.clone().clearTime();
 
@@ -2368,7 +2368,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 	    //Gaps could occur from the start collection time until the first available trade time,
 	    //and/or between the trade times of consecutive data points.
 	    if ((this.duration == "Day") || (this.duration == "Week")) {
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(result.data.getFormattedValue(row, 2)), timeZoneOffset);
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(result.data.getValue(row, 2)), timeZoneOffset);
 
 		if (row == 0) {
 		    //Initialize lastTradeTime with date of current tradeTime but time of the collection start time,
@@ -2471,8 +2471,8 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.save = function(result, ca
 		}
 
 		this.ticks.push({
-		    "date": RiseVision.Common.Utility.adjustTime(new Date(result.data.getFormattedValue(row, 2)), timeZoneOffset).getTime(),
-		    "originalDate": new Date(result.data.getFormattedValue(row, 2)).getTime(),
+		    "date": RiseVision.Common.Utility.adjustTime(new Date(result.data.getValue(row, 2)), timeZoneOffset).getTime(),
+		    "originalDate": new Date(result.data.getValue(row, 2)).getTime(),
 		    "close": closePrice,
 		    "volume": parseInt(result.data.getFormattedValue(row, 1))
 		});
@@ -2611,8 +2611,8 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 	plotValue = parseFloat(this.realTimeData.getValue(0, 2));
 
 	if (this.isLoading) {
-	    if ((this.realTimeData.getFormattedValue(0, 5) != null) && (this.realTimeData.getFormattedValue(0, 5) != "") && (this.lastTradeTime != null)) {
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset).clearTime();
+	    if ((this.realTimeData.getValue(0, 5) != null) && (this.realTimeData.getValue(0, 5) != "") && (this.lastTradeTime != null)) {
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 5)), timeZoneOffset).clearTime();
 
 		//Show Previous Close line as another series in the chart, where the x endpoints are the start and end times of the current day.
 		if (this.duration == "Day") {
@@ -2627,7 +2627,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 		    //Prevent charts from showing two data points for yesterday if running before markets open.
 		    if (!Date.equals(tradeTime, this.lastTradeTime)) {
 			this.ticks.push({
-			    "date": RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset).getTime(),
+			    "date": RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 5)), timeZoneOffset).getTime(),
 			    "close": plotValue,
 			    "volume": parseInt(this.realTimeData.getFormattedValue(0, 4))
 			});
@@ -2647,12 +2647,12 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 	    }
 
 	    this.isLoading = false;
-	    this.lastTradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset);
+	    this.lastTradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 5)), timeZoneOffset);
 	}
 	//After initial load, data is updated from the real-time server.
 	else {
-	    if ((this.realTimeData.getFormattedValue(0, 5) != null) && (this.realTimeData.getFormattedValue(0, 5) != "") && (this.lastTradeTime != null)) {
-		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset);
+	    if ((this.realTimeData.getValue(0, 5) != null) && (this.realTimeData.getValue(0, 5) != "") && (this.lastTradeTime != null)) {
+		tradeTime = RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 5)), timeZoneOffset);
 		tradeDay = tradeTime.clone().clearTime();
 		lastTradeDay = this.lastTradeTime.clone().clearTime();
 
@@ -2691,7 +2691,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 				}
 				else {	//Week
 				    this.ticks.push({
-					"date" : RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getFormattedValue(0, 5)), timeZoneOffset).getTime(),
+					"date" : RiseVision.Common.Utility.adjustTime(new Date(this.realTimeData.getValue(0, 5)), timeZoneOffset).getTime(),
 					"close": plotValue,
 					"volume": parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume	//Issue 919
 				    });
@@ -2715,7 +2715,7 @@ RiseVision.FinancialChart.PrimaryInstrument.prototype.plotRealTimeData = functio
 		    }
 		    //Other chart types have the last data point updated.
 		    else {
-			this.ticks[this.startIndex - 1].date = new Date(this.realTimeData.getFormattedValue(0, 5)).getTime();
+			this.ticks[this.startIndex - 1].date = new Date(this.realTimeData.getValue(0, 5)).getTime();
 			this.ticks[this.startIndex - 1].close = plotValue;
 			this.ticks[this.startIndex - 1].volume = parseFloat(this.realTimeData.getValue(0, 4)) - this.accumulatedVolume;	//Issue 919
 			this.y[this.startIndex - 1] = plotValue;
