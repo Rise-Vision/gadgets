@@ -413,8 +413,8 @@ RiseVision.Common.Financial.RealTime.prototype.saveCollectionTimes = function() 
         if (startTime && endTime && timeZoneOffset != "N/P") {
           this.collectionTimes.push({
             "instrument" : this.instruments[0],
-            "startTime" : startTime,
-            "endTime" : endTime,
+            "startTime" : RiseVision.Common.Utility.adjustTimeZone(startTime, timeZoneOffset),
+            "endTime" : RiseVision.Common.Utility.adjustTimeZone(endTime, timeZoneOffset),
             "daysOfWeek" : this.data.getFormattedValue(0, this.startTimeIndex + 2).split(",")
           });
         }
