@@ -72,7 +72,6 @@
 				<a href="#" class="tooltip">Data URL*:<span>Query data source URL of the spreadsheet that holds the data</span></a>
 			    </label>
 			    <input id="url" name="url" type="text" class="medium" required autofocus />
-			    <a id="googleDrive" href="#" data-for="url"><span>Google Drive&#8482;</span></a>
 			</li>
 			<li class="more drillDown" style="display: none;">
 			    <ol>
@@ -449,7 +448,6 @@
 	    
 	    <link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/Settings/css/Settings.css" />
 	    
-	    <script src="//www.google.com/jsapi"></script>
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
 	    <script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
@@ -459,25 +457,40 @@
 		var prefs = new gadgets.Prefs(),
 		    directorySettings = null;
 		    
-		google.load("picker", "1");
-                                
+                var apiLoaded = false;
+
+                function onApiLoad() {
+                  console.log("api loaded");
+                  apiLoaded = true;
+                }
+
                 function init() {
-		    google.setOnLoadCallback(function() {
-			$(function() {
-			    directorySettings = new RiseVision.Directory.Settings();
-			    
-			    gadgets.rpc.register("rscmd_getSettings", directorySettings.getSettings);
-			    gadgets.rpc.register("rscmd_googlePickerCallback", directorySettings.setURL);
-			    gadgets.rpc.register("rscmd_colorPickerCallback", directorySettings.setColor);
-			    gadgets.rpc.register("rscmd_fontSelectorCallback", directorySettings.setFont);
-			    
-			    directorySettings.initSettings();
-			});
-		    });
+                  if (apiLoaded) {
+                    gapi.load('picker', onPickerLoad);
+                  } else {
+                    setTimeout(function() {
+                      init();
+                    }, 500);
+                  }
+                }
+
+                function onPickerLoad() {
+                  console.log("picker loaded");
+                  $(function() {
+                    directorySettings = new RiseVision.Directory.Settings();
+
+                    gadgets.rpc.register("rscmd_getSettings", directorySettings.getSettings);
+                    gadgets.rpc.register("rscmd_googlePickerCallback", directorySettings.setURL);
+                    gadgets.rpc.register("rscmd_colorPickerCallback", directorySettings.setColor);
+                    gadgets.rpc.register("rscmd_fontSelectorCallback", directorySettings.setFont);
+
+                    directorySettings.initSettings();
+                  });
                 }
 		
                 gadgets.util.registerOnLoadHandler(init); 
             </script>
+            <script type="text/javascript" src="//apis.google.com/js/api.js?onload=onApiLoad"></script>
 	]]>
     </Content>
     <Content type="html">
@@ -573,6 +586,7 @@
 	<link rel="stylesheet" href="//s3.amazonaws.com/Common-Production/AlphaNav/css/AlphaNav.css" />
 	
 	<script src="//www.google.com/jsapi"></script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     	
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
@@ -585,8 +599,6 @@
         <script type="text/javascript">
             var prefs = new gadgets.Prefs(),
 		controller = null;
-	    
-	    google.load("gdata", "1");
 	    
 	    //Issue 1056 - Disable right-click.
 	    window.oncontextmenu = function() {
@@ -621,16 +633,14 @@
 		    gadgets.rpc.register("rscmd_stop_" + id, stop);
 		}
 				
-		google.setOnLoadCallback(function() {
-		    controller = new RiseVision.Directory.Controller();
+                controller = new RiseVision.Directory.Controller();
+
+                $(window).resize(function() {
+		    controller.onresize();
+                });
 		    
-		    $(window).resize(function() {
-			controller.onresize();
-		    });
-		    
-		    gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
-		    gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
-		});
+                gadgets.rpc.register("rsparam_set_" + id, controller.getAdditionalParams);
+                gadgets.rpc.call("", "rsparam_get", null, id, "additionalParams");
             }
 	    
 	    function play() {

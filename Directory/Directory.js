@@ -22,10 +22,6 @@ RiseVision.Directory.Settings.prototype.initSettings = function() {
 	var self = this;
 
 	//Add event handlers.
-	$("#googleDrive").click(function() {
-		self.picker.showPicker($(this).data("for"), google.picker.ViewId.SPREADSHEETS);
-	});
-
 	$("input[name='cells']").change(function() {
 		var val = $(this).val();
 
