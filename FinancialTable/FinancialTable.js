@@ -920,6 +920,12 @@ RiseVision.Financial.prototype.addRow = function(row, tr) {
 		$(td).html(self.data.getFormattedValue(row, 0));
 		$(tr).append(td);
 	    }
+	    else if (value.field == "tradeTime") {
+		td.setAttribute("class", "data_font-style " + self.data.getColumnId(self.financial.dataFields[value.field]));
+		$(td).html(self.data.getValue(row, self.financial.dataFields[value.field]));
+		$(td).attr("data-value", self.data.getValue(row, self.financial.dataFields[value.field]));
+		$(tr).append(td);
+	    }
 	    else {
 		td.setAttribute("class", "data_font-style " + self.data.getColumnId(self.financial.dataFields[value.field]));
 		$(td).html(self.data.getFormattedValue(row, self.financial.dataFields[value.field]));

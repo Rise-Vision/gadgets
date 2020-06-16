@@ -326,10 +326,10 @@
 	<script type="text/javascript" src="//www.gstatic.com/charts/loader.js"></script>
 
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/datejs/date.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/Common/RiseVision.Common-2020.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/dataTables/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="//s3.amazonaws.com/Common-Production/InfiniteScroll/InfiniteScroll.min.js"></script>
-	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.min.js"></script>
+	<script type="text/javascript" src="//s3.amazonaws.com/Gadget-Financial-Table/FinancialTable.js"></script>
 
         <script type="text/javascript">
             var prefs = new gadgets.Prefs(),
