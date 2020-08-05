@@ -146,7 +146,7 @@ RiseVision.Common.Visualization.prototype.getData = function(opts) {
 RiseVision.Common.Visualization.prototype.loadVisualizationAPI = function() {
   var self = this;
 
-  google.charts.load('current', {
+  google.charts.load('48', {
     packages: ['corechart'],
     callback: function() {
       self.isVisualizationLoaded = true;
